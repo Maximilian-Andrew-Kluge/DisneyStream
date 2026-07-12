@@ -1,623 +1,961 @@
-﻿/* ============================================================
-   DisneyStream v0.4.0 — Disney+ Theme for Jellyfin
-   https://github.com/Maximilian-Andrew-Kluge/DisneyStream
-   Tested on Jellyfin 10.9 / 10.10 / 10.11
-============================================================ */
+/*! DisneyStream v1.0.0 — Disney+ Theme for Jellyfin
+    https://github.com/Maximilian-Andrew-Kluge/DisneyStream
+    Tested: Jellyfin 10.9 / 10.10 / 10.11
+*/
 
-/* ============================================================
-   DESIGN TOKENS
-============================================================ */
+/* ── FONTS ─────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ── TOKENS ────────────────────────────────────────────── */
 :root {
-    --dp-bg:           #040405;
-    --dp-bg2:          #0d0d1a;
-    --dp-surface:      #16161f;
-    --dp-blue:         #176EE1;
-    --dp-blue-hover:   #3d8ff0;
-    --dp-text:         #ffffff;
-    --dp-text-dim:     rgba(255,255,255,0.70);
-    --dp-text-muted:   rgba(255,255,255,0.45);
-    --dp-border:       rgba(255,255,255,0.08);
-    --dp-overlay:      rgba(4,4,5,0.80);
-    --dp-radius:       6px;
-    --dp-header-h:     68px;
-    --dp-font:         "Avenir Next","Avenir","Nunito","Segoe UI",Arial,sans-serif;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color-scheme: dark;
+
+    --dp-bg:        #040714;
+    --dp-bg2:       #0b0d1a;
+    --dp-surface:   #111827;
+    --dp-surface2:  #1d2535;
+
+    --dp-blue:      #176EE1;
+    --dp-blue-h:    #3d8ff0;
+    --dp-blue-a:    rgba(23,110,225,0.18);
+
+    --dp-text:      #f9f9f9;
+    --dp-text-70:   rgba(249,249,249,0.70);
+    --dp-text-50:   rgba(249,249,249,0.50);
+    --dp-text-30:   rgba(249,249,249,0.30);
+
+    --dp-border:    rgba(255,255,255,0.08);
+    --dp-border2:   rgba(255,255,255,0.14);
+
+    --dp-r-sm:  6px;
+    --dp-r-md:  10px;
+    --dp-r-lg:  16px;
+    --dp-r-xl:  22px;
+    --dp-r-pill:999px;
+
+    --dp-header: rgba(4,7,20,0.88);
+    --dp-shadow: 0 8px 32px rgba(0,0,0,0.55);
 }
 
-/* ============================================================
-   GLOBAL RESET / BASE
-============================================================ */
+/* ── BASE ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body {
     background:  var(--dp-bg)   !important;
     color:       var(--dp-text) !important;
-    font-family: var(--dp-font) !important;
-    -webkit-font-smoothing: antialiased;
+    font-family: "Inter","Segoe UI",Arial,sans-serif !important;
+    font-size:   16px !important;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
 }
 
-/* ============================================================
-   BACKGROUND — deep black with very subtle top glow
-============================================================ */
+/* background radial glow top-center like Disney+ */
 .backgroundContainer {
     background:
-        radial-gradient(ellipse 90% 40% at 50% 0%,
-            rgba(23,110,225,0.12) 0%,
-            var(--dp-bg) 55%
+        radial-gradient(ellipse 80% 35% at 50% 0%,
+            rgba(23,110,225,0.10) 0%,
+            var(--dp-bg) 60%
         ) fixed !important;
 }
-.backgroundContainer.withBackdrop {
-    background-color: rgba(0,0,0,0) !important;
-}
-.skinBody { background: transparent !important; }
+.backgroundContainer.withBackdrop { background-color: transparent !important; }
+.skinBody, .skinBodyWithoutShortcut { background: transparent !important; }
 
-/* ============================================================
-   HEADER — transparent → dark on scroll
-============================================================ */
+/* selection */
+::selection { background: rgba(23,110,225,0.38); }
+
+/* scrollbar */
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.16);
+    border-radius: var(--dp-r-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
+* { scrollbar-color: rgba(255,255,255,0.16) transparent !important; }
+
+/* ── HEADER ────────────────────────────────────────────── */
+/* Jellyfin wraps the header in #reactRoot > div:nth-child(3)
+   The actual bar is .skinHeader */
 .skinHeader {
-    position:   fixed !important;
-    top: 0; left: 0; right: 0;
-    height:     var(--dp-header-h) !important;
-    background: rgba(4,4,5,0.85)   !important;
-    backdrop-filter:          blur(18px) saturate(160%) !important;
-    -webkit-backdrop-filter:  blur(18px) saturate(160%) !important;
-    border:     none                !important;
-    box-shadow: none                !important;
-    z-index:    1000;
-    transition: background 0.3s ease !important;
-}
-.skinHeader-withBackground {
-    background: rgba(4,4,5,0.92) !important;
-}
-/* No border line under header */
-.skinHeader::after { display: none !important; }
-
-.mainAnimatedPage {
-    padding-top: calc(var(--dp-header-h) + 4px) !important;
+    background: var(--dp-header) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--dp-text) !important;
 }
 
-/* ============================================================
-   HEADER NAV TABS (horizontal links)
-============================================================ */
-.headerTabs.sectionTabs {
-    font-size: 100% !important;
-}
-.emby-tab-button {
-    color:         var(--dp-text-dim)  !important;
-    font-weight:   600                 !important;
-    border-radius: 0                   !important;
-    padding:       0 16px              !important;
-    height:        var(--dp-header-h)  !important;
-    min-height:    unset               !important;
-    background:    transparent         !important;
-    border-bottom: 3px solid transparent !important;
-    transition:    color 0.15s ease, border-color 0.15s ease !important;
-}
-.emby-tab-button:hover {
-    color:      var(--dp-text) !important;
-    background: transparent    !important;
-    transform:  none           !important;
-    box-shadow: none           !important;
-}
-.emby-tab-button-active {
-    color:         var(--dp-text)  !important;
-    font-weight:   700             !important;
-    background:    transparent     !important;
-    border-bottom: 3px solid var(--dp-text) !important;
+/* transparent header on item detail page */
+.skinHeader-withBackground.semiTransparent {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
 }
 
-/* ============================================================
-   SIDEBAR (mainDrawer)
-============================================================ */
-.mainDrawer {
-    background:   rgba(4,4,5,0.95)           !important;
-    backdrop-filter:         blur(18px)       !important;
-    -webkit-backdrop-filter: blur(18px)       !important;
-    border-right: 1px solid var(--dp-border)  !important;
-    transition:   width 0.28s cubic-bezier(0.25,0.46,0.45,0.94) !important;
-    overflow:     hidden !important;
-    z-index:      950;
+/* OSD header gradient */
+.skinHeader-withBackground.osdHeader {
+    background: linear-gradient(180deg,rgba(0,0,0,0.80) 0%,transparent 100%) !important;
+    backdrop-filter: none !important;
+}
+
+/* header buttons */
+.headerButton,
+.paper-icon-button-light {
+    color: var(--dp-text) !important;
+    background: transparent !important;
+    border-radius: 50% !important;
+    transition: background 0.15s ease !important;
+}
+.paper-icon-button-light:hover:not(:disabled),
+.headerButton:hover {
+    background: rgba(255,255,255,0.10) !important;
+    color: var(--dp-text) !important;
+}
+
+/* user avatar in header */
+.headerUserButton {
+    border: 2px solid var(--dp-border2) !important;
+    border-radius: 50% !important;
+}
+
+/* page title in header */
+.pageTitle {
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+    color: var(--dp-text) !important;
+}
+
+/* ── SECTION TABS (horizontal nav in header) ───────────── */
+.sectionTabs .emby-tab-button {
+    color: var(--dp-text-70) !important;
+    font-weight: 500 !important;
+    border-radius: var(--dp-r-lg) !important;
+    background: rgba(255,255,255,0.06) !important;
+    transition: background 0.15s, color 0.15s !important;
+}
+.sectionTabs .emby-tab-button:hover {
+    color: var(--dp-text) !important;
+    background: rgba(255,255,255,0.10) !important;
+}
+.sectionTabs .emby-tab-button-active {
+    background: var(--dp-text) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+
+/* ── SIDEBAR ───────────────────────────────────────────── */
+.mainDrawer, .drawer-open {
+    background: rgba(4,7,20,0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid var(--dp-border) !important;
 }
 .navMenuOption {
-    border-radius: var(--dp-radius) !important;
-    color:         var(--dp-text-dim) !important;
-    margin:        3px 8px !important;
-    transition:    background 0.15s ease, color 0.15s ease !important;
-    position:      relative;
+    border-radius: var(--dp-r-sm) !important;
+    margin: 3px 8px !important;
+    padding: 10px 14px !important;
+    color: var(--dp-text-70) !important;
+    transition: background 0.15s ease !important;
+    position: relative;
 }
 .navMenuOption:hover {
-    background: rgba(255,255,255,0.07) !important;
-    color:      var(--dp-text)         !important;
-    transform:  none                   !important;
+    background: rgba(255,255,255,0.08) !important;
+    color: var(--dp-text) !important;
 }
 .navMenuOption-selected {
     background: rgba(23,110,225,0.20) !important;
-    color:      var(--dp-text)        !important;
+    color: var(--dp-text) !important;
+    font-weight: 600 !important;
 }
 .navMenuOption-selected::before {
-    content:       "";
-    position:      absolute;
-    left:          0; top: 20%; bottom: 20%;
-    width:         3px;
-    border-radius: 0 4px 4px 0;
-    background:    var(--dp-blue);
-}
-.navMenuOptionText {
-    transition: opacity 0.15s ease !important;
+    content: "";
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--dp-blue);
 }
 
-/* ============================================================
-   LINKS
-============================================================ */
-a { color: var(--dp-text) !important; text-decoration: none; }
-a:hover { opacity: 0.75; }
-
-/* ============================================================
-   TYPOGRAPHY
-============================================================ */
-.pageTitle {
-    font-size:      32px !important;
-    font-weight:    700  !important;
-    color:          var(--dp-text) !important;
-    letter-spacing: -0.3px;
-    margin-top: auto; margin-bottom: auto;
+/* ── BACKGROUND / BACKDROP ─────────────────────────────── */
+/* With backdrop image: semi-transparent overlay */
+.backgroundContainer.withBackdrop {
+    opacity: 0.92 !important;
+    background: linear-gradient(0deg,
+        var(--dp-bg) 0%,
+        rgba(4,7,20,0.30) 100%
+    ) !important;
 }
+
+/* backdrop image itself: slight blur + crop */
+.backdropImage {
+    background-position-y: 10% !important;
+    filter: brightness(0.55) saturate(0.8) !important;
+}
+.backdropImage::before {
+    transform: scale(1.05) !important;
+    filter: blur(14px) !important;
+}
+.backdropImage::after {
+    -webkit-mask: linear-gradient(180deg,rgba(0,0,0,1) 60%, transparent) !important;
+    mask: linear-gradient(180deg,rgba(0,0,0,1) 60%, transparent) !important;
+}
+
+/* blurhash placeholders: muted */
+.blurhash-canvas {
+    filter: opacity(50%) saturate(40%) !important;
+}
+
+/* ── TYPOGRAPHY ────────────────────────────────────────── */
+h1,h2,h3,h4,h5,h6 { color: var(--dp-text) !important; }
+a { color: var(--dp-text) !important; text-decoration: none !important; }
+
 .sectionTitle, .sectionTitleLink {
-    font-size:   20px !important;
-    font-weight: 600  !important;
-    color:       var(--dp-text) !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: var(--dp-text) !important;
 }
-.secondaryText, .itemMiscInfo-withouthoverlink {
-    color: var(--dp-text-dim) !important;
+.sectionTitleTextButton:hover {
+    background: transparent !important;
+    color: var(--dp-text) !important;
+}
+.secondaryText, .detail-clamp-text { color: var(--dp-text-70) !important; }
+.dimText { color: var(--dp-text-50) !important; }
+.starIcon { color: rgba(255,255,255,0.75) !important; }
+
+/* ── CARDS — real Jellyfin structure ───────────────────── */
+/* .itemsContainer > .card > .cardBox > .cardScalable > .cardImageContainer */
+
+/* card wrapper: no bg, no border */
+.cardBox { background: transparent !important; }
+.visualCardBox {
+    background: rgba(17,24,39,0.70) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-md) !important;
+    box-shadow: none !important;
 }
 
-/* ============================================================
-   BUTTONS
-============================================================ */
-/* Reset all buttons first */
-.raised, .fab, a[data-role="button"],
-.emby-button:not(.paper-icon-button-light):not(.headerButton) {
-    background:    var(--dp-blue)  !important;
-    color:         #fff            !important;
-    border:        none            !important;
-    border-radius: var(--dp-radius)!important;
-    font-family:   var(--dp-font)  !important;
-    font-weight:   600             !important;
-    min-height:    42px            !important;
-    padding:       8px 22px        !important;
-    transition:    background 0.15s ease, transform 0.15s ease !important;
-    box-shadow:    none !important;
-}
-.raised:hover, .fab:hover,
-.emby-button:not(.paper-icon-button-light):not(.headerButton):hover {
-    background:    var(--dp-blue-hover) !important;
-    transform:     translateY(-1px)     !important;
-    box-shadow:    none                 !important;
-}
-.raised:active,
-.emby-button:not(.paper-icon-button-light):active {
-    transform: scale(0.97) !important;
+/* the scalable poster container */
+.cardScalable {
+    border-radius: var(--dp-r-sm) !important;
+    border: none !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.45) !important;
+    transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94) !important;
 }
 
-/* Library home buttons */
-.raised.homeLibraryButton {
-    background:    rgba(255,255,255,0.10) !important;
-    border-radius: var(--dp-radius)       !important;
-    color:         var(--dp-text)         !important;
+/* hover: lift & slight glow */
+.card-hoverable:hover .cardScalable {
+    transform: scale(1.04) !important;
+    border: none !important;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.65),
+                0 0 0 1px rgba(255,255,255,0.15) !important;
 }
-.raised.homeLibraryButton:hover {
-    background: rgba(255,255,255,0.18) !important;
-    transform:  none                   !important;
-}
-
-/* Icon buttons stay transparent */
-.paper-icon-button-light,
-.headerButton,
-.emby-button.paper-icon-button-light {
-    background:    transparent !important;
-    border-radius: 50%         !important;
-    padding:       8px         !important;
-    min-height:    unset       !important;
-    color:         var(--dp-text) !important;
-}
-.paper-icon-button-light:hover,
-.paper-icon-button-light:hover:not(:disabled) {
-    background:    rgba(255,255,255,0.10) !important;
-    color:         var(--dp-text)         !important;
-    transform:     scale(1.08)            !important;
+.card-hoverable:hover .visualCardBox {
+    border-color: rgba(255,255,255,0.20) !important;
 }
 
-/* ============================================================
-   INPUTS
-============================================================ */
-.emby-input, .emby-textarea, .emby-select-withcolor {
-    background:    rgba(255,255,255,0.07) !important;
-    border:        1px solid var(--dp-border) !important;
-    color:         var(--dp-text)         !important;
-    border-radius: var(--dp-radius)       !important;
-    font-family:   var(--dp-font)         !important;
-}
-.emby-input:focus, .emby-textarea:focus {
-    border-color: var(--dp-blue) !important;
-    outline:      none;
-}
-input[type="checkbox"], input[type="radio"] {
-    accent-color: var(--dp-blue);
-}
-
-/* ============================================================
-   CARDS — the real Jellyfin structure:
-   .itemsContainer > .card > .cardBox > .cardImageContainer
-============================================================ */
-
-/* Remove all default backgrounds/borders from card wrappers */
-.visualCardBox,
-.cardBox,
-.card {
-    background:  transparent !important;
-    border:      none        !important;
-    box-shadow:  none        !important;
-}
+/* image container */
 .cardImageContainer {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.50) !important;
-    border-radius: var(--dp-radius) !important;
-    overflow: hidden;
-    background: #111118;
-    transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94),
-                box-shadow 0.25s ease !important;
-}
-
-/* Hover: lift the image container */
-.card:hover .cardImageContainer,
-.card.show-animation:focus > .cardBox .cardImageContainer {
-    transform:  scale(1.04) !important;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.65) !important;
-}
-
-/* Poster image */
-.cardImage, .cardPadder {
-    border-radius: var(--dp-radius) !important;
+    background: #0d0d1a !important;
     transition: none !important;
 }
 
-/* Overlay on hover */
-.cardOverlayContainer {
-    border-radius: var(--dp-radius) !important;
-    background-color: rgba(0,0,0,0.55) !important;
-}
-.cardOverlayFab-primary,
-.cardOverlayButtonIcon {
-    background-color: transparent !important;
-}
+/* card background placeholder colors */
+.defaultCardBackground,.cardScalable,
+.defaultCardBackground1 { background: #0d1117 !important; }
+.defaultCardBackground2 { background: #111420 !important; }
+.defaultCardBackground3 { background: #0a0e1a !important; }
+.defaultCardBackground4 { background: #141828 !important; }
+.defaultCardBackground5 { background: #0e1220 !important; }
 
-/* Card footer text */
-.cardFooter {
-    background:    transparent !important;
-    padding:       6px 2px 0  !important;
-}
+/* card text below poster */
+.cardFooter { background: transparent !important; }
 .cardText {
-    font-size:   13px !important;
-    font-weight: 600  !important;
-    color:       var(--dp-text) !important;
-    white-space: nowrap;
-    overflow:    hidden;
-    text-overflow: ellipsis;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: var(--dp-text) !important;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .cardText-secondary {
-    font-size: 11px          !important;
-    color:     var(--dp-text-muted) !important;
+    font-size: 0.73rem !important;
+    color: var(--dp-text-50) !important;
 }
 
-/* Inner footer (watched badge etc.) */
-.innerCardFooter {
-    border-radius: 0 0 var(--dp-radius) var(--dp-radius) !important;
-    background:    rgba(0,0,0,0.40) !important;
-    box-shadow:    none !important;
+/* ── CARD OVERLAY ──────────────────────────────────────── */
+.cardOverlayContainer {
+    background: rgba(0,0,0,0.0) !important;
+    transition: background 0.2s ease !important;
+    border-radius: var(--dp-r-sm) !important;
 }
-.countIndicator, .playedIndicator {
-    background: rgba(0,0,0,0.40) !important;
-    box-shadow: none !important;
-    border-radius: var(--dp-radius) !important;
+.card-hoverable:hover .cardOverlayContainer {
+    background: rgba(0,0,0,0.35) !important;
 }
 
-/* Progress bar */
+/* play FAB — white circle, Disney+ style */
+.cardOverlayContainer > .cardOverlayFab-primary {
+    background: rgba(255,255,255,0.92) !important;
+    color: #040714 !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.50) !important;
+    border-radius: 50% !important;
+}
+.cardOverlayContainer > .cardOverlayFab-primary:hover {
+    background: #fff !important;
+    transform: scale(1.08) !important;
+}
+.cardOverlayContainer > .cardOverlayFab-primary .material-icons {
+    color: #040714 !important;
+}
+
+/* extra buttons (watched, favorite etc.) */
+.cardOverlayButton-br > button {
+    color: #fff !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.80) !important;
+    background: transparent !important;
+}
+
+/* ── CARD PROGRESS BAR ─────────────────────────────────── */
 .itemProgressBar {
-    background:    rgba(255,255,255,0.15) !important;
-    border-radius: 3px !important;
-    height:        3px !important;
+    background: rgba(255,255,255,0.18) !important;
+    border-radius: var(--dp-r-pill) !important;
+    height: 3px !important;
+    overflow: hidden;
 }
-.itemProgressBarForeground,
-.transcodingProgress > div {
+.itemProgressBarForeground {
     background: var(--dp-blue) !important;
-    border-radius: 3px !important;
+    opacity: 1 !important;
+    border-radius: var(--dp-r-pill) !important;
 }
-.playbackProgress > div {
+
+/* ── CARD INDICATORS ───────────────────────────────────── */
+.playedIndicator {
+    background: #22c55e !important;
+    border: 1px solid rgba(255,255,255,0.20) !important;
+}
+.countIndicator, .fullSyncIndicator, .mediaSourceIndicator {
     background: var(--dp-blue) !important;
+    border: 1px solid rgba(255,255,255,0.20) !important;
+    border-radius: 999px !important;
 }
 
-/* Card spacing */
-.itemsContainer > .card > .cardBox {
-    margin-left:   0.5em !important;
-    margin-right:  0.5em !important;
-    margin-bottom: 0.5em !important;
-}
-.cardBox-bottompadded { margin-bottom: 0.5em !important; }
-
-/* ============================================================
-   SECTION TITLES & ROW LAYOUT
-============================================================ */
-.verticalSection { margin-bottom: 2em !important; }
-.sectionTitle, .sectionTitleLink { margin-bottom: 12px !important; }
-
-/* "See All" arrow hover */
-.button-flat:hover {
-    background:    rgba(255,255,255,0.07) !important;
-    color:         var(--dp-text)         !important;
-    border-radius: var(--dp-radius)       !important;
+/* inner footer text on hover */
+.innerCardFooter {
+    background: linear-gradient(0deg,rgba(0,0,0,0.90),40%,transparent) !important;
+    border-radius: 0 0 var(--dp-r-sm) var(--dp-r-sm) !important;
 }
 
-/* ============================================================
-   HOME LIBRARY TILES (Filme / Serien / etc.)
-============================================================ */
-#divVirtualFolders .cardImageContainer,
-#divVirtualFolders .cardContent {
-    border-radius: var(--dp-radius) var(--dp-radius) 0 0 !important;
+/* ── BUTTONS ───────────────────────────────────────────── */
+/* Generic raised / fab */
+.emby-button.block, .button-alt, .raised, .raised:focus,
+.manageRecordingButton, .dashboardActionsContainer > .emby-button,
+.localnav > .emby-button {
+    background: var(--dp-surface2) !important;
+    color: var(--dp-text) !important;
+    border: 1px solid var(--dp-border2) !important;
+    border-radius: var(--dp-r-sm) !important;
+    transition: background 0.15s ease, transform 0.15s ease !important;
+}
+.raised:hover { background: rgba(255,255,255,0.12) !important; }
+.raised:active, .emby-button:active { transform: scale(0.97) !important; }
+
+/* HOME library tiles — semi-transparent */
+.raised.homeLibraryButton {
+    background: rgba(255,255,255,0.07) !important;
+    border: 1px solid var(--dp-border) !important;
+    color: var(--dp-text) !important;
+    border-radius: var(--dp-r-md) !important;
+}
+.raised.homeLibraryButton:hover {
+    background: rgba(255,255,255,0.14) !important;
+    border-color: var(--dp-border2) !important;
 }
 
-/* ============================================================
-   DETAIL PAGE
-============================================================ */
-.itemBackdrop::after {
-    background: linear-gradient(
-        0deg,
-        var(--dp-bg)              0%,
-        rgba(4,4,5,0.55)         50%,
-        rgba(4,4,5,0.15)        100%
-    ) !important;
+/* DETAIL PAGE — play button: white pill */
+.btnPlay.detailButton {
+    background: var(--dp-text) !important;
+    color: #040714 !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    padding: 0.6em 2em !important;
+    height: 3em !important;
+    min-width: 10em !important;
 }
-.layout-desktop .detailRibbon {
-    background: rgba(0,0,0,0.25) !important;
+.btnPlay.detailButton:hover {
+    background: rgba(249,249,249,0.85) !important;
+    transform: none !important;
 }
-.detailPagePrimaryContainer {
+
+/* other detail buttons: icon circles */
+.detailButton:not(.btnPlay) {
     background: transparent !important;
+    border: none !important;
+    color: var(--dp-text) !important;
+    border-radius: 50% !important;
+    padding: 0.6em !important;
+    margin: 0.5em !important;
 }
-/* Fix cover on desktop */
-.layout-desktop .detailImageContainer .card {
-    position: fixed !important;
-    top: 10% !important;
-}
-.layout-mobile .detailImageContainer .card {
-    position: absolute !important;
-}
-
-/* ============================================================
-   DIALOGS / MODALS
-============================================================ */
-.dialog, .formDialog {
-    background:    var(--dp-surface) !important;
-    border:        1px solid var(--dp-border) !important;
-    border-radius: 12px !important;
-    box-shadow:    0 20px 60px rgba(0,0,0,0.70) !important;
-}
-.formDialogHeader {
-    border-top-left-radius:  12px !important;
-    border-top-right-radius: 12px !important;
-    background: rgba(255,255,255,0.03) !important;
-    border-bottom: 1px solid var(--dp-border) !important;
-}
-.formDialogFooter {
-    border-bottom-left-radius:  12px !important;
-    border-bottom-right-radius: 12px !important;
-    background: rgba(255,255,255,0.02) !important;
-}
-.formDialogHeader-clear,
-.formDialogFooter-clear,
-.innerCardFooterClear {
-    background-color: transparent !important;
+.detailButton:not(.btnPlay):hover {
+    background: rgba(255,255,255,0.14) !important;
 }
 
-/* ============================================================
-   PAPERLIST / PANELS
-============================================================ */
-.paperList, .visualCardBox {
-    background-color: rgba(0,0,0,0.40) !important;
-    border-radius:    var(--dp-radius)  !important;
-    border:           none              !important;
+/* submit / delete */
+.button-submit {
+    background: var(--dp-blue) !important;
+    border: 1px solid rgba(61,143,240,0.60) !important;
+    color: #fff !important;
+    border-radius: var(--dp-r-sm) !important;
+}
+.button-submit:hover { background: var(--dp-blue-h) !important; }
+#btnDeleteImage, .button-delete, .btnRevoke, #btnShutdown {
+    background: #991b1b !important;
+    border: 1px solid #ef4444 !important;
+    color: #fff !important;
+    border-radius: var(--dp-r-sm) !important;
 }
 
-/* ============================================================
-   LIST ITEMS
-============================================================ */
+/* skip intro button */
+.skip-button {
+    background: var(--dp-text) !important;
+    color: #040714 !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    box-shadow: var(--dp-shadow) !important;
+}
+.skip-button:hover { background: rgba(249,249,249,0.88) !important; }
+
+/* ── INPUTS / FORMS ────────────────────────────────────── */
+.emby-input, .emby-textarea, .emby-select-withcolor, .emby-select {
+    background: rgba(255,255,255,0.07) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    color: var(--dp-text) !important;
+    border-radius: var(--dp-r-sm) !important;
+    padding: 0.5em 0.75em !important;
+    font-family: inherit !important;
+}
+.emby-input:focus, .emby-textarea:focus, .emby-select-withcolor:focus {
+    border-color: var(--dp-blue) !important;
+    outline: 2px solid rgba(23,110,225,0.25) !important;
+    outline-offset: 0 !important;
+}
+.emby-input:hover:not(:focus),
+.emby-textarea:hover:not(:focus),
+.emby-select-withcolor:hover:not(:focus) {
+    border-color: rgba(255,255,255,0.30) !important;
+}
+.emby-select-withcolor > option {
+    background: var(--dp-surface) !important;
+    color: var(--dp-text) !important;
+}
+.inputLabelFocused, .selectLabelFocused, .textareaLabelFocused {
+    color: var(--dp-text) !important;
+}
+input[type="checkbox"] { accent-color: var(--dp-blue) !important; }
+input[type="range"]     { accent-color: var(--dp-blue) !important; }
+
+/* search field */
+.searchfields-txtSearch {
+    border-radius: 999px !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid var(--dp-border) !important;
+}
+
+/* ── CHECKBOXES ────────────────────────────────────────── */
+.checkboxOutline:not(.multiSelectCheckboxOutline) {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.30) !important;
+    border-radius: 4px !important;
+}
+.emby-checkbox:checked + span + .checkboxOutline:not(.multiSelectCheckboxOutline) {
+    background: var(--dp-blue) !important;
+    border-color: var(--dp-blue-h) !important;
+}
+
+/* ── SWITCHES ──────────────────────────────────────────── */
+.mdl-switch__input:checked + .mdl-switch__label
++ .mdl-switch__trackContainer > .mdl-switch__track {
+    background: rgba(23,110,225,0.45) !important;
+}
+.mdl-switch__input:checked + .mdl-switch__label
++ .mdl-switch__trackContainer > .mdl-switch__thumb {
+    background: var(--dp-blue) !important;
+}
+
+/* ── DIALOGS / MODALS ──────────────────────────────────── */
+.dialog:not(.dialog-fullscreen) {
+    background: #111827 !important;
+    border: 1px solid var(--dp-border2) !important;
+    border-radius: var(--dp-r-xl) !important;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.70) !important;
+    backdrop-filter: blur(10px) !important;
+    color: var(--dp-text) !important;
+}
+.formDialogHeader:not(.formDialogHeader-clear),
+.collapseContent,
+.formDialogFooter:not(.formDialogFooter-clear) {
+    background: rgba(17,24,39,0.95) !important;
+    color: var(--dp-text) !important;
+}
+.formDialogHeader-clear, .formDialogFooter-clear,
+.innerCardFooterClear { background: transparent !important; }
+
+/* ── PANELS / LISTS ────────────────────────────────────── */
+.paperList {
+    background: rgba(17,24,39,0.75) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-lg) !important;
+}
+.listItem, .navMenuOption { border-radius: var(--dp-r-sm) !important; }
 .listItem:hover {
-    background:    rgba(255,255,255,0.05) !important;
-    transition:    background 0.2s ease;
-    border-radius: var(--dp-radius)       !important;
+    background: rgba(255,255,255,0.07) !important;
+    backdrop-filter: blur(8px) !important;
 }
-.listItem-border {
-    border-color: rgba(255,255,255,0) !important;
+.listItem-border { border-color: transparent !important; }
+.listItemBodyText { color: var(--dp-text) !important; }
+.listItemBodyText.secondary { color: var(--dp-text-70) !important; }
+.listItemIcon:not(.listItemIcon-transparent) {
+    background: var(--dp-surface2) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-sm) !important;
+    color: var(--dp-text) !important;
 }
-.listItemIcon {
+
+/* ── TABLES ────────────────────────────────────────────── */
+table:not(.MuiTable-root) {
+    background: var(--dp-surface) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-md) !important;
+    overflow: hidden;
+}
+.detailTableBodyRow-shaded:nth-child(odd)  { background: rgba(17,24,39,0.80) !important; }
+.detailTableBodyRow-shaded:nth-child(even) { background: rgba(29,37,53,0.70) !important; }
+
+/* ── DETAIL / ITEM PAGE ────────────────────────────────── */
+/* The backdrop behind the hero */
+.itemBackdrop {
+    display: block !important;
+}
+
+/* title styling on detail page */
+.nameContainer > h1.itemName,
+.nameContainer > h1.parentName {
+    font-size: clamp(2em,5vw,4em) !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.60) !important;
+}
+
+/* description */
+.detail-clamp-text {
+    color: var(--dp-text-70) !important;
+    font-size: 0.95em !important;
+    line-height: 1.6 !important;
+}
+
+/* meta info (year, rating, duration) */
+.mediaInfoOfficialRating {
     background: transparent !important;
+    border: 1px solid var(--dp-border2) !important;
+    color: var(--dp-text-70) !important;
+    border-radius: 3px !important;
+    font-size: 0.72em !important;
+    padding: 1px 5px !important;
 }
 
-/* ============================================================
-   FOOTER PLAYER
-============================================================ */
-.appfooter {
-    background: rgba(4,4,5,0.92) !important;
-    backdrop-filter: blur(18px)  !important;
-    border-top: 1px solid var(--dp-border) !important;
+/* external links */
+.itemExternalLinks > .button-link {
+    background: var(--dp-surface2) !important;
+    color: var(--dp-text) !important;
+    border-radius: 4px !important;
+    padding: 3px 10px !important;
 }
 
-/* ============================================================
-   SCROLLBAR
-============================================================ */
-::-webkit-scrollbar             { width: 5px; height: 5px; }
-::-webkit-scrollbar-track-piece { background: transparent; }
-::-webkit-scrollbar-corner      { background: transparent; }
-::-webkit-scrollbar-thumb {
-    background:    rgba(255,255,255,0.18) !important;
-    border-radius: 10px;
+/* details group table */
+.itemDetailsGroup {
+    background: rgba(29,37,53,0.65) !important;
+    border: none !important;
+    box-shadow: inset 0 0 0 1px var(--dp-border) !important;
+    border-radius: var(--dp-r-md) !important;
 }
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.30) !important;
-}
-* { scrollbar-color: rgba(255,255,255,0.18) transparent !important; }
+.detailsGroupItem { border-bottom: 1px solid var(--dp-border) !important; }
+.detailsGroupItem > .label { color: var(--dp-text) !important; font-weight:600; }
+.detailsGroupItem > .content { color: var(--dp-text-70) !important; }
 
-/* ============================================================
-   SELECTION
-============================================================ */
-::selection { background: rgba(23,110,225,0.40); }
-
-/* ============================================================
-   CARD PLACEHOLDER COLORS (when no poster)
-============================================================ */
-.defaultCardBackground1 { background-color: #0d0d1a !important; }
-.defaultCardBackground2 { background-color: #111122 !important; }
-.defaultCardBackground3 { background-color: #141430 !important; }
-.defaultCardBackground4 { background-color: #0a0a16 !important; }
-.defaultCardBackground5 { background-color: #181828 !important; }
-
-/* ============================================================
-   SPINNER / PROGRESS
-============================================================ */
-.mdl-spinner__layer-1 { border-color: var(--dp-blue) !important; }
-.mdl-spinner__layer-2 { border-color: rgba(23,110,225,0.70) !important; }
-.mdl-spinner__layer-3 { border-color: rgba(23,110,225,0.40) !important; }
-.mdl-spinner__layer-4 { border-color: rgba(23,110,225,0.20) !important; }
-
-/* ============================================================
-   BLURHASH — less saturated to match dark look
-============================================================ */
-.blurhash-canvas {
-    filter: opacity(55%) saturate(50%) !important;
-    border-radius: var(--dp-radius) !important;
+/* track selections */
+.trackSelections {
+    background: rgba(29,37,53,0.60) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-sm) !important;
 }
 
-/* ============================================================
-   DASHBOARD / SETTINGS
-============================================================ */
-#user_usage_report_table, .detailTable {
-    background: rgba(0,0,0,0.40) !important;
-    border-radius: var(--dp-radius) !important;
-}
-.detailTableBodyRow-shaded { background: transparent !important; }
-.infoBanner { background: #0d0d1a !important; }
-.dashboardSection h3 { margin-left: 0.5em; }
-.sessionCardFooter { border: none; }
-progress {
-    background:    rgba(0,0,0,0.40) !important;
-    border:        1px solid rgba(255,255,255,0.15) !important;
-    border-radius: var(--dp-radius) !important;
-}
-progress::-webkit-progress-bar {
-    background:    rgba(0,0,0,0.40) !important;
-    border-radius: var(--dp-radius) !important;
-}
-progress::-webkit-progress-value,
-progress::-moz-progress-bar {
-    background: var(--dp-blue) !important;
-}
-.taskProgressOuter {
-    background:    rgba(0,0,0,0.40) !important;
-    border:        1px solid rgba(255,255,255,0.15) !important;
-    border-radius: var(--dp-radius) !important;
-}
-.taskProgressInner {
-    background: var(--dp-blue) !important;
-    border-radius: var(--dp-radius) !important;
-}
-
-/* ============================================================
-   SWITCHES / TOGGLES
-============================================================ */
-.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__track {
-    background: rgba(23,110,225,0.50) !important;
-}
-.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__thumb {
-    background: var(--dp-blue) !important;
-}
-
-/* ============================================================
-   LOGIN PAGE
-============================================================ */
+/* ── LOGIN PAGE ────────────────────────────────────────── */
+/* Full-screen centered card on dark gradient — Disney+ login style */
 #loginPage {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding: 1em !important;
     background:
-        radial-gradient(ellipse 120% 70% at 50% 0%,
-            #1a2860 0%,
-            #060614 40%,
-            var(--dp-bg) 100%
+        radial-gradient(ellipse 120% 80% at 50% -10%,
+            #1a3a7a 0%,
+            #0a0d24 40%,
+            var(--dp-bg) 75%
         ) !important;
     background-size: cover !important;
 }
 
-/* ============================================================
-   STAR RATING
-============================================================ */
-.starIcon { color: rgba(255,255,255,0.75) !important; }
-
-/* ============================================================
-   INDICATORS
-============================================================ */
-.cardIndicators, .listItemIndicators {
-    right: 0.5em !important;
-    top:   0.5em !important;
-}
-.mediaSourceIndicator {
-    left: 0.5em !important;
-    top:  0.5em !important;
+/* the login card */
+#loginPage .padded-left.padded-right.padded-bottom-page {
+    width: 26em !important;
+    background: rgba(13,17,32,0.88) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: var(--dp-r-xl) !important;
+    padding: 2.5em 2em 2em !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.70) !important;
+    box-sizing: border-box !important;
 }
 
-/* ============================================================
-   MEDIA PLAYER (OSD)
-============================================================ */
-.chapterThumb {
-    height:     14vh !important;
-    min-width:  14vh !important;
-    box-shadow: 0 0 10px #000 !important;
-    border-radius: var(--dp-radius) !important;
+/* "Sign in" heading injected via ::before */
+.manualLoginForm::before,
+.visualLoginForm::before {
+    content: "Sign in";
+    display: block !important;
+    font-size: 1.9em !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    text-align: center !important;
+    margin-bottom: 1.4em !important;
+    letter-spacing: -0.3px;
+}
+
+/* hide Jellyfin default title on login */
+.manualLoginForm .sectionTitle,
+.visualLoginForm > h1 { display: none !important; }
+
+/* login inputs */
+#loginPage .emby-input {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    border-radius: var(--dp-r-sm) !important;
+    color: #fff !important;
+    padding: 0.75em 1em !important;
+    font-size: 1em !important;
+}
+#loginPage .emby-input:focus {
+    border-color: var(--dp-blue) !important;
+    outline: none !important;
+    background: rgba(255,255,255,0.12) !important;
+}
+
+/* sign-in submit button */
+#loginPage .button-submit, #loginPage .btnLogin {
+    width: 100% !important;
+    background: var(--dp-blue) !important;
     border: none !important;
+    border-radius: var(--dp-r-sm) !important;
+    color: #fff !important;
+    font-size: 1em !important;
+    font-weight: 700 !important;
+    padding: 0.85em !important;
+    margin-top: 0.5em !important;
+    transition: background 0.15s ease !important;
 }
-.sliderBubble { background: transparent !important; }
-.upNextDialog-countdownText { color: white !important; }
-.upNextContainer {
-    background:    rgba(13,13,26,0.88) !important;
-    border:        1px solid var(--dp-border) !important;
-    border-radius: 10px !important;
+#loginPage .button-submit:hover, #loginPage .btnLogin:hover {
+    background: var(--dp-blue-h) !important;
+}
+
+/* profile selector on login */
+#divUsers .squareCard { width: 30% !important; }
+
+/* ── PROFILE SELECTION (user cards on login) ───────────── */
+/* User select cards: round avatar + name below */
+#divUsers .card .cardScalable {
+    border-radius: 50% !important;
+    border: 3px solid transparent !important;
+    overflow: hidden !important;
+    transition: border-color 0.2s ease, transform 0.2s ease !important;
+}
+#divUsers .card-hoverable:hover .cardScalable {
+    border-color: #fff !important;
+    transform: scale(1.06) !important;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.20) !important;
+}
+#divUsers .cardText {
+    text-align: center !important;
+    font-size: 0.88em !important;
+    font-weight: 600 !important;
+    color: var(--dp-text) !important;
+    margin-top: 8px !important;
+}
+
+/* ── MEDIA PLAYER OSD ──────────────────────────────────── */
+.videoOsdBottom.videoOsdBottom-maincontrols {
+    background: linear-gradient(0deg,rgba(0,0,0,0.85) 0%,transparent 100%) !important;
+}
+.skinHeader-withBackground.osdHeader {
+    background: linear-gradient(180deg,rgba(0,0,0,0.80) 0%,transparent 100%) !important;
+    backdrop-filter: none !important;
+}
+
+/* seekbar */
+.mdl-slider-background-flex {
+    background: rgba(255,255,255,0.25) !important;
+    height: 4px !important;
+    border-radius: 4px !important;
+}
+.mdl-slider-background-lower { background: var(--dp-text) !important; }
+.mdl-slider::-webkit-slider-thumb {
+    background: var(--dp-text) !important;
+    border-radius: 50% !important;
+}
+.mdl-slider::-moz-range-thumb { background: var(--dp-text) !important; }
+
+/* up next container */
+.toast, .upNextContainer {
+    background: rgba(17,24,39,0.92) !important;
+    border: 1px solid var(--dp-border2) !important;
+    border-radius: var(--dp-r-lg) !important;
     backdrop-filter: blur(14px) !important;
+    color: var(--dp-text) !important;
 }
-.upNextDialog-poster-img {
-    border-radius: var(--dp-radius) !important;
+.upNextContainer .btnStartNow {
+    background: var(--dp-blue) !important;
+    border-color: var(--dp-blue-h) !important;
 }
-.nowPlayingPageImage {
+.upNextDialog-countdownText { color: #fff !important; }
+
+/* chapter thumbnails */
+.chapterThumb {
+    border-radius: var(--dp-r-sm) !important;
     border: none !important;
-    border-radius: var(--dp-radius) !important;
+    box-shadow: 0 0 10px rgba(0,0,0,0.80) !important;
 }
+.sliderBubble {
+    background: transparent !important;
+    border: 1px solid var(--dp-border2) !important;
+    border-radius: var(--dp-r-md) !important;
+    overflow: hidden !important;
+}
+
+/* ── FOOTER / NOW PLAYING BAR ──────────────────────────── */
+.appfooter {
+    background: rgba(4,7,20,0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-top: 1px solid var(--dp-border) !important;
+    color: var(--dp-text) !important;
+}
+.nowPlayingBar .nowPlayingImage {
+    border-radius: var(--dp-r-sm) !important;
+}
+
+/* ── PROGRESS BARS (tasks, library scan) ───────────────── */
+progress, ::-webkit-progress-bar {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-sm) !important;
+    overflow: hidden;
+}
+::-webkit-progress-value, ::-moz-progress-bar {
+    background: var(--dp-blue) !important;
+    border-radius: var(--dp-r-sm) !important;
+}
+.taskProgressOuter {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-sm) !important;
+}
+.taskProgressInner {
+    background: var(--dp-blue) !important;
+    border-radius: var(--dp-r-sm) !important;
+}
+
+/* ── SPINNER ───────────────────────────────────────────── */
+.mdl-spinner__layer-1 { border-color: var(--dp-blue) !important; }
+.mdl-spinner__layer-2 { border-color: rgba(23,110,225,0.70) !important; }
+.mdl-spinner__layer-3 { border-color: rgba(23,110,225,0.40) !important; }
+.mdl-spinner__layer-4 { border-color: rgba(23,110,225,0.20) !important; }
+.progressring-spiner  { border-color: var(--dp-blue) !important; }
+
+/* ── INFOBANNER / TOAST ────────────────────────────────── */
+.infoBanner {
+    background: rgba(17,24,39,0.90) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-lg) !important;
+    color: var(--dp-text) !important;
+}
+
+/* ── FIELDSET / COLLAPSIBLE ────────────────────────────── */
+fieldset {
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-sm) !important;
+}
+.collapseContent {
+    background: transparent !important;
+    backdrop-filter: none !important;
+}
+
+/* ── ACTION SHEET ──────────────────────────────────────── */
+.actionSheetContent { padding: 0.4em !important; }
+.actionSheetMenuItem { border-radius: var(--dp-r-sm) !important; }
+.actionSheetMenuItem:hover { background: rgba(255,255,255,0.08) !important; }
+.actionSheetMenuItem:has(.listItemIcon.check) {
+    background: var(--dp-blue-a) !important;
+}
+.actionsheetDivider {
+    background: rgba(255,255,255,0.06) !important;
+    height: 1px !important;
+}
+
+/* ── SETTINGS / DASHBOARD ──────────────────────────────── */
+/* General settings page layout */
+.dashboardDocument .content-primary {
+    padding-top: 4.5rem !important;
+}
+#user_usage_report_table, .detailTable {
+    background: rgba(17,24,39,0.80) !important;
+    border-radius: var(--dp-r-md) !important;
+    border: 1px solid var(--dp-border) !important;
+}
+.sessionCardFooter { border: none !important; }
+
+/* settings cards (server dashboard tiles) */
+.dashboardSection h3 {
+    color: var(--dp-text) !important;
+    font-weight: 600 !important;
+    margin-left: 0.5em !important;
+}
+
+/* MUI components (admin React pages) */
+.MuiAppBar-root {
+    background: rgba(4,7,20,0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid var(--dp-border) !important;
+    box-shadow: none !important;
+}
+.MuiDrawer-paper {
+    background: rgba(4,7,20,0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    border-right: 1px solid var(--dp-border) !important;
+    padding: 0.25em !important;
+}
+.MuiList-root.MuiMenu-list {
+    background: var(--dp-surface) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: var(--dp-r-md) !important;
+}
+.Mui-selected {
+    background: var(--dp-blue-a) !important;
+    color: var(--dp-text) !important;
+}
+.MuiButtonBase-root.MuiIconButton-root:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: var(--dp-text) !important;
+}
+
+/* ── SUBTITLE PREVIEW ──────────────────────────────────── */
 .subtitleappearance-preview {
-    background: linear-gradient(140deg, #1a1a2e, #060614) !important;
+    background: linear-gradient(135deg, #1a1a2e, #060614) !important;
+    border-radius: var(--dp-r-sm) !important;
 }
 
-/* ============================================================
-   SLIDE-IN ANIMATION
-============================================================ */
-.mainAnimatedPage {
-    animation: dpFadeIn 0.35s ease both;
+/* ── SELECTION MODE ────────────────────────────────────── */
+.selectionCommandsPanel {
+    background: var(--dp-surface2) !important;
+    border-bottom: 1px solid var(--dp-border) !important;
+    backdrop-filter: blur(16px) !important;
 }
+
+/* ── GUIDE / TV ────────────────────────────────────────── */
+.guideProgramName {
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 4px !important;
+}
+.programCell-active .guideProgramName {
+    background: rgba(255,255,255,0.14) !important;
+}
+.guide-channelHeaderCell {
+    background: rgba(255,255,255,0.10) !important;
+    border-radius: var(--dp-r-sm) !important;
+}
+
+/* ── LYRICS ────────────────────────────────────────────── */
+.lyricsLine {
+    color: var(--dp-text) !important;
+    font-weight: 600 !important;
+}
+.pastLyric  { opacity: 0.40 !important; }
+.futureLyric { opacity: 0.55 !important; }
+
+/* ── ANIMATIONS ────────────────────────────────────────── */
 @keyframes dpFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: none; }
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:none; }
+}
+@keyframes dpScaleUp {
+    from { opacity:0; transform:translateY(-2%); }
+    to   { opacity:1; transform:none; }
 }
 
-/* ============================================================
-   RESPONSIVE
-============================================================ */
-@media (max-width: 900px) {
-    .navMenuOptionText { display: none !important; }
-    .pageTitle    { font-size: 24px !important; }
-    .sectionTitle { font-size: 18px !important; }
+.mainAnimatedPage {
+    animation: dpFadeIn 0.30s ease both;
 }
+.backdropImageFadeIn {
+    animation: dpScaleUp 0.45s ease-out both !important;
+}
+
+/* ── REDUCED MOTION ────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation: none !important;
         transition: none !important;
     }
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────── */
+@media (max-width: 60em) {
+    .sectionTitle { font-size: 1.1rem !important; }
+    #divUsers .squareCard { width: 45% !important; }
+    #loginPage .padded-left.padded-right.padded-bottom-page {
+        width: 100% !important;
+        max-width: 24em !important;
+    }
+}
+@media (max-width: 30em) {
+    .nameContainer > h1.itemName { font-size: 1.8em !important; }
+    #loginPage .padded-left.padded-right.padded-bottom-page {
+        padding: 1.8em 1.2em 1.4em !important;
+    }
+}
+
+/* pointer:coarse = TV / touchscreen */
+@media (pointer: coarse) {
+    .cardOverlayContainer { background: rgba(0,0,0,0.30) !important; }
+    .emby-button { min-height: 48px !important; }
+}
+
+/* ── MISC FIXES ────────────────────────────────────────── */
+/* prevent white flash on page load */
+html { background: var(--dp-bg) !important; }
+
+/* alpha picker */
+.alphaPickerButton { color: var(--dp-text-50) !important; }
+.alphaPickerButton-selected { color: #000 !important; }
+
+/* filter indicator badge */
+.filterIndicator { background: var(--dp-blue) !important; }
+
+/* played / watched icon color */
+.playstatebutton-icon-played { color: #22c55e !important; }
+.ratingbutton-icon-withrating { color: #facc15 !important; }
+
+/* button-link (text buttons) */
+.button-link { color: var(--dp-text-70) !important; }
+.button-link:hover { color: var(--dp-text) !important; text-decoration: none !important; }
+.button-flat:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: var(--dp-text) !important;
 }
