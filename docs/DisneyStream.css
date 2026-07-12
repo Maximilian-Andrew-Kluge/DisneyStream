@@ -720,3 +720,153 @@ fieldset { border: 1px solid var(--dp-border) !important; border-radius: var(--d
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ═══════════════════════════════════════════
+   v2.1 FIXES — based on screenshot feedback
+═══════════════════════════════════════════ */
+
+/* ── 1. HERO: taller + gradient links→rechts wie Disney+ ── */
+
+/* The home page hero/slideshow — make it taller */
+.sliderView,
+.homeSectionSlider,
+.focuscontainer-x.padded-top.padded-bottom .sliderView {
+    height: 56vw !important;
+    max-height: 680px !important;
+    min-height: 360px !important;
+}
+
+/* Backdrop behind hero: gradient links dunkel → rechts transparent */
+.itemBackdrop,
+.backdropContainer {
+    height: 56vw !important;
+    max-height: 680px !important;
+}
+
+/* Override the bottom-to-top gradient that Jellyfin sets */
+/* We want left-to-right like Disney+: text left, image right */
+.backdropImage::after {
+    background: none !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+}
+
+/* The text/button area on the hero sits bottom-left */
+.homeSectionSlider .infoWrapper,
+.sliderView .infoWrapper {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(4,7,20,0.92) 0%,
+            rgba(4,7,20,0.75) 35%,
+            rgba(4,7,20,0.20) 65%,
+            transparent 85%
+        ) !important;
+}
+
+/* ── 2. LIBRARY TILES: like Disney+ dark tiles ── */
+/* Tiles should show a clear image with text overlay, no 3-dot menu */
+.homeLibraryButton {
+    border-radius: var(--dp-r) !important;
+    overflow: hidden !important;
+}
+/* Remove the three-dot overlay button on library tiles */
+.homeLibraryButton .cardOverlayButton-br,
+.homeLibraryButton [data-action="menu"] {
+    display: none !important;
+    visibility: hidden !important;
+}
+/* Label text centered and visible */
+.homeLibraryButton .cardText-first,
+.homeLibraryButton .cardTextCentered {
+    font-size: 1.1em !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.80) !important;
+    color: #fff !important;
+}
+
+/* ── 3. PROFIL-BILD: force visibility ── */
+/* Jellyfin renders the user avatar as an img inside .headerUserButton */
+.headerUserButton {
+    overflow: visible !important;
+    background: transparent !important;
+    border: 2px solid rgba(255,255,255,0.35) !important;
+    border-radius: 50% !important;
+    width: 2.0em !important;
+    height: 2.0em !important;
+    min-height: unset !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+/* The actual round image inside */
+.headerUserButton .headerUserButtonRound,
+.headerUserButton img.headerUserButtonRound {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    background: var(--dp-surface2) !important;
+}
+/* If using MUI Avatar */
+.MuiAvatar-img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* ── 4. HEADER: thinner + darker exactly like Disney+ ── */
+.skinHeader {
+    height: 3.5em !important;
+    background: rgba(4,7,20,0.85) !important;
+}
+/* Nav tabs sit in the header center */
+.headerTabs.sectionTabs {
+    height: 3.5em !important;
+    display: flex !important;
+    align-items: center !important;
+}
+.sectionTabs .emby-tab-button {
+    font-size: 0.88em !important;
+    padding: 0.35em 1.0em !important;
+}
+
+/* ── 5. CONTENT starts right below hero ── */
+/* Remove big padding-top that pushes content down */
+.homePage .verticalSection:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* ── 6. POSTER ROW: more Disney+ card sizing ── */
+/* Disney+ uses a tighter grid with medium-sized posters */
+.card {
+    /* Use Jellyfin's own --cardCount variable but override padding */
+    padding: 0.25em !important;
+}
+.itemsContainer {
+    column-gap: 0.6em !important;
+    row-gap: 0.8em !important;
+}
+
+/* ── 7. SECTION TITLE: smaller + left-aligned ── */
+.sectionTitle, .sectionTitleLink {
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+}
+
+/* ── 8. MISC ── */
+/* Remove the pause/play icon that shows on the hero center */
+.sliderView .btnPlayPause,
+.homeSectionSlider .btnPlayPause {
+    display: none !important;
+}
+/* The carousel dot indicators */
+.sliderPageIndicator { bottom: 1.2em !important; }
