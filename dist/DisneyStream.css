@@ -996,3 +996,113 @@ fieldset { border: 1px solid var(--dp-border) !important; border-radius: var(--d
 
 /* ── HIDE PAUSE BUTTON on hero ── */
 .btnPlayPause.paper-icon-button-light.btnPlayerPlayPause { display: none !important; }
+
+/* ═══════════════════════════════════════════
+   v2.3 — Hero size fix + Header cleanup
+═══════════════════════════════════════════ */
+
+/* ── HERO: kleinere Höhe ── */
+/* Jellyfin's home slideshow is inside .sliderContainer or emby-slider */
+.emby-slider,
+.sliderView,
+.homeSectionSlider,
+.sliderContainer {
+    height: 38vw !important;
+    max-height: 460px !important;
+    min-height: 260px !important;
+}
+
+/* The backdrop image behind the home slider */
+.itemBackdrop,
+.backdropContainer {
+    height: 38vw !important;
+    max-height: 460px !important;
+    min-height: 260px !important;
+}
+
+/* The actual slide item */
+.slide,
+.sliderItem,
+.homeSlide {
+    height: 38vw !important;
+    max-height: 460px !important;
+}
+
+/* ── HEADER: Disney+ style ──
+   Disney+: thin dark bar, nav links centered, logo left, avatar right
+   Jellyfin has: hamburger + logo left, tabs center, icons right */
+
+/* Make header thinner — Disney+ is about 52px */
+.skinHeader {
+    height: 52px !important;
+}
+.headerTop {
+    height: 52px !important;
+    padding: 0 16px !important;
+    align-items: center !important;
+}
+
+/* Hide hamburger menu icon — Disney+ doesn't have one */
+.headerButton.headerButtonMenu,
+.btnNotifications,
+.btnCast {
+    display: none !important;
+}
+
+/* Jellyfin logo: keep but make smaller */
+.headerLogo,
+.headerLogoLink {
+    height: 22px !important;
+    width: auto !important;
+    opacity: 0.85 !important;
+}
+
+/* Nav tabs (Startseite / Favoriten): sit more to center */
+.sectionTabs {
+    flex: 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 52px !important;
+}
+.sectionTabs .emby-tab-button {
+    font-size: 0.85em !important;
+    padding: 0.30em 0.9em !important;
+    height: auto !important;
+    min-height: unset !important;
+}
+
+/* Icons right side: search, users, cast */
+.headerRight {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+.headerButton {
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    min-height: unset !important;
+}
+
+/* ── LIBRARY TILES: correct height for the row ── */
+/* Make tiles shorter so they fit in one row below hero */
+.homeLibraryButton {
+    min-width: unset !important;
+    width: auto !important;
+    flex: 1 1 0 !important;
+    margin: 0 0.3em !important;
+}
+/* Tile aspect ratio: wider than tall like Disney+ brand row */
+.homeLibraryButton .cardScalable {
+    aspect-ratio: 16 / 7 !important;
+}
+
+/* ── PAGE CONTENT: no overlap with hero ── */
+/* Ensure content section sits cleanly below hero */
+.homePage {
+    padding-top: 0 !important;
+}
