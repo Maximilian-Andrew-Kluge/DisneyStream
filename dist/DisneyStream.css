@@ -1,171 +1,141 @@
-/*! DisneyStream v1.0.0 — Disney+ Theme for Jellyfin
-    https://github.com/Maximilian-Andrew-Kluge/DisneyStream
-    Tested: Jellyfin 10.9 / 10.10 / 10.11
+/*! DisneyStream v1.1.0 — Disney+ Theme for Jellyfin
+    Minimal, surgical CSS — doesn't break Jellyfin's layout logic
 */
 
-/* ── FONTS ─────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   FONTS
+══════════════════════════════════════════════════════ */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
-/* ── TOKENS ────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════════════ */
 :root {
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif !important;
     -webkit-font-smoothing: antialiased;
-    color-scheme: dark;
 
+    /* Disney+ exact colors */
     --dp-bg:        #040714;
-    --dp-bg2:       #0b0d1a;
-    --dp-surface:   #111827;
-    --dp-surface2:  #1d2535;
-
     --dp-blue:      #176EE1;
     --dp-blue-h:    #3d8ff0;
-    --dp-blue-a:    rgba(23,110,225,0.18);
-
     --dp-text:      #f9f9f9;
     --dp-text-70:   rgba(249,249,249,0.70);
     --dp-text-50:   rgba(249,249,249,0.50);
-    --dp-text-30:   rgba(249,249,249,0.30);
-
-    --dp-border:    rgba(255,255,255,0.08);
-    --dp-border2:   rgba(255,255,255,0.14);
-
-    --dp-r-sm:  6px;
-    --dp-r-md:  10px;
-    --dp-r-lg:  16px;
-    --dp-r-xl:  22px;
-    --dp-r-pill:999px;
-
-    --dp-header: rgba(4,7,20,0.88);
-    --dp-shadow: 0 8px 32px rgba(0,0,0,0.55);
+    --dp-border:    rgba(255,255,255,0.10);
+    --dp-surface:   #111827;
+    --dp-surface2:  #1d2535;
+    --dp-r:         8px;
 }
 
-/* ── BASE ──────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
-
+/* ══════════════════════════════════════════════════════
+   GLOBAL BASE
+══════════════════════════════════════════════════════ */
 html, body {
-    background:  var(--dp-bg)   !important;
-    color:       var(--dp-text) !important;
+    background: var(--dp-bg) !important;
+    color: var(--dp-text) !important;
     font-family: "Inter","Segoe UI",Arial,sans-serif !important;
-    font-size:   16px !important;
-    margin: 0; padding: 0;
-    overflow-x: hidden;
 }
+::selection { background: rgba(23,110,225,0.35); }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 99px; }
 
-/* background radial glow top-center like Disney+ */
+/* ══════════════════════════════════════════════════════
+   BACKGROUND
+══════════════════════════════════════════════════════ */
 .backgroundContainer {
     background:
-        radial-gradient(ellipse 80% 35% at 50% 0%,
-            rgba(23,110,225,0.10) 0%,
-            var(--dp-bg) 60%
-        ) fixed !important;
+        radial-gradient(ellipse 80% 30% at 50% 0%,
+            rgba(23,110,225,0.09) 0%,
+            var(--dp-bg) 55%) fixed !important;
 }
-.backgroundContainer.withBackdrop { background-color: transparent !important; }
-.skinBody, .skinBodyWithoutShortcut { background: transparent !important; }
+.backgroundContainer.withBackdrop { background-color: rgba(0,0,0,0) !important; }
+.skinBody { background: transparent !important; }
+html { background: var(--dp-bg) !important; }
 
-/* selection */
-::selection { background: rgba(23,110,225,0.38); }
-
-/* scrollbar */
-::-webkit-scrollbar { width:5px; height:5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.16);
-    border-radius: var(--dp-r-pill);
+/* Backdrop image: darker + slight blur */
+.backdropImage { filter: brightness(0.50) saturate(0.75) !important; }
+.backdropImage::before { filter: blur(12px) !important; transform: scale(1.06) !important; }
+.backdropImage::after {
+    -webkit-mask: linear-gradient(180deg, black 55%, transparent) !important;
+    mask: linear-gradient(180deg, black 55%, transparent) !important;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
-* { scrollbar-color: rgba(255,255,255,0.16) transparent !important; }
+.backgroundContainer.withBackdrop {
+    opacity: 0.90 !important;
+    background: linear-gradient(0deg, var(--dp-bg) 0%, rgba(4,7,20,0.20) 100%) !important;
+}
+.blurhash-canvas { filter: opacity(45%) saturate(35%) !important; }
 
-/* ── HEADER ────────────────────────────────────────────── */
-/* Jellyfin wraps the header in #reactRoot > div:nth-child(3)
-   The actual bar is .skinHeader */
+/* ══════════════════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════════════════ */
 .skinHeader {
-    background: var(--dp-header) !important;
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    background: rgba(4,7,20,0.90) !important;
+    backdrop-filter: blur(22px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(160%) !important;
     border: none !important;
     box-shadow: none !important;
-    color: var(--dp-text) !important;
 }
-
-/* transparent header on item detail page */
 .skinHeader-withBackground.semiTransparent {
     background: transparent !important;
     backdrop-filter: none !important;
-    border: none !important;
 }
-
-/* OSD header gradient */
 .skinHeader-withBackground.osdHeader {
-    background: linear-gradient(180deg,rgba(0,0,0,0.80) 0%,transparent 100%) !important;
+    background: linear-gradient(180deg,rgba(0,0,0,0.78) 0%,transparent 100%) !important;
     backdrop-filter: none !important;
 }
-
-/* header buttons */
-.headerButton,
-.paper-icon-button-light {
+.paper-icon-button-light, .headerButton {
     color: var(--dp-text) !important;
     background: transparent !important;
-    border-radius: 50% !important;
-    transition: background 0.15s ease !important;
 }
-.paper-icon-button-light:hover:not(:disabled),
-.headerButton:hover {
+.paper-icon-button-light:hover:not(:disabled), .headerButton:hover {
     background: rgba(255,255,255,0.10) !important;
     color: var(--dp-text) !important;
 }
+.pageTitle { color: var(--dp-text) !important; font-weight: 600 !important; }
 
-/* user avatar in header */
-.headerUserButton {
-    border: 2px solid var(--dp-border2) !important;
-    border-radius: 50% !important;
-}
-
-/* page title in header */
-.pageTitle {
-    font-size: 1.1em !important;
-    font-weight: 600 !important;
-    color: var(--dp-text) !important;
-}
-
-/* ── SECTION TABS (horizontal nav in header) ───────────── */
+/* ══════════════════════════════════════════════════════
+   SECTION TABS
+══════════════════════════════════════════════════════ */
 .sectionTabs .emby-tab-button {
     color: var(--dp-text-70) !important;
     font-weight: 500 !important;
-    border-radius: var(--dp-r-lg) !important;
-    background: rgba(255,255,255,0.06) !important;
+    border-radius: 20px !important;
+    background: rgba(255,255,255,0.07) !important;
     transition: background 0.15s, color 0.15s !important;
 }
 .sectionTabs .emby-tab-button:hover {
     color: var(--dp-text) !important;
-    background: rgba(255,255,255,0.10) !important;
+    background: rgba(255,255,255,0.12) !important;
 }
 .sectionTabs .emby-tab-button-active {
     background: var(--dp-text) !important;
-    color: #000 !important;
+    color: #040714 !important;
     font-weight: 700 !important;
 }
 
-/* ── SIDEBAR ───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════════ */
 .mainDrawer, .drawer-open {
-    background: rgba(4,7,20,0.95) !important;
+    background: rgba(4,7,20,0.96) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border-right: 1px solid var(--dp-border) !important;
 }
 .navMenuOption {
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
     margin: 3px 8px !important;
-    padding: 10px 14px !important;
     color: var(--dp-text-70) !important;
-    transition: background 0.15s ease !important;
     position: relative;
+    transition: background 0.15s !important;
 }
 .navMenuOption:hover {
     background: rgba(255,255,255,0.08) !important;
     color: var(--dp-text) !important;
 }
 .navMenuOption-selected {
-    background: rgba(23,110,225,0.20) !important;
+    background: rgba(23,110,225,0.22) !important;
     color: var(--dp-text) !important;
     font-weight: 600 !important;
 }
@@ -178,41 +148,11 @@ html, body {
     background: var(--dp-blue);
 }
 
-/* ── BACKGROUND / BACKDROP ─────────────────────────────── */
-/* With backdrop image: semi-transparent overlay */
-.backgroundContainer.withBackdrop {
-    opacity: 0.92 !important;
-    background: linear-gradient(0deg,
-        var(--dp-bg) 0%,
-        rgba(4,7,20,0.30) 100%
-    ) !important;
-}
-
-/* backdrop image itself: slight blur + crop */
-.backdropImage {
-    background-position-y: 10% !important;
-    filter: brightness(0.55) saturate(0.8) !important;
-}
-.backdropImage::before {
-    transform: scale(1.05) !important;
-    filter: blur(14px) !important;
-}
-.backdropImage::after {
-    -webkit-mask: linear-gradient(180deg,rgba(0,0,0,1) 60%, transparent) !important;
-    mask: linear-gradient(180deg,rgba(0,0,0,1) 60%, transparent) !important;
-}
-
-/* blurhash placeholders: muted */
-.blurhash-canvas {
-    filter: opacity(50%) saturate(40%) !important;
-}
-
-/* ── TYPOGRAPHY ────────────────────────────────────────── */
-h1,h2,h3,h4,h5,h6 { color: var(--dp-text) !important; }
-a { color: var(--dp-text) !important; text-decoration: none !important; }
-
+/* ══════════════════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════════════════ */
 .sectionTitle, .sectionTitleLink {
-    font-size: 1.25rem !important;
+    font-size: 1.2rem !important;
     font-weight: 600 !important;
     color: var(--dp-text) !important;
 }
@@ -220,742 +160,469 @@ a { color: var(--dp-text) !important; text-decoration: none !important; }
     background: transparent !important;
     color: var(--dp-text) !important;
 }
-.secondaryText, .detail-clamp-text { color: var(--dp-text-70) !important; }
-.dimText { color: var(--dp-text-50) !important; }
+a { color: var(--dp-text) !important; }
+.button-link { color: var(--dp-text-70) !important; }
+.button-link:hover { color: var(--dp-text) !important; text-decoration: none !important; }
+.button-flat:hover { background: rgba(255,255,255,0.08) !important; color: var(--dp-text) !important; }
 .starIcon { color: rgba(255,255,255,0.75) !important; }
+.playstatebutton-icon-played { color: #22c55e !important; }
 
-/* ── CARDS — real Jellyfin structure ───────────────────── */
-/* .itemsContainer > .card > .cardBox > .cardScalable > .cardImageContainer */
+/* ══════════════════════════════════════════════════════
+   CARDS — MINIMAL, DON'T BREAK IMAGES
+   Key: never touch width/height/aspect-ratio on cardImageContainer
+   Never set overflow:hidden on cardBox (breaks glow)
+   Just style borders, shadows, hover
+══════════════════════════════════════════════════════ */
 
-/* card wrapper: no bg, no border */
-.cardBox { background: transparent !important; }
+/* Remove default blue border Jellyfin adds */
+.cardScalable {
+    border: none !important;
+    border-radius: var(--dp-r) !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.40) !important;
+    transition: transform 0.22s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+}
+/* Hover: scale up slightly, like Disney+ */
+.card-hoverable:hover .cardScalable {
+    transform: scale(1.05) !important;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.65) !important;
+    border: none !important;
+}
+/* Remove any border that ElegantFin-like themes add on focus */
+.card:focus .cardBox .cardScalable { border-color: rgba(255,255,255,0.40) !important; }
+
+/* Card wrapper — transparent */
+.cardBox { background: transparent !important; border: none !important; box-shadow: none !important; }
+
+/* visualCardBox (library tiles etc.) */
 .visualCardBox {
-    background: rgba(17,24,39,0.70) !important;
-    border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-md) !important;
+    background: rgba(17,24,39,0.65) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: var(--dp-r) !important;
     box-shadow: none !important;
 }
+.card-hoverable:hover .visualCardBox { border-color: rgba(255,255,255,0.22) !important; }
+.visualCardBox .cardScalable { border-radius: 0 !important; border: none !important; }
 
-/* the scalable poster container */
-.cardScalable {
-    border-radius: var(--dp-r-sm) !important;
-    border: none !important;
-    overflow: hidden !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.45) !important;
-    transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+/* Card footer text */
+.cardFooter, .cardBox .cardText-first { background: transparent !important; }
+.cardText { font-size: 0.83rem !important; font-weight: 600 !important; color: var(--dp-text) !important; }
+.cardText-secondary { font-size: 0.73rem !important; color: var(--dp-text-50) !important; }
+.innerCardFooter {
+    background: linear-gradient(0deg,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.40) 60%,transparent 100%) !important;
+    border-radius: 0 0 var(--dp-r) var(--dp-r) !important;
 }
 
-/* hover: lift & slight glow */
-.card-hoverable:hover .cardScalable {
-    transform: scale(1.04) !important;
-    border: none !important;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.65),
-                0 0 0 1px rgba(255,255,255,0.15) !important;
-}
-.card-hoverable:hover .visualCardBox {
-    border-color: rgba(255,255,255,0.20) !important;
+/* Placeholder bg when no image */
+.defaultCardBackground, .defaultCardBackground1,
+.defaultCardBackground2, .defaultCardBackground3,
+.defaultCardBackground4, .defaultCardBackground5 {
+    background: linear-gradient(160deg, #0d1020, #060916) !important;
 }
 
-/* image container */
-.cardImageContainer {
-    background: #0d0d1a !important;
-    transition: none !important;
-}
-
-/* card background placeholder colors */
-.defaultCardBackground,.cardScalable,
-.defaultCardBackground1 { background: #0d1117 !important; }
-.defaultCardBackground2 { background: #111420 !important; }
-.defaultCardBackground3 { background: #0a0e1a !important; }
-.defaultCardBackground4 { background: #141828 !important; }
-.defaultCardBackground5 { background: #0e1220 !important; }
-
-/* card text below poster */
-.cardFooter { background: transparent !important; }
-.cardText {
-    font-size: 0.82rem !important;
-    font-weight: 600 !important;
-    color: var(--dp-text) !important;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.cardText-secondary {
-    font-size: 0.73rem !important;
-    color: var(--dp-text-50) !important;
-}
-
-/* ── CARD OVERLAY ──────────────────────────────────────── */
+/* ── CARD OVERLAY ── */
 .cardOverlayContainer {
-    background: rgba(0,0,0,0.0) !important;
+    background: transparent !important;
     transition: background 0.2s ease !important;
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
 }
-.card-hoverable:hover .cardOverlayContainer {
-    background: rgba(0,0,0,0.35) !important;
-}
+.card-hoverable:hover .cardOverlayContainer { background: rgba(0,0,0,0.30) !important; }
 
-/* play FAB — white circle, Disney+ style */
+/* Play button — white circle */
 .cardOverlayContainer > .cardOverlayFab-primary {
     background: rgba(255,255,255,0.92) !important;
     color: #040714 !important;
     border: none !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.50) !important;
-    border-radius: 50% !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.55) !important;
 }
-.cardOverlayContainer > .cardOverlayFab-primary:hover {
-    background: #fff !important;
-    transform: scale(1.08) !important;
-}
-.cardOverlayContainer > .cardOverlayFab-primary .material-icons {
-    color: #040714 !important;
-}
+.cardOverlayContainer > .cardOverlayFab-primary .material-icons { color: #040714 !important; }
+.cardOverlayContainer > .cardOverlayFab-primary:hover { background: #fff !important; }
 
-/* extra buttons (watched, favorite etc.) */
-.cardOverlayButton-br > button {
-    color: #fff !important;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.80) !important;
-    background: transparent !important;
-}
-
-/* ── CARD PROGRESS BAR ─────────────────────────────────── */
+/* Progress bar */
 .itemProgressBar {
-    background: rgba(255,255,255,0.18) !important;
-    border-radius: var(--dp-r-pill) !important;
+    background: rgba(255,255,255,0.20) !important;
+    border-radius: 99px !important;
     height: 3px !important;
     overflow: hidden;
 }
-.itemProgressBarForeground {
-    background: var(--dp-blue) !important;
-    opacity: 1 !important;
-    border-radius: var(--dp-r-pill) !important;
-}
+.itemProgressBarForeground { background: var(--dp-blue) !important; opacity: 1 !important; }
 
-/* ── CARD INDICATORS ───────────────────────────────────── */
-.playedIndicator {
-    background: #22c55e !important;
-    border: 1px solid rgba(255,255,255,0.20) !important;
-}
-.countIndicator, .fullSyncIndicator, .mediaSourceIndicator {
+/* Indicators */
+.playedIndicator { background: #16a34a !important; border: 1px solid rgba(255,255,255,0.25) !important; }
+.countIndicator, .mediaSourceIndicator {
     background: var(--dp-blue) !important;
     border: 1px solid rgba(255,255,255,0.20) !important;
-    border-radius: 999px !important;
 }
 
-/* inner footer text on hover */
-.innerCardFooter {
-    background: linear-gradient(0deg,rgba(0,0,0,0.90),40%,transparent) !important;
-    border-radius: 0 0 var(--dp-r-sm) var(--dp-r-sm) !important;
-}
-
-/* ── BUTTONS ───────────────────────────────────────────── */
-/* Generic raised / fab */
+/* ══════════════════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════════════════ */
+/* Generic */
 .emby-button.block, .button-alt, .raised, .raised:focus,
-.manageRecordingButton, .dashboardActionsContainer > .emby-button,
-.localnav > .emby-button {
+.manageRecordingButton {
     background: var(--dp-surface2) !important;
     color: var(--dp-text) !important;
-    border: 1px solid var(--dp-border2) !important;
-    border-radius: var(--dp-r-sm) !important;
-    transition: background 0.15s ease, transform 0.15s ease !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    border-radius: var(--dp-r) !important;
 }
 .raised:hover { background: rgba(255,255,255,0.12) !important; }
-.raised:active, .emby-button:active { transform: scale(0.97) !important; }
+.raised:active, .emby-button:active { transform: scale(0.97) !important; filter: brightness(1.05) !important; }
 
-/* HOME library tiles — semi-transparent */
+/* Library tiles */
 .raised.homeLibraryButton {
     background: rgba(255,255,255,0.07) !important;
-    border: 1px solid var(--dp-border) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
     color: var(--dp-text) !important;
-    border-radius: var(--dp-r-md) !important;
+    border-radius: var(--dp-r) !important;
+    transition: background 0.15s !important;
 }
-.raised.homeLibraryButton:hover {
-    background: rgba(255,255,255,0.14) !important;
-    border-color: var(--dp-border2) !important;
-}
+.raised.homeLibraryButton:hover { background: rgba(255,255,255,0.14) !important; }
 
-/* DETAIL PAGE — play button: white pill */
+/* Play button on detail page — white pill */
 .btnPlay.detailButton {
-    background: var(--dp-text) !important;
+    background: #f9f9f9 !important;
     color: #040714 !important;
     border: none !important;
-    border-radius: 999px !important;
+    border-radius: 99px !important;
     font-weight: 700 !important;
-    padding: 0.6em 2em !important;
-    height: 3em !important;
-    min-width: 10em !important;
+    min-width: 9em !important;
+    height: 2.8em !important;
 }
-.btnPlay.detailButton:hover {
-    background: rgba(249,249,249,0.85) !important;
-    transform: none !important;
-}
+.btnPlay.detailButton:hover { background: rgba(249,249,249,0.82) !important; }
 
-/* other detail buttons: icon circles */
+/* Other detail page icon buttons */
 .detailButton:not(.btnPlay) {
     background: transparent !important;
     border: none !important;
     color: var(--dp-text) !important;
     border-radius: 50% !important;
-    padding: 0.6em !important;
-    margin: 0.5em !important;
+    padding: 0.55em !important;
 }
-.detailButton:not(.btnPlay):hover {
-    background: rgba(255,255,255,0.14) !important;
-}
+.detailButton:not(.btnPlay):hover { background: rgba(255,255,255,0.14) !important; }
 
-/* submit / delete */
+/* Submit */
 .button-submit {
     background: var(--dp-blue) !important;
-    border: 1px solid rgba(61,143,240,0.60) !important;
+    border: 1px solid rgba(61,143,240,0.50) !important;
     color: #fff !important;
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
 }
 .button-submit:hover { background: var(--dp-blue-h) !important; }
+
+/* Delete */
 #btnDeleteImage, .button-delete, .btnRevoke, #btnShutdown {
     background: #991b1b !important;
     border: 1px solid #ef4444 !important;
     color: #fff !important;
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
 }
 
-/* skip intro button */
+/* Skip intro */
 .skip-button {
-    background: var(--dp-text) !important;
+    background: #f9f9f9 !important;
     color: #040714 !important;
-    border-radius: 999px !important;
+    border-radius: 99px !important;
     font-weight: 700 !important;
-    box-shadow: var(--dp-shadow) !important;
 }
-.skip-button:hover { background: rgba(249,249,249,0.88) !important; }
+.skip-button:hover { background: rgba(249,249,249,0.85) !important; }
 
-/* ── INPUTS / FORMS ────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   INPUTS
+══════════════════════════════════════════════════════ */
 .emby-input, .emby-textarea, .emby-select-withcolor, .emby-select {
     background: rgba(255,255,255,0.07) !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
     color: var(--dp-text) !important;
-    border-radius: var(--dp-r-sm) !important;
-    padding: 0.5em 0.75em !important;
-    font-family: inherit !important;
+    border-radius: var(--dp-r) !important;
 }
 .emby-input:focus, .emby-textarea:focus, .emby-select-withcolor:focus {
     border-color: var(--dp-blue) !important;
-    outline: 2px solid rgba(23,110,225,0.25) !important;
+    outline: 2px solid rgba(23,110,225,0.22) !important;
     outline-offset: 0 !important;
 }
-.emby-input:hover:not(:focus),
-.emby-textarea:hover:not(:focus),
-.emby-select-withcolor:hover:not(:focus) {
+.emby-input:hover:not(:focus), .emby-textarea:hover:not(:focus) {
     border-color: rgba(255,255,255,0.30) !important;
 }
-.emby-select-withcolor > option {
-    background: var(--dp-surface) !important;
-    color: var(--dp-text) !important;
+.emby-select-withcolor > option { background: var(--dp-surface) !important; color: var(--dp-text) !important; }
+.inputLabelFocused, .selectLabelFocused { color: var(--dp-text) !important; }
+input[type="checkbox"] { accent-color: var(--dp-blue) !important; }
+
+/* Search */
+.searchfields-txtSearch {
+    border-radius: 99px !important;
+    padding: 0.6em 1.2em !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
 }
-.inputLabelFocused, .selectLabelFocused, .textareaLabelFocused {
-    color: var(--dp-text) !important;
+
+/* Switches */
+.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__track {
+    background: rgba(23,110,225,0.45) !important;
+}
+.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__thumb {
+    background: var(--dp-blue) !important;
 }
 input[type="checkbox"] { accent-color: var(--dp-blue) !important; }
-input[type="range"]     { accent-color: var(--dp-blue) !important; }
-
-/* search field */
-.searchfields-txtSearch {
-    border-radius: 999px !important;
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid var(--dp-border) !important;
-}
-
-/* ── CHECKBOXES ────────────────────────────────────────── */
-.checkboxOutline:not(.multiSelectCheckboxOutline) {
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.30) !important;
-    border-radius: 4px !important;
-}
 .emby-checkbox:checked + span + .checkboxOutline:not(.multiSelectCheckboxOutline) {
     background: var(--dp-blue) !important;
     border-color: var(--dp-blue-h) !important;
 }
 
-/* ── SWITCHES ──────────────────────────────────────────── */
-.mdl-switch__input:checked + .mdl-switch__label
-+ .mdl-switch__trackContainer > .mdl-switch__track {
-    background: rgba(23,110,225,0.45) !important;
-}
-.mdl-switch__input:checked + .mdl-switch__label
-+ .mdl-switch__trackContainer > .mdl-switch__thumb {
-    background: var(--dp-blue) !important;
-}
-
-/* ── DIALOGS / MODALS ──────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   DIALOGS / PANELS / LISTS
+══════════════════════════════════════════════════════ */
 .dialog:not(.dialog-fullscreen) {
     background: #111827 !important;
-    border: 1px solid var(--dp-border2) !important;
-    border-radius: var(--dp-r-xl) !important;
-    box-shadow: 0 25px 70px rgba(0,0,0,0.70) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.72) !important;
     backdrop-filter: blur(10px) !important;
     color: var(--dp-text) !important;
 }
 .formDialogHeader:not(.formDialogHeader-clear),
-.collapseContent,
-.formDialogFooter:not(.formDialogFooter-clear) {
+.formDialogFooter:not(.formDialogFooter-clear),
+.collapseContent {
     background: rgba(17,24,39,0.95) !important;
     color: var(--dp-text) !important;
 }
-.formDialogHeader-clear, .formDialogFooter-clear,
-.innerCardFooterClear { background: transparent !important; }
-
-/* ── PANELS / LISTS ────────────────────────────────────── */
+.formDialogHeader-clear, .formDialogFooter-clear, .innerCardFooterClear {
+    background: transparent !important;
+}
 .paperList {
     background: rgba(17,24,39,0.75) !important;
     border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-lg) !important;
+    border-radius: 12px !important;
 }
-.listItem, .navMenuOption { border-radius: var(--dp-r-sm) !important; }
-.listItem:hover {
-    background: rgba(255,255,255,0.07) !important;
-    backdrop-filter: blur(8px) !important;
-}
+.listItem { border-radius: var(--dp-r) !important; }
+.listItem:hover { background: rgba(255,255,255,0.07) !important; }
 .listItem-border { border-color: transparent !important; }
 .listItemBodyText { color: var(--dp-text) !important; }
 .listItemBodyText.secondary { color: var(--dp-text-70) !important; }
 .listItemIcon:not(.listItemIcon-transparent) {
     background: var(--dp-surface2) !important;
     border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-sm) !important;
     color: var(--dp-text) !important;
 }
+.actionSheetMenuItem { border-radius: var(--dp-r) !important; }
+.actionSheetMenuItem:hover { background: rgba(255,255,255,0.08) !important; }
+.actionsheetDivider { background: rgba(255,255,255,0.06) !important; height: 1px !important; }
 
-/* ── TABLES ────────────────────────────────────────────── */
-table:not(.MuiTable-root) {
-    background: var(--dp-surface) !important;
-    border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-md) !important;
-    overflow: hidden;
-}
-.detailTableBodyRow-shaded:nth-child(odd)  { background: rgba(17,24,39,0.80) !important; }
-.detailTableBodyRow-shaded:nth-child(even) { background: rgba(29,37,53,0.70) !important; }
-
-/* ── DETAIL / ITEM PAGE ────────────────────────────────── */
-/* The backdrop behind the hero */
-.itemBackdrop {
-    display: block !important;
-}
-
-/* title styling on detail page */
-.nameContainer > h1.itemName,
-.nameContainer > h1.parentName {
-    font-size: clamp(2em,5vw,4em) !important;
+/* ══════════════════════════════════════════════════════
+   DETAIL PAGE
+══════════════════════════════════════════════════════ */
+.nameContainer > h1.itemName, .nameContainer > h1.parentName {
+    font-size: clamp(1.8em, 4.5vw, 3.8em) !important;
     font-weight: 700 !important;
     color: #fff !important;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.60) !important;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.60) !important;
 }
-
-/* description */
-.detail-clamp-text {
-    color: var(--dp-text-70) !important;
-    font-size: 0.95em !important;
-    line-height: 1.6 !important;
-}
-
-/* meta info (year, rating, duration) */
+.detail-clamp-text { color: var(--dp-text-70) !important; font-size: 0.95em !important; line-height: 1.6 !important; }
 .mediaInfoOfficialRating {
     background: transparent !important;
-    border: 1px solid var(--dp-border2) !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
     color: var(--dp-text-70) !important;
     border-radius: 3px !important;
     font-size: 0.72em !important;
-    padding: 1px 5px !important;
 }
-
-/* external links */
+.itemDetailsGroup {
+    background: rgba(29,37,53,0.60) !important;
+    border: none !important;
+    box-shadow: inset 0 0 0 1px var(--dp-border) !important;
+    border-radius: var(--dp-r) !important;
+}
+.detailsGroupItem { border-bottom: 1px solid var(--dp-border) !important; }
+.detailsGroupItem > .label { color: var(--dp-text) !important; font-weight: 600 !important; }
+.detailsGroupItem > .content { color: var(--dp-text-70) !important; }
 .itemExternalLinks > .button-link {
     background: var(--dp-surface2) !important;
     color: var(--dp-text) !important;
     border-radius: 4px !important;
-    padding: 3px 10px !important;
 }
-
-/* details group table */
-.itemDetailsGroup {
-    background: rgba(29,37,53,0.65) !important;
-    border: none !important;
-    box-shadow: inset 0 0 0 1px var(--dp-border) !important;
-    border-radius: var(--dp-r-md) !important;
-}
-.detailsGroupItem { border-bottom: 1px solid var(--dp-border) !important; }
-.detailsGroupItem > .label { color: var(--dp-text) !important; font-weight:600; }
-.detailsGroupItem > .content { color: var(--dp-text-70) !important; }
-
-/* track selections */
 .trackSelections {
     background: rgba(29,37,53,0.60) !important;
     border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
 }
 
-/* ── LOGIN PAGE ────────────────────────────────────────── */
-/* Full-screen centered card on dark gradient — Disney+ login style */
+/* ══════════════════════════════════════════════════════
+   FOOTER / NOW PLAYING
+══════════════════════════════════════════════════════ */
+.appfooter {
+    background: rgba(4,7,20,0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-top: 1px solid var(--dp-border) !important;
+}
+.nowPlayingBar .nowPlayingImage { border-radius: var(--dp-r) !important; }
+.toast, .upNextContainer {
+    background: rgba(17,24,39,0.92) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(14px) !important;
+    color: var(--dp-text) !important;
+}
+.upNextDialog-countdownText { color: #fff !important; }
+.upNextContainer .btnStartNow { background: var(--dp-blue) !important; }
+
+/* ══════════════════════════════════════════════════════
+   OSD / PLAYER
+══════════════════════════════════════════════════════ */
+.videoOsdBottom.videoOsdBottom-maincontrols {
+    background: linear-gradient(0deg,rgba(0,0,0,0.88) 0%,transparent 100%) !important;
+}
+.mdl-slider-background-flex {
+    background: rgba(255,255,255,0.25) !important;
+    height: 4px !important;
+    border-radius: 4px !important;
+}
+.mdl-slider-background-lower { background: #f9f9f9 !important; }
+.mdl-slider::-webkit-slider-thumb { background: #f9f9f9 !important; }
+.mdl-slider::-moz-range-thumb    { background: #f9f9f9 !important; }
+.chapterThumb { border-radius: var(--dp-r) !important; border: none !important; }
+.sliderBubble { background: transparent !important; border: 1px solid rgba(255,255,255,0.14) !important; border-radius: 10px !important; overflow: hidden !important; }
+
+/* ══════════════════════════════════════════════════════
+   PROGRESS / SPINNER
+══════════════════════════════════════════════════════ */
+progress, ::-webkit-progress-bar {
+    background: rgba(255,255,255,0.10) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: 4px !important;
+    overflow: hidden;
+}
+::-webkit-progress-value, ::-moz-progress-bar { background: var(--dp-blue) !important; }
+.taskProgressOuter { background: rgba(255,255,255,0.08) !important; border: 1px solid var(--dp-border) !important; border-radius: 4px !important; }
+.taskProgressInner { background: var(--dp-blue) !important; border-radius: 4px !important; }
+.mdl-spinner__layer-1 { border-color: var(--dp-blue) !important; }
+.mdl-spinner__layer-2 { border-color: rgba(23,110,225,0.65) !important; }
+.mdl-spinner__layer-3 { border-color: rgba(23,110,225,0.35) !important; }
+.mdl-spinner__layer-4 { border-color: rgba(23,110,225,0.15) !important; }
+.progressring-spiner  { border-color: var(--dp-blue) !important; }
+
+/* ══════════════════════════════════════════════════════
+   LOGIN PAGE — Disney+ Stil
+══════════════════════════════════════════════════════ */
 #loginPage {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     min-height: 100vh !important;
-    padding: 1em !important;
     background:
-        radial-gradient(ellipse 120% 80% at 50% -10%,
-            #1a3a7a 0%,
-            #0a0d24 40%,
-            var(--dp-bg) 75%
-        ) !important;
-    background-size: cover !important;
+        radial-gradient(ellipse 120% 80% at 50% -5%,
+            #1a3870 0%, #0a0d24 45%, var(--dp-bg) 75%)
+        fixed !important;
 }
-
-/* the login card */
 #loginPage .padded-left.padded-right.padded-bottom-page {
     width: 26em !important;
-    background: rgba(13,17,32,0.88) !important;
+    background: rgba(10,14,28,0.90) !important;
     border: 1px solid rgba(255,255,255,0.12) !important;
-    border-radius: var(--dp-r-xl) !important;
-    padding: 2.5em 2em 2em !important;
+    border-radius: 18px !important;
+    padding: 2.5em 2em 1.8em !important;
     backdrop-filter: blur(20px) !important;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.70) !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.72) !important;
     box-sizing: border-box !important;
 }
-
-/* "Sign in" heading injected via ::before */
-.manualLoginForm::before,
-.visualLoginForm::before {
-    content: "Sign in";
+.manualLoginForm::before, .visualLoginForm::before {
+    content: "Anmelden";
     display: block !important;
-    font-size: 1.9em !important;
+    font-size: 1.85em !important;
     font-weight: 800 !important;
     color: #fff !important;
     text-align: center !important;
     margin-bottom: 1.4em !important;
-    letter-spacing: -0.3px;
 }
-
-/* hide Jellyfin default title on login */
-.manualLoginForm .sectionTitle,
-.visualLoginForm > h1 { display: none !important; }
-
-/* login inputs */
+.manualLoginForm .sectionTitle, .visualLoginForm > h1 { display: none !important; }
 #loginPage .emby-input {
     background: rgba(255,255,255,0.08) !important;
     border: 1px solid rgba(255,255,255,0.18) !important;
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
     color: #fff !important;
     padding: 0.75em 1em !important;
-    font-size: 1em !important;
 }
 #loginPage .emby-input:focus {
     border-color: var(--dp-blue) !important;
     outline: none !important;
     background: rgba(255,255,255,0.12) !important;
 }
-
-/* sign-in submit button */
 #loginPage .button-submit, #loginPage .btnLogin {
     width: 100% !important;
     background: var(--dp-blue) !important;
     border: none !important;
-    border-radius: var(--dp-r-sm) !important;
+    border-radius: var(--dp-r) !important;
     color: #fff !important;
-    font-size: 1em !important;
     font-weight: 700 !important;
     padding: 0.85em !important;
-    margin-top: 0.5em !important;
-    transition: background 0.15s ease !important;
+    font-size: 1em !important;
 }
-#loginPage .button-submit:hover, #loginPage .btnLogin:hover {
-    background: var(--dp-blue-h) !important;
-}
-
-/* profile selector on login */
+#loginPage .button-submit:hover { background: var(--dp-blue-h) !important; }
 #divUsers .squareCard { width: 30% !important; }
-
-/* ── PROFILE SELECTION (user cards on login) ───────────── */
-/* User select cards: round avatar + name below */
-#divUsers .card .cardScalable {
-    border-radius: 50% !important;
-    border: 3px solid transparent !important;
-    overflow: hidden !important;
-    transition: border-color 0.2s ease, transform 0.2s ease !important;
-}
 #divUsers .card-hoverable:hover .cardScalable {
-    border-color: #fff !important;
+    border: 2px solid #fff !important;
     transform: scale(1.06) !important;
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.20) !important;
-}
-#divUsers .cardText {
-    text-align: center !important;
-    font-size: 0.88em !important;
-    font-weight: 600 !important;
-    color: var(--dp-text) !important;
-    margin-top: 8px !important;
 }
 
-/* ── MEDIA PLAYER OSD ──────────────────────────────────── */
-.videoOsdBottom.videoOsdBottom-maincontrols {
-    background: linear-gradient(0deg,rgba(0,0,0,0.85) 0%,transparent 100%) !important;
-}
-.skinHeader-withBackground.osdHeader {
-    background: linear-gradient(180deg,rgba(0,0,0,0.80) 0%,transparent 100%) !important;
-    backdrop-filter: none !important;
-}
-
-/* seekbar */
-.mdl-slider-background-flex {
-    background: rgba(255,255,255,0.25) !important;
-    height: 4px !important;
-    border-radius: 4px !important;
-}
-.mdl-slider-background-lower { background: var(--dp-text) !important; }
-.mdl-slider::-webkit-slider-thumb {
-    background: var(--dp-text) !important;
-    border-radius: 50% !important;
-}
-.mdl-slider::-moz-range-thumb { background: var(--dp-text) !important; }
-
-/* up next container */
-.toast, .upNextContainer {
-    background: rgba(17,24,39,0.92) !important;
-    border: 1px solid var(--dp-border2) !important;
-    border-radius: var(--dp-r-lg) !important;
-    backdrop-filter: blur(14px) !important;
-    color: var(--dp-text) !important;
-}
-.upNextContainer .btnStartNow {
-    background: var(--dp-blue) !important;
-    border-color: var(--dp-blue-h) !important;
-}
-.upNextDialog-countdownText { color: #fff !important; }
-
-/* chapter thumbnails */
-.chapterThumb {
-    border-radius: var(--dp-r-sm) !important;
-    border: none !important;
-    box-shadow: 0 0 10px rgba(0,0,0,0.80) !important;
-}
-.sliderBubble {
-    background: transparent !important;
-    border: 1px solid var(--dp-border2) !important;
-    border-radius: var(--dp-r-md) !important;
-    overflow: hidden !important;
-}
-
-/* ── FOOTER / NOW PLAYING BAR ──────────────────────────── */
-.appfooter {
-    background: rgba(4,7,20,0.95) !important;
-    backdrop-filter: blur(20px) !important;
-    border-top: 1px solid var(--dp-border) !important;
-    color: var(--dp-text) !important;
-}
-.nowPlayingBar .nowPlayingImage {
-    border-radius: var(--dp-r-sm) !important;
-}
-
-/* ── PROGRESS BARS (tasks, library scan) ───────────────── */
-progress, ::-webkit-progress-bar {
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-sm) !important;
-    overflow: hidden;
-}
-::-webkit-progress-value, ::-moz-progress-bar {
-    background: var(--dp-blue) !important;
-    border-radius: var(--dp-r-sm) !important;
-}
-.taskProgressOuter {
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-sm) !important;
-}
-.taskProgressInner {
-    background: var(--dp-blue) !important;
-    border-radius: var(--dp-r-sm) !important;
-}
-
-/* ── SPINNER ───────────────────────────────────────────── */
-.mdl-spinner__layer-1 { border-color: var(--dp-blue) !important; }
-.mdl-spinner__layer-2 { border-color: rgba(23,110,225,0.70) !important; }
-.mdl-spinner__layer-3 { border-color: rgba(23,110,225,0.40) !important; }
-.mdl-spinner__layer-4 { border-color: rgba(23,110,225,0.20) !important; }
-.progressring-spiner  { border-color: var(--dp-blue) !important; }
-
-/* ── INFOBANNER / TOAST ────────────────────────────────── */
-.infoBanner {
-    background: rgba(17,24,39,0.90) !important;
-    border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-lg) !important;
-    color: var(--dp-text) !important;
-}
-
-/* ── FIELDSET / COLLAPSIBLE ────────────────────────────── */
-fieldset {
-    border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-sm) !important;
-}
-.collapseContent {
-    background: transparent !important;
-    backdrop-filter: none !important;
-}
-
-/* ── ACTION SHEET ──────────────────────────────────────── */
-.actionSheetContent { padding: 0.4em !important; }
-.actionSheetMenuItem { border-radius: var(--dp-r-sm) !important; }
-.actionSheetMenuItem:hover { background: rgba(255,255,255,0.08) !important; }
-.actionSheetMenuItem:has(.listItemIcon.check) {
-    background: var(--dp-blue-a) !important;
-}
-.actionsheetDivider {
-    background: rgba(255,255,255,0.06) !important;
-    height: 1px !important;
-}
-
-/* ── SETTINGS / DASHBOARD ──────────────────────────────── */
-/* General settings page layout */
-.dashboardDocument .content-primary {
-    padding-top: 4.5rem !important;
-}
-#user_usage_report_table, .detailTable {
-    background: rgba(17,24,39,0.80) !important;
-    border-radius: var(--dp-r-md) !important;
-    border: 1px solid var(--dp-border) !important;
-}
-.sessionCardFooter { border: none !important; }
-
-/* settings cards (server dashboard tiles) */
-.dashboardSection h3 {
-    color: var(--dp-text) !important;
-    font-weight: 600 !important;
-    margin-left: 0.5em !important;
-}
-
-/* MUI components (admin React pages) */
+/* ══════════════════════════════════════════════════════
+   SETTINGS / DASHBOARD / MUI
+══════════════════════════════════════════════════════ */
 .MuiAppBar-root {
-    background: rgba(4,7,20,0.92) !important;
+    background: rgba(4,7,20,0.95) !important;
     backdrop-filter: blur(16px) !important;
     border-bottom: 1px solid var(--dp-border) !important;
     box-shadow: none !important;
+    color: var(--dp-text) !important;
 }
 .MuiDrawer-paper {
-    background: rgba(4,7,20,0.96) !important;
+    background: rgba(4,7,20,0.97) !important;
     backdrop-filter: blur(20px) !important;
     border-right: 1px solid var(--dp-border) !important;
-    padding: 0.25em !important;
 }
 .MuiList-root.MuiMenu-list {
     background: var(--dp-surface) !important;
     border: 1px solid var(--dp-border) !important;
-    border-radius: var(--dp-r-md) !important;
+    border-radius: var(--dp-r) !important;
 }
-.Mui-selected {
-    background: var(--dp-blue-a) !important;
+.Mui-selected { background: rgba(23,110,225,0.20) !important; color: var(--dp-text) !important; }
+.filterIndicator { background: var(--dp-blue) !important; }
+.infoBanner {
+    background: rgba(17,24,39,0.90) !important;
+    border: 1px solid var(--dp-border) !important;
+    border-radius: 12px !important;
     color: var(--dp-text) !important;
 }
-.MuiButtonBase-root.MuiIconButton-root:hover {
-    background: rgba(255,255,255,0.08) !important;
-    color: var(--dp-text) !important;
-}
-
-/* ── SUBTITLE PREVIEW ──────────────────────────────────── */
-.subtitleappearance-preview {
-    background: linear-gradient(135deg, #1a1a2e, #060614) !important;
-    border-radius: var(--dp-r-sm) !important;
-}
-
-/* ── SELECTION MODE ────────────────────────────────────── */
+fieldset { border: 1px solid var(--dp-border) !important; border-radius: var(--dp-r) !important; }
 .selectionCommandsPanel {
     background: var(--dp-surface2) !important;
     border-bottom: 1px solid var(--dp-border) !important;
     backdrop-filter: blur(16px) !important;
 }
+.subtitleappearance-preview {
+    background: linear-gradient(135deg,#1a1a2e,#06061a) !important;
+    border-radius: var(--dp-r) !important;
+}
+.detailTableBodyRow-shaded:nth-child(odd)  { background: rgba(17,24,39,0.75) !important; }
+.detailTableBodyRow-shaded:nth-child(even) { background: rgba(29,37,53,0.65) !important; }
 
-/* ── GUIDE / TV ────────────────────────────────────────── */
-.guideProgramName {
-    background: rgba(255,255,255,0.05) !important;
-    border-radius: 4px !important;
-}
-.programCell-active .guideProgramName {
-    background: rgba(255,255,255,0.14) !important;
-}
-.guide-channelHeaderCell {
-    background: rgba(255,255,255,0.10) !important;
-    border-radius: var(--dp-r-sm) !important;
-}
-
-/* ── LYRICS ────────────────────────────────────────────── */
-.lyricsLine {
-    color: var(--dp-text) !important;
-    font-weight: 600 !important;
-}
-.pastLyric  { opacity: 0.40 !important; }
-.futureLyric { opacity: 0.55 !important; }
-
-/* ── ANIMATIONS ────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════ */
 @keyframes dpFadeIn {
-    from { opacity:0; transform:translateY(10px); }
+    from { opacity:0; transform:translateY(8px); }
     to   { opacity:1; transform:none; }
 }
-@keyframes dpScaleUp {
-    from { opacity:0; transform:translateY(-2%); }
-    to   { opacity:1; transform:none; }
-}
+.mainAnimatedPage { animation: dpFadeIn 0.28s ease both; }
 
-.mainAnimatedPage {
-    animation: dpFadeIn 0.30s ease both;
-}
-.backdropImageFadeIn {
-    animation: dpScaleUp 0.45s ease-out both !important;
-}
-
-/* ── REDUCED MOTION ────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-    }
-}
-
-/* ── RESPONSIVE ────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
 @media (max-width: 60em) {
-    .sectionTitle { font-size: 1.1rem !important; }
+    .sectionTitle { font-size: 1.05rem !important; }
     #divUsers .squareCard { width: 45% !important; }
     #loginPage .padded-left.padded-right.padded-bottom-page {
-        width: 100% !important;
-        max-width: 24em !important;
+        width: 100% !important; max-width: 24em !important;
     }
 }
-@media (max-width: 30em) {
-    .nameContainer > h1.itemName { font-size: 1.8em !important; }
-    #loginPage .padded-left.padded-right.padded-bottom-page {
-        padding: 1.8em 1.2em 1.4em !important;
-    }
-}
-
-/* pointer:coarse = TV / touchscreen */
 @media (pointer: coarse) {
-    .cardOverlayContainer { background: rgba(0,0,0,0.30) !important; }
     .emby-button { min-height: 48px !important; }
 }
-
-/* ── MISC FIXES ────────────────────────────────────────── */
-/* prevent white flash on page load */
-html { background: var(--dp-bg) !important; }
-
-/* alpha picker */
-.alphaPickerButton { color: var(--dp-text-50) !important; }
-.alphaPickerButton-selected { color: #000 !important; }
-
-/* filter indicator badge */
-.filterIndicator { background: var(--dp-blue) !important; }
-
-/* played / watched icon color */
-.playstatebutton-icon-played { color: #22c55e !important; }
-.ratingbutton-icon-withrating { color: #facc15 !important; }
-
-/* button-link (text buttons) */
-.button-link { color: var(--dp-text-70) !important; }
-.button-link:hover { color: var(--dp-text) !important; text-decoration: none !important; }
-.button-flat:hover {
-    background: rgba(255,255,255,0.08) !important;
-    color: var(--dp-text) !important;
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
 }
