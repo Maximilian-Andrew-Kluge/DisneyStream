@@ -1106,3 +1106,112 @@ fieldset { border: 1px solid var(--dp-border) !important; border-radius: var(--d
 .homePage {
     padding-top: 0 !important;
 }
+
+/* ═══════════════════════════════════════════
+   v2.4 — Profile image fix + header polish
+═══════════════════════════════════════════ */
+
+/* ── PROFIL-BILD FIX ──
+   Jellyfin renders the user avatar as background-image on .headerUserButtonRound
+   We need to make the container show it correctly */
+.headerUserButton,
+.headerUserButton.paper-icon-button-light {
+    width: 32px !important;
+    height: 32px !important;
+    min-height: unset !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(255,255,255,0.40) !important;
+    background: #1c2333 !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* The round image element inside the button */
+.headerUserButtonRound {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    display: block !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+}
+
+/* If no profile image: show person icon */
+.headerUserButton .material-icons {
+    font-size: 18px !important;
+    color: var(--dp-text) !important;
+    display: block !important;
+}
+
+/* ── HEADER ICONS: correct size ── */
+/* The icons row oben rechts (screenshot: user, cast, settings etc.) */
+.headerRight .headerButton,
+.headerRight .paper-icon-button-light {
+    width: 36px !important;
+    height: 36px !important;
+    min-height: unset !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    color: var(--dp-text) !important;
+    opacity: 0.85 !important;
+}
+.headerRight .headerButton:hover,
+.headerRight .paper-icon-button-light:hover {
+    opacity: 1 !important;
+    background: rgba(255,255,255,0.10) !important;
+}
+
+/* ── HERO: less cropped, title more visible ──
+   Reduce hero a bit more so tiles are fully visible */
+.emby-slider,
+.sliderView,
+.homeSectionSlider,
+.sliderContainer,
+.itemBackdrop,
+.backdropContainer {
+    height: 36vw !important;
+    max-height: 440px !important;
+    min-height: 240px !important;
+}
+.slide, .sliderItem, .homeSlide {
+    height: 36vw !important;
+    max-height: 440px !important;
+}
+
+/* ── LIBRARY TILES ROW: below hero, full width ── */
+/* Section title "Meine Medien" — hide it for cleaner look */
+.homePage .verticalSection .sectionTitle:not(.sectionTitleLink) {
+    font-size: 0.95rem !important;
+    opacity: 0.70 !important;
+    margin-bottom: 0.5em !important;
+}
+
+/* Tiles horizontal scroll row */
+.homeLibraryButton {
+    border-radius: var(--dp-r) !important;
+    overflow: hidden !important;
+    transition: transform 0.18s ease, border-color 0.18s ease !important;
+}
+.homeLibraryButton:hover {
+    transform: scale(1.03) !important;
+}
+
+/* ── POSTER ROWS: tighter spacing ── */
+.itemsContainer {
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+}
+
+/* ── SECTION TITLE spacing ── */
+.sectionTitleContainer {
+    padding-left: 2% !important;
+}
