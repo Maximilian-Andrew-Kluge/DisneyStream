@@ -1,0 +1,203 @@
+/* ============================================================
+   Aurora Stream
+   responsive.css
+   Jellyfin 10.11.x
+============================================================ */
+
+/* ================================
+   4K / Ultrawide
+================================ */
+
+@media (min-width:2000px){
+
+:root{
+
+--poster-width:260px;
+
+}
+
+.pageTitle{
+
+font-size:42px!important;
+
+}
+
+.sectionTitle{
+
+font-size:34px!important;
+
+}
+
+.itemsContainer{
+
+gap:28px!important;
+
+}
+
+}
+
+/* ================================
+   Desktop
+================================ */
+
+@media (max-width:1600px){
+
+:root{
+
+--poster-width:210px;
+
+}
+
+}
+
+/* ================================
+   Laptop
+================================ */
+
+@media (max-width:1300px){
+
+:root{
+
+--poster-width:180px;
+
+}
+
+.pageTitle{
+
+font-size:30px!important;
+
+}
+
+.sectionTitle{
+
+font-size:24px!important;
+
+}
+
+}
+
+/* ================================
+   Tablet
+================================ */
+
+@media (max-width:900px){
+
+.mainDrawer{
+
+width:72px!important;
+
+}
+
+.mainDrawer:hover{
+
+width:72px!important;
+
+}
+
+.navMenuOptionText{
+
+display:none!important;
+
+}
+
+.pageTitle{
+
+font-size:26px!important;
+
+}
+
+.sectionTitle{
+
+font-size:20px!important;
+
+}
+
+.itemsContainer{
+
+gap:14px!important;
+
+}
+
+.cardBox{
+
+width:160px!important;
+
+}
+
+}
+
+/* ================================
+   Smartphone
+================================ */
+
+@media (max-width:600px){
+
+.homePage{
+
+padding:12px!important;
+
+}
+
+.pageTitle{
+
+font-size:22px!important;
+
+}
+
+.sectionTitle{
+
+font-size:18px!important;
+
+}
+
+.cardBox{
+
+width:135px!important;
+
+}
+
+button{
+
+min-height:42px!important;
+
+padding:10px 18px!important;
+
+}
+
+}
+
+/* ================================
+   Android TV
+================================ */
+
+@media (pointer:coarse){
+
+.cardBox{
+
+transition:.2s;
+
+}
+
+button{
+
+font-size:18px!important;
+
+}
+
+}
+
+/* ================================
+   Reduce Motion
+================================ */
+
+@media (prefers-reduced-motion:reduce){
+
+*{
+
+animation:none!important;
+
+transition:none!important;
+
+}
+
+}

@@ -1,0 +1,409 @@
+/* ============================================================
+   Aurora Stream
+   animations.css
+   Jellyfin 10.11.x
+============================================================ */
+
+
+/* ============================================================
+   GLOBAL
+============================================================ */
+
+*{
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .30s ease,
+        transform .30s ease;
+
+}
+
+
+/* ============================================================
+   PAGE FADE
+============================================================ */
+
+.mainAnimatedPage{
+
+    animation:
+        pageFade .45s ease;
+
+}
+
+@keyframes pageFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.homePage::before{
+
+    animation:
+        heroFade 1s ease;
+
+}
+
+@keyframes heroFade{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(1.03);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+
+/* ============================================================
+   POSTERS
+============================================================ */
+
+.cardBox{
+
+    animation:
+        posterFade .55s ease;
+
+}
+
+@keyframes posterFade{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+
+/* ============================================================
+   CARD HOVER
+============================================================ */
+
+.cardBox:hover{
+
+    transform:
+        translateY(-8px)
+        scale(1.04);
+
+}
+
+
+/* ============================================================
+   IMAGE
+============================================================ */
+
+.cardImage{
+
+    transition:
+
+        transform .45s ease,
+        filter .45s ease;
+
+}
+
+.cardBox:hover .cardImage{
+
+    transform:
+
+        scale(1.08);
+
+}
+
+
+/* ============================================================
+   GLOW
+============================================================ */
+
+.cardBox:hover{
+
+    box-shadow:
+
+        0 22px 55px rgba(0,0,0,.45),
+
+        0 0 35px rgba(30,167,255,.18);
+
+}
+
+
+/* ============================================================
+   BUTTON
+============================================================ */
+
+button:hover,
+.btn:hover{
+
+    transform:
+
+        translateY(-2px);
+
+}
+
+button:active{
+
+    transform:
+
+        scale(.97);
+
+}
+
+
+/* ============================================================
+   SIDEBAR
+============================================================ */
+
+.navMenuOption{
+
+    transition:
+
+        all .25s ease;
+
+}
+
+.navMenuOption:hover{
+
+    transform:
+
+        translateX(6px);
+
+}
+
+
+/* ============================================================
+   ICON
+============================================================ */
+
+.navMenuOption:hover i{
+
+    transform:
+
+        rotate(6deg)
+        scale(1.12);
+
+}
+
+
+/* ============================================================
+   SCROLL
+============================================================ */
+
+.itemsContainer{
+
+    scroll-behavior:smooth;
+
+}
+
+
+/* ============================================================
+   TITLE
+============================================================ */
+
+.sectionTitle{
+
+    animation:
+
+        fadeTitle .6s ease;
+
+}
+
+@keyframes fadeTitle{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-12px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+
+/* ============================================================
+   DIALOG
+============================================================ */
+
+.dialog{
+
+    animation:
+
+        dialogOpen .28s ease;
+
+}
+
+@keyframes dialogOpen{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* ============================================================
+   MENU
+============================================================ */
+
+.mainDrawer{
+
+    transition:
+
+        width .35s ease,
+        background .35s ease;
+
+}
+
+
+/* ============================================================
+   LOADER
+============================================================ */
+
+.mdl-spinner{
+
+    animation:
+
+        spinGlow 1.2s linear infinite;
+
+}
+
+@keyframes spinGlow{
+
+    0%{
+
+        filter:
+
+            drop-shadow(0 0 0px #1ea7ff);
+
+    }
+
+    50%{
+
+        filter:
+
+            drop-shadow(0 0 12px #1ea7ff);
+
+    }
+
+    100%{
+
+        filter:
+
+            drop-shadow(0 0 0px #1ea7ff);
+
+    }
+
+}
+
+
+/* ============================================================
+   PROGRESS BAR
+============================================================ */
+
+.itemProgressBarForeground{
+
+    animation:
+
+        progressGlow 2s linear infinite;
+
+}
+
+@keyframes progressGlow{
+
+    0%{
+
+        filter:brightness(1);
+
+    }
+
+    50%{
+
+        filter:brightness(1.35);
+
+    }
+
+    100%{
+
+        filter:brightness(1);
+
+    }
+
+}
+
+
+/* ============================================================
+   HOVER SCALE
+============================================================ */
+
+.visualCardBox:hover,
+.cardScalable:hover{
+
+    transform:
+
+        scale(1.05);
+
+}

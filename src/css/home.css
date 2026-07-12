@@ -1,0 +1,243 @@
+/* ============================================================
+   Aurora Stream
+   home.css
+   Jellyfin 10.11.x
+============================================================ */
+
+/* ============================================================
+   HOME PAGE
+============================================================ */
+
+.homePage{
+
+    padding-left:40px;
+    padding-right:40px;
+    padding-bottom:60px;
+
+}
+
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.homePage::before{
+
+    content:"";
+
+    display:block;
+
+    height:520px;
+
+    width:100%;
+
+    margin-bottom:55px;
+
+    border-radius:28px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(4,7,20,.05),
+            rgba(4,7,20,.35),
+            rgba(4,7,20,.95)
+        ),
+
+        url("/web/assets/img/banner.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    box-shadow:
+
+        0 25px 70px rgba(0,0,0,.55);
+
+}
+
+
+/* ============================================================
+   HERO FADE
+============================================================ */
+
+.homePage::after{
+
+    content:"";
+
+    display:block;
+
+    width:100%;
+
+    height:80px;
+
+    margin-top:-80px;
+
+    background:
+
+        linear-gradient(
+            transparent,
+            var(--background)
+        );
+
+}
+
+
+/* ============================================================
+   SECTIONS
+============================================================ */
+
+.homePage .verticalSection{
+
+    margin-bottom:70px!important;
+
+}
+
+
+/* ============================================================
+   SECTION TITLE
+============================================================ */
+
+.homePage .sectionTitle{
+
+    font-size:30px!important;
+
+    font-weight:700!important;
+
+    margin-bottom:20px!important;
+
+}
+
+
+/* ============================================================
+   POSTER ROW
+============================================================ */
+
+.homePage .itemsContainer{
+
+    gap:22px!important;
+
+    padding-top:8px;
+
+    padding-bottom:12px;
+
+}
+
+
+/* ============================================================
+   ROW ANIMATION
+============================================================ */
+
+.homePage .itemsContainer>.cardBox{
+
+    animation:rowFade .55s ease both;
+
+}
+
+@keyframes rowFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+
+/* ============================================================
+   HORIZONTAL SCROLL
+============================================================ */
+
+.homePage .itemsContainer{
+
+    scroll-behavior:smooth;
+
+}
+
+
+/* ============================================================
+   TITLE SHADOW
+============================================================ */
+
+.pageTitle{
+
+    text-shadow:
+
+        0 0 18px rgba(0,0,0,.45);
+
+}
+
+
+/* ============================================================
+   CONTINUE WATCHING
+============================================================ */
+
+.resumeSection{
+
+    margin-top:20px;
+
+}
+
+
+/* ============================================================
+   LIBRARIES
+============================================================ */
+
+.libraryPage .itemsContainer{
+
+    gap:18px!important;
+
+}
+
+
+/* ============================================================
+   EMPTY STATE
+============================================================ */
+
+.noItemsMessage{
+
+    color:var(--text-secondary)!important;
+
+    opacity:.8;
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media(max-width:900px){
+
+.homePage{
+
+    padding-left:18px;
+    padding-right:18px;
+
+}
+
+.homePage::before{
+
+    height:260px;
+
+    border-radius:20px;
+
+}
+
+.homePage .sectionTitle{
+
+    font-size:22px!important;
+
+}
+
+}

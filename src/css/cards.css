@@ -1,0 +1,297 @@
+/* ============================================================
+   Aurora Stream Theme
+   cards.css
+   Jellyfin 10.11.x
+============================================================ */
+
+
+/* ============================================================
+   CARD CONTAINER
+============================================================ */
+
+.itemsContainer{
+
+    gap:20px!important;
+
+    padding:10px!important;
+
+}
+
+
+/* ============================================================
+   POSTER
+============================================================ */
+
+.cardBox{
+
+    border-radius:20px!important;
+
+    overflow:hidden;
+
+    background:transparent!important;
+
+    transition:
+        .35s cubic-bezier(.2,.8,.2,1);
+
+}
+
+
+/* ============================================================
+   IMAGE
+============================================================ */
+
+.cardImageContainer{
+
+    border-radius:20px!important;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.45);
+
+}
+
+
+/* ============================================================
+   IMAGE
+============================================================ */
+
+.cardImage{
+
+    transition:
+        transform .45s ease,
+        filter .45s ease;
+
+}
+
+
+/* ============================================================
+   HOVER
+============================================================ */
+
+.cardBox:hover .cardImage{
+
+    transform:scale(1.08);
+
+    filter:
+        brightness(1.08)
+        saturate(1.1);
+
+}
+
+
+/* ============================================================
+   CARD SHADOW
+============================================================ */
+
+.cardBox:hover{
+
+    transform:
+        translateY(-8px);
+
+}
+
+
+/* ============================================================
+   PLAY BUTTON
+============================================================ */
+
+.cardOverlayButton{
+
+    width:62px!important;
+
+    height:62px!important;
+
+    border-radius:50%!important;
+
+    background:
+
+        rgba(30,167,255,.92)!important;
+
+    backdrop-filter:blur(12px);
+
+    transition:.30s;
+
+}
+
+
+.cardOverlayButton:hover{
+
+    transform:scale(1.12);
+
+}
+
+
+/* ============================================================
+   OVERLAY
+============================================================ */
+
+.cardOverlayContainer{
+
+    opacity:0;
+
+    transition:.30s;
+
+    background:
+
+        linear-gradient(
+            transparent,
+            rgba(4,7,20,.72)
+        );
+
+}
+
+
+.cardBox:hover
+.cardOverlayContainer{
+
+    opacity:1;
+
+}
+
+
+/* ============================================================
+   TITLE
+============================================================ */
+
+.cardText{
+
+    margin-top:12px;
+
+    font-size:15px!important;
+
+    font-weight:600!important;
+
+    color:white!important;
+
+}
+
+
+/* ============================================================
+   SUBTITLE
+============================================================ */
+
+.cardText-secondary{
+
+    color:#AAB3C7!important;
+
+}
+
+
+/* ============================================================
+   PROGRESS BAR
+============================================================ */
+
+.itemProgressBar{
+
+    height:5px!important;
+
+    border-radius:50px;
+
+    background:
+
+        rgba(255,255,255,.12)!important;
+
+}
+
+
+.itemProgressBarForeground{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #1ea7ff,
+            #5ec8ff
+        )!important;
+
+}
+
+
+/* ============================================================
+   FAVORITE
+============================================================ */
+
+.cardOverlayFab-primary{
+
+    background:
+
+        rgba(0,0,0,.55)!important;
+
+    border-radius:50%!important;
+
+}
+
+
+/* ============================================================
+   FAVORITE HOVER
+============================================================ */
+
+.cardOverlayFab-primary:hover{
+
+    background:
+
+        rgba(30,167,255,.9)!important;
+
+}
+
+
+/* ============================================================
+   ROUNDED
+============================================================ */
+
+.cardPadder{
+
+    border-radius:20px!important;
+
+}
+
+
+/* ============================================================
+   ROW SPACING
+============================================================ */
+
+.verticalSection{
+
+    margin-bottom:50px!important;
+
+}
+
+
+/* ============================================================
+   ROW TITLE
+============================================================ */
+
+.sectionTitle{
+
+    margin-bottom:18px!important;
+
+    font-size:28px!important;
+
+}
+
+
+/* ============================================================
+   SCROLL
+============================================================ */
+
+.itemsContainer::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media(max-width:900px){
+
+.cardBox{
+
+    width:160px!important;
+
+}
+
+}
