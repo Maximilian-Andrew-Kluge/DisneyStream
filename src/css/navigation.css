@@ -1,272 +1,221 @@
 /* ============================================================
-   DisneyStream
-   navigation.css
-   Jellyfin 10.11.x — v0.2.0
+   DisneyStream — navigation.css
+   Disney+ TOP-NAVIGATION (2024/2025 Design)
+   Jellyfin 10.11.x — v0.3.0
 ============================================================ */
 
 
 /* ============================================================
-   SIDEBAR SHELL
+   HAUPTMENÜ-LINKS im Header (Jellyfin .skinHeader)
+   Disney+ nutzt eine horizontale Nav-Leiste oben,
+   mit Links: For You | Disney+ | Hulu | ESPN
+   Wir mappen das auf Jellyfinʼs horizontale Tabs.
+============================================================ */
+
+/* Disney+ Logo im Header */
+.headerLogo,
+.headerLogoLink,
+.headerLogoImage {
+    height: 28px !important;
+    width:  auto !important;
+}
+
+/* Header-Inhalt vertikal zentrieren */
+.skinHeader .headerButtons,
+.skinHeader .headerLeft,
+.skinHeader .headerRight {
+    display:     flex !important;
+    align-items: center !important;
+    height:      var(--ds-header-h) !important;
+}
+
+/* Haupt-Navigation (horizontal) */
+.mainHeaderLinks,
+.headerTabs,
+.emby-tabs {
+    display:     flex !important;
+    align-items: center !important;
+    gap:         var(--ds-s-8) !important;
+    height:      100% !important;
+    margin:      0 !important;
+    padding:     0 !important;
+}
+
+/* Nav-Link */
+.mainHeaderLink,
+.headerTab,
+.emby-tab-button {
+    position:    relative;
+    display:     inline-flex;
+    align-items: center;
+    height:      100%;
+    padding:     0 var(--ds-s-16) !important;
+
+    font-size:   var(--ds-text-base)         !important;
+    font-weight: var(--ds-weight-semibold)   !important;
+    color:       var(--ds-text-70)           !important;
+
+    background:  transparent !important;
+    border:      none        !important;
+    border-radius: 0         !important;
+    min-height:  unset       !important;
+    cursor:      pointer;
+
+    transition:  color var(--ds-dur-fast) ease !important;
+}
+
+.mainHeaderLink:hover,
+.headerTab:hover,
+.emby-tab-button:hover {
+    color:      var(--ds-text) !important;
+    background: transparent    !important;
+    transform:  none           !important;
+    box-shadow: none           !important;
+}
+
+/* aktiver Link — weißer Unterstrich wie Disney+ */
+.mainHeaderLink.active,
+.headerTab.active,
+.emby-tab-button-active,
+.emby-tab-button.is-active {
+    color: var(--ds-text)         !important;
+    font-weight: var(--ds-weight-bold) !important;
+    background:  transparent      !important;
+}
+
+.mainHeaderLink.active::after,
+.headerTab.active::after,
+.emby-tab-button-active::after,
+.emby-tab-button.is-active::after {
+    content:  "";
+    position: absolute;
+    bottom:   0;
+    left:     var(--ds-s-16);
+    right:    var(--ds-s-16);
+    height:   3px;
+    border-radius: var(--ds-r-pill);
+    background: var(--ds-text);
+}
+
+
+/* ============================================================
+   SIDEBAR (Jellyfin .mainDrawer)
+   Auf Desktop: schmale Sidebar die beim Hover aufklappt.
+   Wir stylen sie so minimal wie möglich,
+   da Disney+ auf Desktop eine Top-Nav hat.
 ============================================================ */
 
 .mainDrawer {
-    position: fixed !important;
-    top:    var(--ds-header-h) !important;
-    left:   0                  !important;
-    bottom: 0                  !important;
-    width:  var(--ds-sidebar-w) !important;
-
-    background:
-        rgba(4, 7, 20, 0.92)   !important;
-    backdrop-filter: blur(var(--ds-blur)) saturate(150%);
-    -webkit-backdrop-filter: blur(var(--ds-blur)) saturate(150%);
-
-    border-right: 1px solid var(--ds-border) !important;
-
-    display: flex;
-    flex-direction: column;
-
-    overflow: hidden !important;
-    z-index: var(--ds-z-sidebar);
-
-    transition: width var(--ds-normal) var(--ds-ease) !important;
+    background:  rgba(4,4,5,0.95) !important;
+    backdrop-filter: blur(20px)   !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(255,255,255,0.06) !important;
+    transition:   width var(--ds-dur-normal) var(--ds-ease) !important;
+    overflow:     hidden !important;
+    z-index:      var(--ds-z-dropdown);
 }
 
-/* expand on hover */
-.mainDrawer:hover,
-.mainDrawer.ds-expanded {
-    width: var(--ds-sidebar-open) !important;
-}
-
-
-/* ============================================================
-   DRAWER LOGO
-============================================================ */
-
-.drawerLogo {
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--ds-space-16);
-    flex-shrink: 0;
-    border-bottom: 1px solid var(--ds-border);
-}
-
-.drawerLogo img {
-    height: 28px;
-    object-fit: contain;
-}
-
-
-/* ============================================================
-   NAV LIST
-============================================================ */
-
-.navMenu,
-.navMenuContent {
-    flex: 1;
-    padding: var(--ds-space-12) 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-/* hide scrollbar while allowing scroll */
-.navMenu::-webkit-scrollbar,
-.navMenuContent::-webkit-scrollbar {
-    display: none;
-}
-
-
-/* ============================================================
-   NAV ITEM
-============================================================ */
-
+/* Sidebar-Einträge */
 .navMenuOption {
-    display:     flex     !important;
-    align-items: center   !important;
-    gap:         var(--ds-space-16) !important;
-
-    height:  52px;
-    margin:  var(--ds-space-4) var(--ds-space-8) !important;
-    padding: 0 var(--ds-space-16) !important;
-
-    border-radius: var(--ds-radius-md) !important;
+    display:     flex       !important;
+    align-items: center     !important;
+    gap:         var(--ds-s-16) !important;
+    height:      52px;
+    margin:      var(--ds-s-4) var(--ds-s-8) !important;
+    padding:     0 var(--ds-s-16) !important;
+    border-radius: var(--ds-r-md) !important;
+    color:       var(--ds-text-70) !important;
+    cursor:      pointer;
     white-space: nowrap;
-    overflow: hidden;
-
-    color:  var(--ds-text-secondary) !important;
-    cursor: pointer;
-
+    overflow:    hidden;
+    position:    relative;
     transition:
-        background var(--ds-fast) ease,
-        color      var(--ds-fast) ease,
-        transform  var(--ds-fast) var(--ds-ease) !important;
+        background var(--ds-dur-fast) ease,
+        color      var(--ds-dur-fast) ease !important;
 }
-
-
-/* ============================================================
-   NAV ITEM — hover
-============================================================ */
 
 .navMenuOption:hover {
-    background: rgba(255, 255, 255, 0.07) !important;
-    color:      var(--ds-text)            !important;
-    transform:  translateX(3px)           !important;
+    background: rgba(255,255,255,0.07) !important;
+    color:      var(--ds-text)         !important;
+    transform:  none                   !important;
 }
-
-
-/* ============================================================
-   NAV ITEM — active
-============================================================ */
 
 .navMenuOption-selected,
 .navMenuOption.ds-active {
-    background:
-        linear-gradient(
-            90deg,
-            rgba(30, 167, 255, 0.24) 0%,
-            rgba(30, 167, 255, 0.06) 100%
-        ) !important;
-    color: var(--ds-text)   !important;
+    background:  rgba(23,110,225,0.18) !important;
+    color:       var(--ds-text)        !important;
     font-weight: var(--ds-weight-semibold) !important;
 }
 
-/* accent bar on active item */
+/* aktiver Balken links */
 .navMenuOption-selected::before,
 .navMenuOption.ds-active::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top:    25%;
-    bottom: 25%;
-    width: 3px;
-    border-radius: 0 var(--ds-radius-pill) var(--ds-radius-pill) 0;
-    background: var(--ds-primary);
+    content:       "";
+    position:      absolute;
+    left:          0;
+    top:           20%;
+    bottom:        20%;
+    width:         3px;
+    border-radius: 0 var(--ds-r-pill) var(--ds-r-pill) 0;
+    background:    var(--ds-blue);
 }
 
-.navMenuOption {
-    position: relative; /* needed for ::before */
-}
-
-
-/* ============================================================
-   NAV ICON
-============================================================ */
-
+/* Icons */
 .navMenuOption .material-icons,
 .navMenuOption i {
-    font-size:  22px    !important;
+    font-size:   22px !important;
     flex-shrink: 0;
-    width:      24px;
-    text-align: center;
-    transition: transform var(--ds-fast) ease !important;
-}
-
-.navMenuOption:hover .material-icons,
-.navMenuOption:hover i {
-    transform: scale(1.15) !important;
-    color: var(--ds-primary);
+    width:       24px;
+    text-align:  center;
+    color:       inherit;
+    transition:  none !important;
 }
 
 .navMenuOption-selected .material-icons,
-.navMenuOption.ds-active .material-icons,
-.navMenuOption-selected i,
-.navMenuOption.ds-active i {
-    color: var(--ds-primary) !important;
+.navMenuOption.ds-active .material-icons {
+    color: var(--ds-blue) !important;
 }
 
-
-/* ============================================================
-   NAV LABEL — hidden until sidebar expands
-============================================================ */
-
+/* Text — sichtbar nur wenn expanded */
 .navMenuOptionText {
     opacity:    0;
-    transform:  translateX(-6px);
-    transition:
-        opacity   var(--ds-fast) ease,
-        transform var(--ds-fast) ease !important;
-    font-size:   var(--ds-size-base);
+    transition: opacity var(--ds-dur-fast) ease !important;
+    font-size:  var(--ds-text-base);
     font-weight: var(--ds-weight-medium);
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
 }
 
 .mainDrawer:hover .navMenuOptionText,
 .mainDrawer.ds-expanded .navMenuOptionText {
-    opacity:   1;
-    transform: none;
-}
-
-
-/* ============================================================
-   SECTION HEADER inside sidebar
-============================================================ */
-
-.sidebarSectionHeader {
-    padding:   var(--ds-space-16) var(--ds-space-16) var(--ds-space-4);
-    font-size: var(--ds-size-xs);
-    font-weight: var(--ds-weight-semibold);
-    color:     var(--ds-text-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity var(--ds-fast) ease;
-}
-
-.mainDrawer:hover .sidebarSectionHeader,
-.mainDrawer.ds-expanded .sidebarSectionHeader {
     opacity: 1;
 }
 
-
-/* ============================================================
-   DRAWER FOOTER
-============================================================ */
-
+/* Drawer Footer */
 .drawerFooter {
-    padding:   var(--ds-space-16);
-    font-size: var(--ds-size-xs);
-    color:     var(--ds-text-muted);
-    border-top: 1px solid var(--ds-border);
+    padding:    var(--ds-s-16);
+    font-size:  var(--ds-text-xs);
+    color:      var(--ds-text-30);
+    border-top: 1px solid rgba(255,255,255,0.06);
     flex-shrink: 0;
-    opacity: 0.6;
+    opacity:    0.6;
     white-space: nowrap;
-    overflow: hidden;
+    overflow:    hidden;
 }
 
+/* Scrollbar in Sidebar */
+.mainDrawer::-webkit-scrollbar       { width: 4px; }
+.mainDrawer::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: var(--ds-r-pill); }
+
 
 /* ============================================================
-   TABLET — no expand on hover, always collapsed
+   MOBILE — Header bleibt gleich, Sidebar collapsed
 ============================================================ */
 
-@media (max-width: 1024px) {
-    .mainDrawer,
-    .mainDrawer:hover,
-    .mainDrawer.ds-expanded {
-        width: var(--ds-sidebar-w) !important;
-    }
-
+@media (max-width: 900px) {
     .navMenuOptionText,
     .mainDrawer:hover .navMenuOptionText {
         display: none !important;
-    }
-
-    .sidebarSectionHeader,
-    .mainDrawer:hover .sidebarSectionHeader {
-        display: none !important;
-    }
-}
-
-
-/* ============================================================
-   MOBILE — sidebar becomes bottom drawer (Jellyfin handles this)
-============================================================ */
-
-@media (max-width: 600px) {
-    .mainDrawer {
-        width: 100% !important;
     }
 }

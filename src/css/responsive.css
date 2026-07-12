@@ -1,201 +1,85 @@
 /* ============================================================
-   DisneyStream
-   responsive.css
-   Jellyfin 10.11.x — v0.2.0
+   DisneyStream — responsive.css
+   Breakpoints
+   Jellyfin 10.11.x — v0.3.0
 ============================================================ */
 
 
-/* ============================================================
-   4K / ULTRAWIDE  ≥ 2000px
-============================================================ */
-
+/* 4K */
 @media (min-width: 2000px) {
-
     :root {
-        --ds-card-w:   240px;
-        --ds-card-gap: 24px;
+        --ds-card-w:    230px;
+        --ds-card-gap:  22px;
+        --ds-page-pad:  64px;
     }
-
-    .pageTitle    { font-size: 48px !important; }
-    .sectionTitle { font-size: 34px !important; }
-    .itemsContainer { gap: 28px !important; }
-
+    .pageTitle    { font-size: 44px !important; }
+    .sectionTitle { font-size: 28px !important; }
 }
 
-
-/* ============================================================
-   LARGE DESKTOP  1600–1999px
-============================================================ */
-
-@media (max-width: 1999px) and (min-width: 1600px) {
-
-    :root {
-        --ds-card-w: 210px;
-    }
-
+/* Large Desktop */
+@media (max-width: 1600px) {
+    :root { --ds-card-w: 195px; }
 }
 
-
-/* ============================================================
-   DESKTOP  1300–1599px
-============================================================ */
-
-@media (max-width: 1599px) and (min-width: 1300px) {
-
-    :root {
-        --ds-card-w: 190px;
-    }
-
+/* Laptop */
+@media (max-width: 1300px) {
+    :root { --ds-card-w: 175px; --ds-card-gap: 14px; }
+    .pageTitle    { font-size: 30px !important; }
 }
 
-
-/* ============================================================
-   LAPTOP  1025–1299px
-============================================================ */
-
-@media (max-width: 1299px) and (min-width: 1025px) {
-
-    :root {
-        --ds-card-w:   170px;
-        --ds-card-gap: 16px;
-    }
-
-    .pageTitle    { font-size: 32px !important; }
-    .sectionTitle { font-size: 24px !important; }
-
-}
-
-
-/* ============================================================
-   TABLET  601–1024px
-   Sidebar collapses permanently; no hover-expand
-============================================================ */
-
+/* Tablet */
 @media (max-width: 1024px) {
-
     :root {
-        --ds-card-w:   155px;
-        --ds-card-gap: 14px;
-    }
-
-    .mainAnimatedPage {
-        padding-left:  calc(var(--ds-sidebar-w) + var(--ds-space-16)) !important;
-        padding-right: var(--ds-space-16) !important;
-    }
-
-    .homePage {
-        padding-left:  var(--ds-space-20) !important;
-        padding-right: var(--ds-space-20) !important;
-    }
-
-    .pageTitle    { font-size: 28px !important; }
-    .sectionTitle { font-size: 22px !important; }
-
-    .itemsContainer { gap: 14px !important; }
-
-}
-
-
-/* ============================================================
-   LARGE PHONE  601–900px
-============================================================ */
-
-@media (max-width: 900px) {
-
-    :root {
-        --ds-card-w:    150px;
+        --ds-card-w:    155px;
         --ds-card-gap:  12px;
-        --ds-header-h:  60px;
+        --ds-page-pad:  24px;
     }
-
+    .homePage .verticalSection { padding: 0 var(--ds-s-24) !important; }
     .pageTitle    { font-size: 26px !important; }
     .sectionTitle { font-size: 20px !important; }
-
-    button,
-    .emby-button {
-        font-size:  var(--ds-size-sm) !important;
-        padding:    8px 18px          !important;
-    }
-
 }
 
-
-/* ============================================================
-   SMALL PHONE  ≤ 600px
-============================================================ */
-
-@media (max-width: 600px) {
-
+/* Large Phone */
+@media (max-width: 900px) {
     :root {
-        --ds-card-w:    130px;
-        --ds-card-gap:  10px;
-        --ds-header-h:  56px;
-        --ds-sidebar-w: 0px; /* sidebar hidden on mobile */
+        --ds-card-w:     145px;
+        --ds-card-gap:   10px;
+        --ds-header-h:   60px;
+        --ds-hero-h:     55vw;
+        --ds-hero-min-h: 220px;
     }
-
-    .homePage {
-        padding: var(--ds-space-12) !important;
-    }
-
-    .mainAnimatedPage {
-        padding-left: 0 !important;
-    }
-
+    .homePage .verticalSection { padding: 0 var(--ds-s-16) !important; }
     .pageTitle    { font-size: 22px !important; }
     .sectionTitle { font-size: 18px !important; }
-
-    .ds-hero-content .ds-title {
-        font-size: 22px !important;
-    }
-
-    .ds-buttons {
-        gap: var(--ds-space-8);
-    }
-
-    .ds-play,
-    .ds-info {
-        padding:   10px 18px !important;
-        font-size: var(--ds-size-sm) !important;
-    }
-
 }
 
+/* Small Phone */
+@media (max-width: 600px) {
+    :root {
+        --ds-card-w:     118px;
+        --ds-card-gap:   8px;
+        --ds-header-h:   56px;
+    }
+    .homePage .verticalSection { padding: 0 var(--ds-s-12) !important; }
+    .pageTitle    { font-size: 20px !important; }
+    .sectionTitle { font-size: 16px !important; }
+    button, .emby-button {
+        font-size: var(--ds-text-sm) !important;
+        padding:   8px 16px          !important;
+    }
+}
 
-/* ============================================================
-   TV / POINTER:COARSE — larger tap targets
-============================================================ */
-
+/* TV / Touch */
 @media (pointer: coarse) {
-
-    .cardBox {
-        transition: transform 0.2s ease !important;
-    }
-
-    button,
-    .emby-button {
-        min-height: 52px !important;
-        font-size:  var(--ds-size-md) !important;
-    }
-
-    .navMenuOption {
-        height: 60px !important;
-    }
-
+    button, .emby-button  { min-height: 52px !important; }
+    .navMenuOption         { height: 60px    !important; }
+    .cardBox               { transition: transform 0.18s ease !important; }
 }
 
-
-/* ============================================================
-   REDUCED MOTION (duplicate guard in case animations.css
-   is loaded separately or out of order)
-============================================================ */
-
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         animation:  none !important;
         transition: none !important;
     }
-
 }

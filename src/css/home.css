@@ -1,258 +1,303 @@
 /* ============================================================
-   DisneyStream
-   home.css
-   Jellyfin 10.11.x — v0.2.0
+   DisneyStream — home.css
+   Disney+ Hero + Content Rows
+   Jellyfin 10.11.x — v0.3.0
 ============================================================ */
 
 
 /* ============================================================
-   HOME PAGE WRAPPER
+   HOME PAGE
 ============================================================ */
 
 .homePage {
-    padding: 0 var(--ds-space-48) var(--ds-space-64) !important;
-    max-width: var(--ds-page-max);
-    margin: 0 auto;
+    padding: 0 0 var(--ds-s-64) !important;
+    max-width: 100%;
 }
 
 
 /* ============================================================
-   HERO — full-bleed banner
+   HERO SECTION — Fullwidth wie Disney+
+   Kein border-radius, keine Margins seitlich
 ============================================================ */
 
 .ds-hero {
-    position: relative;
-    width:     100%;
-    height:    var(--ds-hero-h);
+    position:   relative;
+    width:      100%;
+    height:     var(--ds-hero-h);
     min-height: var(--ds-hero-min-h);
-    margin-bottom: var(--ds-space-48);
-    border-radius: var(--ds-radius-xl);
-    overflow: hidden;
+    overflow:   hidden;
+    margin-bottom: 0;
 }
 
+/* Hintergrundbild */
 .ds-hero-backdrop {
-    position: absolute;
-    inset: 0;
+    position:            absolute;
+    inset:               0;
     background-size:     cover;
-    background-position: center top;
-    background-color:    var(--ds-surface);
-    transform:  scale(1.04);
-    transition: transform var(--ds-slow) var(--ds-ease);
+    background-position: 50% 25%;
+    background-color:    #0A0A2E;
+    transform:           scale(1.03);
+    transition:          transform var(--ds-dur-slow) var(--ds-ease);
 }
+.ds-hero:hover .ds-hero-backdrop { transform: scale(1); }
 
-.ds-hero:hover .ds-hero-backdrop {
-    transform: scale(1);
-}
-
-/* gradient overlay */
+/* Gradient-Overlay — links dunkel, rechts transparent (exakt Disney+) */
 .ds-hero-overlay {
     position: absolute;
-    inset: 0;
+    inset:    0;
     background:
         linear-gradient(
             90deg,
-            rgba(4, 7, 20, 0.95) 0%,
-            rgba(4, 7, 20, 0.55) 55%,
-            rgba(4, 7, 20, 0.10) 100%
+            rgba(4,4,5,0.95) 0%,
+            rgba(4,4,5,0.70) 30%,
+            rgba(4,4,5,0.20) 60%,
+            transparent      80%
         ),
         linear-gradient(
             0deg,
-            rgba(4, 7, 20, 0.90) 0%,
-            transparent 50%
+            rgba(4,4,5,0.85) 0%,
+            rgba(4,4,5,0.20) 30%,
+            transparent      55%
         );
 }
 
-/* hero text */
+/* Inhalt — links unten positioniert */
 .ds-hero-content {
-    position: absolute;
-    bottom:   var(--ds-space-48);
-    left:     var(--ds-space-48);
-    max-width: var(--ds-hero-max-w);
-    z-index: var(--ds-z-above);
+    position:  absolute;
+    bottom:    12%;
+    left:      var(--ds-s-48);
+    max-width: 600px;
+    z-index:   var(--ds-z-above);
 }
 
+/* Kategorie-Badge — Disney+ Style */
 .ds-badge {
-    display: inline-block;
-    background:  var(--ds-primary);
-    color:       #fff;
-    font-size:   var(--ds-size-xs);
-    font-weight: var(--ds-weight-bold);
-    letter-spacing: 0.12em;
+    display:       inline-flex;
+    align-items:   center;
+    gap:           var(--ds-s-4);
+    font-size:     var(--ds-text-xs);
+    font-weight:   var(--ds-weight-bold);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    padding:       4px 12px;
-    border-radius: var(--ds-radius-pill);
-    margin-bottom: var(--ds-space-12);
+    color:         var(--ds-text-70);
+    margin-bottom: var(--ds-s-12);
 }
 
+/* Trennpunkt zwischen Badges */
+.ds-badge::before {
+    content:       "•";
+    opacity:       0.6;
+    margin-right:  var(--ds-s-4);
+    display:       none;
+}
+.ds-badge + .ds-badge::before { display: inline; }
+
+/* Haupttitel */
 .ds-hero-content .ds-title {
-    font-size:   clamp(30px, 5vw, 56px);
-    font-weight: var(--ds-weight-bold);
+    font-size:   var(--ds-text-hero);
+    font-weight: var(--ds-weight-black);
+    color:       var(--ds-white);
     line-height: var(--ds-lh-tight);
-    color:       var(--ds-text);
-    margin:      0 0 var(--ds-space-12);
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.60);
+    margin:      0 0 var(--ds-s-12);
+    text-shadow: 0 1px 12px rgba(0,0,0,0.50);
+    letter-spacing: -0.5px;
 }
 
+/* Beschreibung */
 .ds-hero-content .ds-description {
-    font-size:   var(--ds-size-md);
-    color:       var(--ds-text-secondary);
+    font-size:   var(--ds-text-md);
+    color:       var(--ds-text-90);
     line-height: var(--ds-lh-normal);
-    margin:      0 0 var(--ds-space-24);
-    max-width:   520px;
+    margin:      0 0 var(--ds-s-24);
+    max-width:   480px;
 }
 
-/* hero buttons */
+/* Meta-Info Zeile (z.B. "2024  •  PG-13  •  2h 15m") */
+.ds-meta {
+    display:     flex;
+    align-items: center;
+    gap:         var(--ds-s-8);
+    font-size:   var(--ds-text-sm);
+    color:       var(--ds-text-70);
+    margin-bottom: var(--ds-s-20);
+}
+.ds-meta-dot {
+    width:         3px;
+    height:        3px;
+    border-radius: 50%;
+    background:    var(--ds-text-50);
+    flex-shrink:   0;
+}
+
+
+/* ============================================================
+   HERO BUTTONS — Weiß (Play) + Halbtransparent (More Info)
+   Exakt wie Disney+
+============================================================ */
+
 .ds-buttons {
-    display: flex;
-    gap:     var(--ds-space-12);
+    display:   flex;
+    gap:       var(--ds-s-12);
     flex-wrap: wrap;
 }
 
+/* Play-Button — weißer Hintergrund, dunkler Text */
 .ds-play {
-    background:  #fff !important;
-    color:       #040714 !important;
-    font-weight: var(--ds-weight-bold) !important;
-    padding:     12px 32px !important;
-    font-size:   var(--ds-size-md) !important;
-    border-radius: var(--ds-radius-sm) !important;
-    gap: var(--ds-space-8);
+    display:       inline-flex !important;
+    align-items:   center      !important;
+    gap:           var(--ds-s-8) !important;
+    background:    #FFFFFF         !important;
+    color:         #040405         !important;
+    font-size:     var(--ds-text-base) !important;
+    font-weight:   var(--ds-weight-bold) !important;
+    padding:       12px 28px       !important;
+    border-radius: var(--ds-r-sm)  !important;
+    min-height:    unset           !important;
+    transition:
+        background var(--ds-dur-fast) ease,
+        transform  var(--ds-dur-fast) ease !important;
 }
-
 .ds-play:hover {
     background:  rgba(255,255,255,0.85) !important;
-    box-shadow:  0 0 0 4px rgba(255,255,255,0.18) !important;
-    transform:   translateY(-2px);
+    color:       #040405               !important;
+    transform:   none;
+    box-shadow:  none !important;
 }
 
+/* More Info / Trailer — halbtransparent */
 .ds-info {
-    background:  rgba(255, 255, 255, 0.18) !important;
-    color:       var(--ds-text)            !important;
-    font-weight: var(--ds-weight-semibold) !important;
-    padding:     12px 28px !important;
-    font-size:   var(--ds-size-md)  !important;
-    border-radius: var(--ds-radius-sm) !important;
+    display:       inline-flex !important;
+    align-items:   center      !important;
+    gap:           var(--ds-s-8) !important;
+    background:    rgba(109,109,110,0.70) !important;
+    color:         var(--ds-white)        !important;
+    font-size:     var(--ds-text-base)    !important;
+    font-weight:   var(--ds-weight-semibold) !important;
+    padding:       12px 28px             !important;
+    border-radius: var(--ds-r-sm)        !important;
+    min-height:    unset                 !important;
     backdrop-filter: blur(8px);
+    transition:
+        background var(--ds-dur-fast) ease !important;
+}
+.ds-info:hover {
+    background:  rgba(109,109,110,0.90) !important;
+    color:       var(--ds-white)         !important;
+    transform:   none;
+    box-shadow:  none !important;
 }
 
-.ds-info:hover {
-    background:  rgba(255, 255, 255, 0.28) !important;
-}
+/* ▶ Icon in Buttons */
+.ds-play::before  { content: "▶"; font-size: 0.85em; }
+.ds-info::before  { content: "ⓘ"; font-size: 0.95em; }
 
 
 /* ============================================================
-   SECTION ROW
+   INHALT-BEREICH — unter dem Hero
 ============================================================ */
 
 .homePage .verticalSection {
-    margin-bottom: var(--ds-space-48) !important;
+    margin-bottom: var(--ds-s-32) !important;
+    padding: 0 var(--ds-s-48)     !important;
 }
 
+/* Section-Titel */
 .homePage .sectionTitle,
 .homePage .sectionTitleLink {
-    font-size:   var(--ds-size-xl)        !important;
-    font-weight: var(--ds-weight-semibold) !important;
-    margin:      0 0 var(--ds-space-16)   !important;
+    font-size:     var(--ds-text-lg)          !important;
+    font-weight:   var(--ds-weight-semibold)  !important;
+    margin:        0 0 var(--ds-s-12)         !important;
+    color:         var(--ds-text)             !important;
+    display:       inline-flex;
+    align-items:   center;
+    gap:           var(--ds-s-4);
 }
 
-.homePage .sectionTitleLink {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--ds-space-8);
-}
-
+/* Pfeil-Symbol neben "See all" */
 .homePage .sectionTitleLink::after {
-    content: "›";
-    font-size: 1.3em;
-    opacity: 0.5;
-    transition: opacity var(--ds-fast) ease, transform var(--ds-fast) ease;
+    content:    "›";
+    font-size:  1.2em;
+    opacity:    0.55;
+    transition: opacity var(--ds-dur-fast) ease,
+                transform var(--ds-dur-fast) ease;
 }
-
 .homePage .sectionTitleLink:hover::after {
-    opacity: 1;
-    transform: translateX(4px);
+    opacity:   1;
+    transform: translateX(3px);
 }
 
 
 /* ============================================================
-   POSTER ROW
+   POSTER-REIHE
 ============================================================ */
 
 .homePage .itemsContainer {
-    gap:         var(--ds-card-gap) !important;
-    padding:     var(--ds-space-8) var(--ds-space-4) var(--ds-space-16) !important;
+    gap:             var(--ds-card-gap) !important;
+    padding:         var(--ds-s-4) 0 var(--ds-s-16) !important;
     scroll-behavior: smooth;
 }
 
-/* stagger animation on row load */
+/* Karten erscheinen gestaffelt */
+.homePage .itemsContainer > .cardBox:nth-child(1)  { animation-delay: 0.03s; }
+.homePage .itemsContainer > .cardBox:nth-child(2)  { animation-delay: 0.06s; }
+.homePage .itemsContainer > .cardBox:nth-child(3)  { animation-delay: 0.09s; }
+.homePage .itemsContainer > .cardBox:nth-child(4)  { animation-delay: 0.12s; }
+.homePage .itemsContainer > .cardBox:nth-child(5)  { animation-delay: 0.15s; }
+.homePage .itemsContainer > .cardBox:nth-child(n+6){ animation-delay: 0.18s; }
+
 .homePage .itemsContainer > .cardBox {
-    animation: dsRowIn 0.45s var(--ds-ease-out) both;
+    animation: dsCardIn 0.40s var(--ds-ease-out) both;
 }
 
-.homePage .itemsContainer > .cardBox:nth-child(1)  { animation-delay: 0.04s; }
-.homePage .itemsContainer > .cardBox:nth-child(2)  { animation-delay: 0.08s; }
-.homePage .itemsContainer > .cardBox:nth-child(3)  { animation-delay: 0.12s; }
-.homePage .itemsContainer > .cardBox:nth-child(4)  { animation-delay: 0.16s; }
-.homePage .itemsContainer > .cardBox:nth-child(5)  { animation-delay: 0.20s; }
-.homePage .itemsContainer > .cardBox:nth-child(n+6){ animation-delay: 0.24s; }
-
-@keyframes dsRowIn {
-    from {
-        opacity:   0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity:   1;
-        transform: none;
-    }
+@keyframes dsCardIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   EMPTY STATE
+   LEER-STATE
 ============================================================ */
 
 .noItemsMessage {
-    color:   var(--ds-text-muted)   !important;
-    opacity: 0.7;
-    padding: var(--ds-space-32);
+    color:      var(--ds-text-50) !important;
+    padding:    var(--ds-s-48);
     text-align: center;
 }
 
 
 /* ============================================================
-   MOBILE
+   RESPONSIVE
 ============================================================ */
 
 @media (max-width: 900px) {
-
-    .homePage {
-        padding: 0 var(--ds-space-16) var(--ds-space-32) !important;
-    }
+    .homePage .verticalSection { padding: 0 var(--ds-s-16) !important; }
 
     .ds-hero {
-        height:        55vw;
-        min-height:    260px;
-        border-radius: var(--ds-radius-lg);
-        margin-bottom: var(--ds-space-32);
+        height:     60vw;
+        min-height: 260px;
     }
 
     .ds-hero-content {
-        bottom: var(--ds-space-24);
-        left:   var(--ds-space-20);
+        bottom: var(--ds-s-24);
+        left:   var(--ds-s-16);
     }
 
     .ds-hero-overlay {
         background:
             linear-gradient(
                 0deg,
-                rgba(4, 7, 20, 0.96) 0%,
-                rgba(4, 7, 20, 0.30) 60%,
+                rgba(4,4,5,0.98) 0%,
+                rgba(4,4,5,0.50) 50%,
                 transparent 100%
             );
     }
 
-    .ds-hero-content .ds-description {
-        display: none;
-    }
+    .ds-hero-content .ds-description { display: none; }
+    .ds-meta { display: none; }
+}
 
+@media (max-width: 600px) {
+    .ds-hero-content .ds-title { font-size: 24px !important; }
+    .ds-play, .ds-info { padding: 10px 18px !important; font-size: var(--ds-text-sm) !important; }
 }

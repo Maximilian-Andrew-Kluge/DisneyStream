@@ -1,195 +1,130 @@
 /* ============================================================
-   DisneyStream
-   animations.css
-   Jellyfin 10.11.x — v0.2.0
+   DisneyStream — animations.css
+   Dezente Animationen wie Disney+
+   Jellyfin 10.11.x — v0.3.0
 ============================================================ */
 
 
 /* ============================================================
-   GLOBAL TRANSITION DEFAULTS
-   Only non-layout props — avoids jank on forced reflows
+   GLOBALE TRANSITIONS
+   Nur Farb- und Opacity-Eigenschaften — kein Transform hier
+   (Transform wird pro-Element definiert)
 ============================================================ */
 
 * {
     transition:
-        background-color var(--ds-fast) ease,
-        color            var(--ds-fast) ease,
-        border-color     var(--ds-fast) ease,
-        opacity          var(--ds-fast) ease;
+        background-color var(--ds-dur-fast) ease,
+        color            var(--ds-dur-fast) ease,
+        border-color     var(--ds-dur-fast) ease,
+        opacity          var(--ds-dur-fast) ease;
 }
 
 
 /* ============================================================
-   PAGE ENTRANCE
+   SEITEN-EINBLENDE
 ============================================================ */
 
 .mainAnimatedPage {
-    animation: dsPageIn var(--ds-slow) var(--ds-ease-out) both;
+    animation: dsPageFadeIn var(--ds-dur-slow) var(--ds-ease-out) both;
 }
 
-@keyframes dsPageIn {
-    from { opacity: 0; transform: translateY(14px); }
+@keyframes dsPageFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   HERO ENTRANCE
+   HERO
 ============================================================ */
 
 .ds-hero {
-    animation: dsHeroIn 0.8s var(--ds-ease-out) both;
+    animation: dsHeroIn 0.75s var(--ds-ease-out) both;
 }
 
 @keyframes dsHeroIn {
-    from { opacity: 0; transform: scale(1.025); }
-    to   { opacity: 1; transform: scale(1); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 .ds-hero-content {
-    animation: dsHeroContentIn 0.7s var(--ds-ease-out) 0.2s both;
+    animation: dsHeroContentIn 0.65s var(--ds-ease-out) 0.15s both;
 }
 
 @keyframes dsHeroContentIn {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   SECTION TITLE
-============================================================ */
-
-.sectionTitle,
-.sectionTitleLink {
-    animation: dsTitleIn 0.5s var(--ds-ease-out) both;
-}
-
-@keyframes dsTitleIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to   { opacity: 1; transform: none; }
-}
-
-
-/* ============================================================
-   CARD ENTRANCE (JS-driven via IntersectionObserver preferred,
-   CSS fallback for initial load)
+   KARTEN
 ============================================================ */
 
 .cardBox {
-    animation: dsCardIn 0.45s var(--ds-ease-out) both;
+    animation: dsCardIn 0.40s var(--ds-ease-out) both;
 }
 
 @keyframes dsCardIn {
-    from { opacity: 0; transform: translateY(18px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: none; }
-}
-
-/* card hover — defined here for completeness, also in cards.css */
-.cardBox:hover {
-    transform:  translateY(-8px) !important;
-    box-shadow: var(--ds-shadow-lg), var(--ds-glow) !important;
-}
-
-.cardBox:hover .cardImage {
-    transform: scale(1.07) !important;
 }
 
 
 /* ============================================================
-   DIALOG OPEN
+   SECTION TITEL
+============================================================ */
+
+.sectionTitle {
+    animation: dsFadeLeft 0.45s var(--ds-ease-out) both;
+}
+
+@keyframes dsFadeLeft {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+
+/* ============================================================
+   DIALOG ÖFFNEN
 ============================================================ */
 
 .dialog,
 .formDialog {
-    animation: dsDialogIn var(--ds-normal) var(--ds-ease-out) both;
+    animation: dsDialogIn var(--ds-dur-normal) var(--ds-ease-out) both;
 }
 
 @keyframes dsDialogIn {
-    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    from { opacity: 0; transform: scale(0.97) translateY(6px); }
     to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   SIDEBAR ITEM RIPPLE (nav icon rotate)
-============================================================ */
-
-.navMenuOption:hover i,
-.navMenuOption:hover .material-icons {
-    animation: dsIconBounce 0.3s var(--ds-ease) both;
-}
-
-@keyframes dsIconBounce {
-    0%  { transform: scale(1); }
-    50% { transform: scale(1.18) rotate(4deg); }
-    100%{ transform: scale(1.12); }
-}
-
-
-/* ============================================================
-   LOADING SPINNER GLOW
+   LOADER
 ============================================================ */
 
 .mdl-spinner {
-    animation: dsSpinGlow 1.2s ease-in-out infinite !important;
+    animation: dsSpinGlow 1.5s ease-in-out infinite !important;
 }
 
 @keyframes dsSpinGlow {
-    0%, 100% { filter: drop-shadow(0 0 0px var(--ds-primary)); }
-    50%       { filter: drop-shadow(0 0 10px var(--ds-primary)); }
+    0%, 100% { filter: drop-shadow(0 0 0px var(--ds-blue)); }
+    50%       { filter: drop-shadow(0 0 8px var(--ds-blue)); }
 }
 
 
 /* ============================================================
-   PROGRESS GLOW PULSE
-============================================================ */
-
-.itemProgressBarForeground {
-    animation: dsProgressPulse 3s ease-in-out infinite;
-}
-
-@keyframes dsProgressPulse {
-    0%, 100% { filter: brightness(1); }
-    50%       { filter: brightness(1.35); }
-}
-
-
-/* ============================================================
-   BUTTON MICRO-INTERACTION
-============================================================ */
-
-button:hover,
-.emby-button:hover {
-    transform: translateY(-1px);
-}
-
-button:active,
-.emby-button:active {
-    transform: scale(0.97);
-}
-
-
-/* ============================================================
-   SKIP INTRO BUTTON ENTRANCE
+   SKIP INTRO BUTTON
 ============================================================ */
 
 .ds-skip-intro {
-    animation: dsSlideUp 0.35s var(--ds-ease-out) both;
+    animation: dsSlideUp 0.30s var(--ds-ease-out) both;
 }
 
 @keyframes dsSlideUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: none; }
-}
-
-
-/* ============================================================
-   CARD VISIBILITY (class added by IntersectionObserver in JS)
-============================================================ */
-
-.cardBox.ds-visible {
-    opacity: 1;
 }
 
 
@@ -198,9 +133,7 @@ button:active,
 ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         animation:  none !important;
         transition: none !important;
     }

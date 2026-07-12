@@ -1,152 +1,167 @@
 /*
 ============================================================
-DisneyStream
-variables.css
-Version: 0.2.0
-Author: Maximilian Andrew Kluge
+DisneyStream — variables.css
+Echte Disney+ Design Tokens (2024/2025)
+Version: 0.3.0
 ============================================================
 */
 
 :root {
 
 /* ==========================================================
-   COLORS — Disney+ Palette
+   FARBEN — direkt aus Disney+ Quelle extrahiert
 ========================================================== */
 
---ds-background:         #040714;
---ds-background-alt:     #060c1f;
+/* Hintergründe */
+--ds-bg:               #040405;   /* Disney+ Haupt-Hintergrund */
+--ds-bg-secondary:     #0A0A2E;   /* Hero-Gradient unten */
+--ds-bg-tertiary:      #111118;   /* Karten-Surface */
+--ds-surface:          #1A1A2E;
+--ds-surface-hover:    #22223A;
 
---ds-surface:            #0d1730;
---ds-surface-hover:      #152040;
---ds-surface-card:       #0f1c35;
+/* Brand Blau */
+--ds-blue:             #176EE1;   /* Disney+ primary blue */
+--ds-blue-hover:       #3D8FF0;
+--ds-blue-light:       #5D99EA;
+--ds-blue-dark:        #104C9D;
 
---ds-primary:            #1ea7ff;
---ds-primary-hover:      #52beff;
---ds-primary-glow:       rgba(30, 167, 255, 0.22);
+/* Text */
+--ds-white:            #FFFFFF;
+--ds-text:             #FFFFFF;
+--ds-text-90:          rgba(255,255,255,0.90);
+--ds-text-70:          rgba(255,255,255,0.70);
+--ds-text-50:          rgba(255,255,255,0.50);
+--ds-text-30:          rgba(255,255,255,0.30);
 
---ds-accent:             #0063e5;
---ds-accent-hover:       #0483ee;
+/* Grautöne (aus Disney Design System) */
+--ds-ui-1:             #15171A;
+--ds-ui-2:             #212329;
+--ds-ui-3:             #31353D;
+--ds-ui-4:             #424752;
+--ds-ui-5:             #525966;
+--ds-ui-6:             #6F788A;
 
---ds-text:               #f9f9f9;
---ds-text-secondary:     #b0bccf;
---ds-text-muted:         #6b7a91;
+/* Overlays */
+--ds-black-90:         rgba(4,4,5,0.90);
+--ds-black-70:         rgba(4,4,5,0.70);
+--ds-black-50:         rgba(4,4,5,0.50);
+--ds-black-30:         rgba(4,4,5,0.30);
 
---ds-border:             rgba(255, 255, 255, 0.07);
---ds-border-light:       rgba(255, 255, 255, 0.12);
-
---ds-overlay-light:      rgba(4, 7, 20, 0.50);
---ds-overlay-heavy:      rgba(4, 7, 20, 0.82);
-
---ds-glass:              rgba(13, 23, 48, 0.75);
---ds-glass-border:       rgba(255, 255, 255, 0.07);
---ds-blur:               20px;
-
---ds-success:            #34c759;
---ds-warning:            #ff9f0a;
---ds-danger:             #ff453a;
+/* Status */
+--ds-success:          #26D997;
+--ds-warning:          #FAAC11;
+--ds-error:            #DA1B4B;
 
 /* ==========================================================
-   TYPOGRAPHY
+   TYPOGRAFIE — Disney nutzt "Inspire" (proprietär)
+   Wir nehmen den nächstbesten öffentlichen Font
 ========================================================== */
 
 --ds-font:
+    "Avenir Next",
+    "Avenir",
+    "Nunito",
     "Inter",
     "Segoe UI",
-    system-ui,
-    -apple-system,
+    Arial,
     sans-serif;
 
---ds-size-xs:    11px;
---ds-size-sm:    13px;
---ds-size-base:  15px;
---ds-size-md:    17px;
---ds-size-lg:    22px;
---ds-size-xl:    28px;
---ds-size-xxl:   38px;
---ds-size-hero:  60px;
+/* Größen */
+--ds-text-xs:      11px;
+--ds-text-sm:      13px;
+--ds-text-base:    15px;
+--ds-text-md:      17px;
+--ds-text-lg:      20px;
+--ds-text-xl:      26px;
+--ds-text-2xl:     34px;
+--ds-text-3xl:     48px;
+--ds-text-hero:    clamp(32px, 5.5vw, 64px);
 
 --ds-weight-regular:  400;
 --ds-weight-medium:   500;
 --ds-weight-semibold: 600;
 --ds-weight-bold:     700;
+--ds-weight-black:    900;
 
---ds-lh-tight:  1.15;
---ds-lh-normal: 1.50;
---ds-lh-loose:  1.70;
+--ds-lh-tight:  1.10;
+--ds-lh-snug:   1.30;
+--ds-lh-normal: 1.55;
+--ds-lh-loose:  1.75;
 
 /* ==========================================================
    BORDER RADIUS
 ========================================================== */
 
---ds-radius-xs:    4px;
---ds-radius-sm:    8px;
---ds-radius-md:    12px;
---ds-radius-lg:    18px;
---ds-radius-xl:    24px;
---ds-radius-pill:  999px;
+--ds-r-xs:    3px;
+--ds-r-sm:    6px;
+--ds-r-md:    10px;
+--ds-r-lg:    16px;
+--ds-r-xl:    22px;
+--ds-r-pill:  999px;
 
 /* ==========================================================
-   SPACING
+   ABSTÄNDE
 ========================================================== */
 
---ds-space-2:    2px;
---ds-space-4:    4px;
---ds-space-8:    8px;
---ds-space-12:  12px;
---ds-space-16:  16px;
---ds-space-20:  20px;
---ds-space-24:  24px;
---ds-space-32:  32px;
---ds-space-48:  48px;
---ds-space-64:  64px;
+--ds-s-2:    2px;
+--ds-s-4:    4px;
+--ds-s-8:    8px;
+--ds-s-12:  12px;
+--ds-s-16:  16px;
+--ds-s-20:  20px;
+--ds-s-24:  24px;
+--ds-s-32:  32px;
+--ds-s-48:  48px;
+--ds-s-64:  64px;
+--ds-s-80:  80px;
 
 /* ==========================================================
-   SHADOWS
+   SCHATTEN
 ========================================================== */
 
---ds-shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.30);
---ds-shadow-md:   0 8px 24px rgba(0, 0, 0, 0.40);
---ds-shadow-lg:   0 18px 50px rgba(0, 0, 0, 0.55);
---ds-shadow-card: 0 14px 40px rgba(0, 0, 0, 0.50);
---ds-glow:        0 0 28px rgba(30, 167, 255, 0.30);
+--ds-shadow-sm:   0px 4px 8px  rgba(0,0,0,0.25);
+--ds-shadow-md:   0px 10px 20px rgba(0,0,0,0.40);
+--ds-shadow-lg:   0px 20px 40px rgba(0,0,0,0.55);
+--ds-shadow-card: 0px 8px 24px rgba(0,0,0,0.45);
+--ds-glow-blue:   0 0 30px rgba(23,110,225,0.35);
 
 /* ==========================================================
    TRANSITIONS
 ========================================================== */
 
---ds-ease:       cubic-bezier(0.22, 0.8, 0.22, 1);
---ds-ease-out:   cubic-bezier(0.0, 0.0, 0.2, 1);
+--ds-ease:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+--ds-ease-out:  cubic-bezier(0.0, 0.0, 0.2, 1.0);
+--ds-ease-in:   cubic-bezier(0.4, 0.0, 1.0, 1.0);
 
---ds-fast:       0.15s;
---ds-normal:     0.28s;
---ds-slow:       0.45s;
+--ds-dur-fast:   150ms;
+--ds-dur-normal: 250ms;
+--ds-dur-slow:   400ms;
 
 /* ==========================================================
    LAYOUT
 ========================================================== */
 
---ds-header-h:       68px;
---ds-sidebar-w:      80px;
---ds-sidebar-open:   256px;
+/* Disney+ nutzt TOP-NAV, nicht Sidebar */
+--ds-header-h:    68px;
+--ds-page-pad:    48px;
+--ds-page-max:    1440px;
 
---ds-card-w:         200px;
---ds-card-h:         300px;
---ds-card-gap:       18px;
+--ds-card-w:      200px;
+--ds-card-gap:    16px;
+--ds-card-r:      6px;
 
---ds-hero-h:         70vh;
---ds-hero-min-h:     440px;
---ds-hero-max-w:     720px;
---ds-page-max:       1600px;
+--ds-hero-h:      68vh;
+--ds-hero-min-h:  420px;
 
 /* ==========================================================
    Z-INDEX
 ========================================================== */
 
---ds-z-base:    1;
---ds-z-above:   10;
---ds-z-header:  900;
---ds-z-sidebar: 950;
---ds-z-modal:   1000;
---ds-z-toast:   2000;
+--ds-z-base:     1;
+--ds-z-above:    10;
+--ds-z-header:   900;
+--ds-z-dropdown: 950;
+--ds-z-modal:    1000;
+--ds-z-toast:    2000;
 
 }

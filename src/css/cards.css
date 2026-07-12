@@ -1,7 +1,7 @@
 /* ============================================================
-   DisneyStream
-   cards.css
-   Jellyfin 10.11.x — v0.2.0
+   DisneyStream — cards.css
+   Poster-Karten exakt wie Disney+
+   Jellyfin 10.11.x — v0.3.0
 ============================================================ */
 
 
@@ -10,218 +10,233 @@
 ============================================================ */
 
 .itemsContainer {
-    gap:            var(--ds-card-gap) !important;
-    padding:        var(--ds-space-4) !important;
+    gap:             var(--ds-card-gap) !important;
+    padding:         var(--ds-s-2) 0    !important;
     scroll-behavior: smooth;
 }
-
-.itemsContainer::-webkit-scrollbar {
-    display: none;
-}
+.itemsContainer::-webkit-scrollbar { display: none; }
 
 
 /* ============================================================
-   CARD BOX — wrapper
+   CARD-WRAPPER — kein eigener Hintergrund, nur Hover-Effekt
 ============================================================ */
 
 .cardBox {
     position:      relative;
-    width:         var(--ds-card-w)  !important;
-    border-radius: var(--ds-radius-md) !important;
-    background:    transparent       !important;
-    overflow:      hidden;
+    width:         var(--ds-card-w)   !important;
+    border-radius: var(--ds-card-r)   !important;
+    background:    transparent        !important;
+    overflow:      visible;
     cursor:        pointer;
 
-    /* reset glass style from main.css for cards */
-    backdrop-filter:   none !important;
-    border:            none !important;
-    box-shadow:        none !important;
+    /* Kein border, kein Glaseffekt — wie Disney+ */
+    backdrop-filter:  none !important;
+    border:           none !important;
+    box-shadow:       none !important;
 
     transition:
-        transform  var(--ds-normal) var(--ds-ease),
-        box-shadow var(--ds-normal) var(--ds-ease) !important;
+        transform  var(--ds-dur-normal) var(--ds-ease) !important;
 }
 
+/* Hover — leicht hoch und etwas größer */
 .cardBox:hover {
-    transform:  translateY(-8px) !important;
-    box-shadow:
-        var(--ds-shadow-lg),
-        var(--ds-glow)  !important;
-    background: transparent !important;
+    transform:   translateY(-4px) scale(1.04) !important;
+    background:  transparent !important;
+    box-shadow:  none !important;
 }
 
-/* keyboard focus */
 .cardBox:focus-visible {
-    outline:        2px solid var(--ds-primary);
+    outline:        2px solid var(--ds-blue);
     outline-offset: 4px;
+    border-radius:  var(--ds-card-r);
 }
 
 
 /* ============================================================
-   IMAGE CONTAINER
+   BILD-CONTAINER — 2:3 Poster-Format
 ============================================================ */
 
 .cardImageContainer {
     position:      relative;
-    border-radius: var(--ds-radius-md) !important;
+    border-radius: var(--ds-card-r) !important;
     overflow:      hidden;
-    aspect-ratio:  2/3; /* poster ratio */
-    background:    var(--ds-surface);
-    box-shadow:    var(--ds-shadow-card);
+    aspect-ratio:  2 / 3;
+    background:    var(--ds-ui-1);
+    box-shadow:    var(--ds-shadow-sm);
 }
 
 
 /* ============================================================
-   POSTER IMAGE
+   POSTER-BILD
 ============================================================ */
 
 .cardImage,
 .cardPadder {
-    border-radius: var(--ds-radius-md) !important;
-    width:  100%;
-    height: 100%;
+    width:      100%;
+    height:     100%;
     object-fit: cover;
+    border-radius: var(--ds-card-r) !important;
     transition:
-        transform var(--ds-slow)   var(--ds-ease),
-        filter    var(--ds-normal) ease !important;
+        transform var(--ds-dur-slow) var(--ds-ease),
+        filter    var(--ds-dur-normal) ease !important;
+    display:    block;
 }
 
 .cardBox:hover .cardImage {
-    transform: scale(1.07) !important;
-    filter:    brightness(1.06) saturate(1.08) !important;
+    transform: scale(1.06) !important;
 }
 
 
 /* ============================================================
-   OVERLAY — gradient + controls
+   OVERLAY — sichtbar beim Hover
+   Disney+: leichter Gradient + Play-Button in der Mitte
 ============================================================ */
 
 .cardOverlayContainer {
-    position: absolute;
-    inset:    0;
-    border-radius: var(--ds-radius-md);
-    background:
-        linear-gradient(
-            0deg,
-            rgba(4, 7, 20, 0.85) 0%,
-            rgba(4, 7, 20, 0.30) 45%,
-            transparent          75%
-        );
-    opacity:    0;
-    transition: opacity var(--ds-fast) ease !important;
-    display:    flex;
-    align-items: flex-end;
-    padding:    var(--ds-space-12);
+    position:      absolute;
+    inset:         0;
+    border-radius: var(--ds-card-r);
+    background:    rgba(0,0,0,0);
+    opacity:       0;
+    transition:
+        opacity    var(--ds-dur-fast) ease,
+        background var(--ds-dur-fast) ease !important;
+    display:     flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardBox:hover .cardOverlayContainer {
     opacity: 1;
+    background: rgba(0,0,0,0.30);
 }
 
 
 /* ============================================================
-   PLAY BUTTON on overlay
+   PLAY-BUTTON auf dem Overlay — Disney+ Stil: weißer Kreis
 ============================================================ */
 
 .cardOverlayButton {
-    width:         52px  !important;
-    height:        52px  !important;
-    border-radius: 50%   !important;
-    background:    rgba(30, 167, 255, 0.95) !important;
-    backdrop-filter: blur(8px);
-    box-shadow:    0 4px 20px rgba(30, 167, 255, 0.45);
+    width:         54px   !important;
+    height:        54px   !important;
+    border-radius: 50%    !important;
+    background:    rgba(255,255,255,0.90) !important;
+    color:         #040405 !important;
     display:       flex;
     align-items:   center;
     justify-content: center;
+    box-shadow:    0 4px 16px rgba(0,0,0,0.50);
     transition:
-        transform var(--ds-fast) ease,
-        box-shadow var(--ds-fast) ease !important;
+        transform  var(--ds-dur-fast) ease,
+        background var(--ds-dur-fast) ease !important;
 }
 
 .cardOverlayButton:hover {
-    transform:  scale(1.12) !important;
-    box-shadow: 0 6px 28px rgba(30, 167, 255, 0.65);
+    background:  #fff       !important;
+    transform:   scale(1.10) !important;
+    box-shadow:  0 6px 24px rgba(0,0,0,0.60);
+}
+
+/* Play-Icon selbst */
+.cardOverlayButton .material-icons {
+    color:     #040405 !important;
+    font-size: 22px    !important;
 }
 
 
 /* ============================================================
-   FAB — favorite / watched
+   FAB-BUTTONS (Herz, Gesehen etc.)
 ============================================================ */
 
 .cardOverlayFab-primary {
-    background:    rgba(0, 0, 0, 0.55) !important;
-    border-radius: 50%                  !important;
-    transition:    background var(--ds-fast) ease !important;
+    background:    rgba(0,0,0,0.60) !important;
+    border-radius: 50%              !important;
+    transition:    background var(--ds-dur-fast) ease !important;
 }
-
 .cardOverlayFab-primary:hover {
-    background: rgba(30, 167, 255, 0.85) !important;
+    background: var(--ds-blue) !important;
 }
 
 
 /* ============================================================
-   CARD TEXT
+   KARTEN-TEXT
 ============================================================ */
 
 .cardText {
-    margin-top:  var(--ds-space-8) !important;
-    font-size:   var(--ds-size-sm) !important;
+    margin-top:  var(--ds-s-8)          !important;
+    font-size:   var(--ds-text-sm)      !important;
     font-weight: var(--ds-weight-semibold) !important;
-    color:       var(--ds-text)   !important;
+    color:       var(--ds-text)         !important;
     white-space: nowrap;
     overflow:    hidden;
     text-overflow: ellipsis;
 }
 
 .cardText-secondary {
-    font-size: var(--ds-size-xs) !important;
-    color:     var(--ds-text-muted) !important;
-    margin-top: var(--ds-space-2);
+    font-size: var(--ds-text-xs)  !important;
+    color:     var(--ds-text-50)  !important;
+    margin-top: var(--ds-s-2);
 }
 
 
 /* ============================================================
-   PROGRESS BAR
+   PROGRESS BAR (Weiterschauen)
 ============================================================ */
 
 .itemProgressBar {
-    height:        4px !important;
-    border-radius: var(--ds-radius-pill);
-    background:    rgba(255, 255, 255, 0.12) !important;
-    margin-top:    var(--ds-space-4);
-    overflow: hidden;
+    height:        3px !important;
+    border-radius: var(--ds-r-pill);
+    background:    rgba(255,255,255,0.20) !important;
+    margin-top:    var(--ds-s-4);
+    overflow:      hidden;
 }
-
 .itemProgressBarForeground {
-    background:
-        linear-gradient(90deg, var(--ds-primary), #52beff) !important;
-    border-radius: var(--ds-radius-pill) !important;
-    height: 100%;
+    background:    var(--ds-blue) !important;
+    border-radius: var(--ds-r-pill) !important;
+    height:        100%;
 }
 
 
 /* ============================================================
-   ROW SECTION SPACING
+   REIHEN-ABSTAND
 ============================================================ */
 
-.verticalSection {
-    margin-bottom: var(--ds-space-48) !important;
-}
-
+.verticalSection      { margin-bottom: var(--ds-s-32) !important; }
 .sectionTitle,
-.sectionTitleLink {
-    margin-bottom: var(--ds-space-16) !important;
-    font-size:   var(--ds-size-xl)        !important;
-    font-weight: var(--ds-weight-semibold) !important;
+.sectionTitleLink     { margin-bottom: var(--ds-s-12) !important; }
+
+
+/* ============================================================
+   BACKDROP-FORMAT (16:9 für manche Reihen)
+============================================================ */
+
+.cardBox.backdrop .cardImageContainer,
+.cardBox[data-type="Season"] .cardImageContainer {
+    aspect-ratio: 16 / 9;
 }
 
 
 /* ============================================================
-   WIDE CARDS (backdrop ratio — used on some rows)
+   NEW / BADGE
 ============================================================ */
 
-.cardBox.backdrop .cardImageContainer {
-    aspect-ratio: 16/9;
+.cardBox .cardIndicators {
+    position:  absolute;
+    top:       var(--ds-s-8);
+    left:      var(--ds-s-8);
+    z-index:   var(--ds-z-above);
+    display:   flex;
+    gap:       var(--ds-s-4);
+}
+
+.cardBox .countIndicator,
+.cardBox .playedIndicator {
+    background:    var(--ds-blue)    !important;
+    border-radius: var(--ds-r-xs)    !important;
+    font-size:     var(--ds-text-xs) !important;
+    font-weight:   var(--ds-weight-bold) !important;
+    color:         #fff              !important;
+    padding:       2px 6px           !important;
 }
 
 
@@ -229,14 +244,7 @@
    RESPONSIVE
 ============================================================ */
 
-@media (max-width: 1300px) {
-    :root { --ds-card-w: 175px; }
-}
-
-@media (max-width: 900px) {
-    :root { --ds-card-w: 155px; --ds-card-gap: 14px; }
-}
-
-@media (max-width: 600px) {
-    :root { --ds-card-w: 130px; --ds-card-gap: 10px; }
-}
+@media (max-width: 1400px) { :root { --ds-card-w: 180px; } }
+@media (max-width: 1100px) { :root { --ds-card-w: 160px; } }
+@media (max-width:  900px) { :root { --ds-card-w: 145px; --ds-card-gap: 12px; } }
+@media (max-width:  600px) { :root { --ds-card-w: 120px; --ds-card-gap: 9px;  } }

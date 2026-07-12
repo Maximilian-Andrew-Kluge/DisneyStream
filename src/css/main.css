@@ -1,88 +1,72 @@
 /* ============================================================
-   DisneyStream
-   main.css
-   Jellyfin 10.11.x — v0.2.0
+   DisneyStream — main.css
+   Jellyfin 10.11.x — v0.3.0
+   Disney+ 1:1 Nachbau
 ============================================================ */
 
 
 /* ============================================================
-   RESET & BASE
+   RESET
 ============================================================ */
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
-html,
-body {
-    margin:  0;
-    padding: 0;
+html, body {
+    margin: 0; padding: 0;
     overflow-x: hidden;
-    background: var(--ds-background) !important;
-    color:      var(--ds-text)       !important;
-    font-family: var(--ds-font)      !important;
-    font-size:   var(--ds-size-base) !important;
-    line-height: var(--ds-lh-normal) !important;
-    -webkit-font-smoothing:  antialiased;
+    background:  var(--ds-bg)    !important;
+    color:       var(--ds-text)  !important;
+    font-family: var(--ds-font)  !important;
+    font-size:   var(--ds-text-base) !important;
+    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 
 /* ============================================================
-   BACKGROUND — deep navy gradient like Disney+
+   HINTERGRUND — Disney+ tiefes Schwarz mit blauem Schimmer oben
 ============================================================ */
 
 .backgroundContainer {
     background:
         radial-gradient(
-            ellipse 120% 60% at 50% -10%,
-            #0a1f4a 0%,
-            #060f2a 35%,
-            var(--ds-background) 70%
+            ellipse 100% 50% at 50% 0%,
+            #101040 0%,
+            #06061A 30%,
+            var(--ds-bg) 65%
         ) fixed !important;
 }
 
-.skinBody {
-    background: none !important;
-}
+.skinBody { background: none !important; }
 
 
 /* ============================================================
-   HEADER
+   HEADER — Disney+ transparentes Top-Menü das beim Scrollen
+   dunkler wird. Jellyfin nutzt .skinHeader
 ============================================================ */
 
 .skinHeader {
     position: fixed   !important;
     inset: 0 0 auto 0 !important;
     height: var(--ds-header-h) !important;
-    background: rgba(4, 7, 20, 0.78) !important;
-    backdrop-filter: blur(var(--ds-blur)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--ds-blur)) saturate(160%);
-    border: none      !important;
-    box-shadow: none  !important;
+
+    background: rgba(4,4,5,0.80) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+
+    border:     none !important;
+    box-shadow: none !important;
     z-index: var(--ds-z-header);
+
+    transition: background var(--ds-dur-normal) ease !important;
 }
 
-/* thin separator line */
-.skinHeader::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--ds-border);
-}
+/* kein sichtbarer Strich unten — Disney+ macht das auch nicht */
+.skinHeader::after { display: none; }
 
-
-/* ============================================================
-   PAGE OFFSET
-============================================================ */
-
+/* Seite mit Header-Offset */
 .mainAnimatedPage {
-    padding-top: calc(var(--ds-header-h) + var(--ds-space-12)) !important;
+    padding-top: calc(var(--ds-header-h) + 4px) !important;
 }
 
 
@@ -91,104 +75,89 @@ body {
 ============================================================ */
 
 a {
-    color: var(--ds-primary) !important;
+    color: var(--ds-text) !important;
     text-decoration: none;
-    transition: color var(--ds-fast) ease;
+    transition: opacity var(--ds-dur-fast) ease;
 }
-
-a:hover {
-    color: var(--ds-primary-hover) !important;
-}
+a:hover { opacity: 0.8; }
 
 
 /* ============================================================
-   HEADINGS
+   ÜBERSCHRIFTEN
 ============================================================ */
 
 .pageTitle {
-    font-size:   var(--ds-size-xxl)      !important;
+    font-size:   var(--ds-text-2xl)      !important;
     font-weight: var(--ds-weight-bold)   !important;
     color:       var(--ds-text)          !important;
     line-height: var(--ds-lh-tight)      !important;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.5px;
 }
 
 .sectionTitle,
 .sectionTitleLink {
-    font-size:   var(--ds-size-xl)        !important;
-    font-weight: var(--ds-weight-semibold)!important;
-    color:       var(--ds-text)           !important;
+    font-size:   var(--ds-text-xl)          !important;
+    font-weight: var(--ds-weight-semibold)  !important;
+    color:       var(--ds-text)             !important;
     letter-spacing: -0.2px;
 }
 
-.secondaryText {
-    color: var(--ds-text-secondary) !important;
-}
-
-.dimText,
-.textMuted {
-    color: var(--ds-text-muted) !important;
-}
+.secondaryText { color: var(--ds-text-70) !important; }
+.dimText       { color: var(--ds-text-50) !important; }
 
 
 /* ============================================================
-   BUTTONS — Disney+ style (solid blue, rounded)
+   BUTTONS — Disney+ Style: weiß (Play) und halbtransparent (Info)
 ============================================================ */
 
 button,
 .emby-button,
-.raised,
-.btnDefault {
+.raised {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--ds-space-8);
+    gap: var(--ds-s-8);
 
-    background: var(--ds-accent)           !important;
-    color:      #fff                        !important;
-    border:     none                        !important;
-    border-radius: var(--ds-radius-sm)     !important;
-    font-family: var(--ds-font)            !important;
-    font-size:   var(--ds-size-base)       !important;
-    font-weight: var(--ds-weight-semibold) !important;
-    min-height:  44px                       !important;
-    padding: var(--ds-space-8) var(--ds-space-24) !important;
+    background:    var(--ds-blue)           !important;
+    color:         #fff                     !important;
+    border:        none                     !important;
+    border-radius: var(--ds-r-sm)           !important;
+    font-family:   var(--ds-font)           !important;
+    font-size:     var(--ds-text-base)      !important;
+    font-weight:   var(--ds-weight-semibold)!important;
+    min-height:    42px                     !important;
+    padding:       8px 22px                 !important;
     cursor: pointer;
     transition:
-        background    var(--ds-fast) ease,
-        box-shadow    var(--ds-fast) ease,
-        transform     var(--ds-fast) ease !important;
+        background  var(--ds-dur-fast) ease,
+        transform   var(--ds-dur-fast) ease,
+        box-shadow  var(--ds-dur-fast) ease !important;
 }
 
-button:hover,
-.emby-button:hover,
-.raised:hover {
-    background:  var(--ds-accent-hover) !important;
-    box-shadow:  var(--ds-glow);
+button:hover, .emby-button:hover, .raised:hover {
+    background:  var(--ds-blue-hover) !important;
     transform:   translateY(-1px);
+    box-shadow:  var(--ds-glow-blue);
 }
-
-button:active,
-.emby-button:active,
-.raised:active {
-    transform:  scale(0.97);
+button:active, .emby-button:active {
+    transform: scale(0.97);
     box-shadow: none;
 }
 
-/* icon-only buttons — keep small */
+/* Icon-Buttons bleiben klein */
 .paper-icon-button,
 .emby-button.paper-icon-button-light {
-    background:   transparent !important;
-    border-radius: 50%        !important;
-    padding:       8px        !important;
-    min-height:    unset      !important;
-    box-shadow:    none       !important;
+    background:    transparent !important;
+    border-radius: 50%         !important;
+    padding:       8px         !important;
+    min-height:    unset       !important;
+    box-shadow:    none        !important;
 }
-
 .paper-icon-button:hover,
 .emby-button.paper-icon-button-light:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    transform:  scale(1.1);
+    background:  rgba(255,255,255,0.10) !important;
+    transform:   scale(1.10);
+    box-shadow:  none !important;
 }
 
 
@@ -199,43 +168,38 @@ button:active,
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 textarea,
 select {
-    background:    rgba(255, 255, 255, 0.05) !important;
-    border:        1px solid var(--ds-border) !important;
-    color:         var(--ds-text)             !important;
-    border-radius: var(--ds-radius-md)        !important;
-    padding:       10px 16px                  !important;
-    font-family:   var(--ds-font)             !important;
-    font-size:     var(--ds-size-base)        !important;
-    transition:    border-color var(--ds-fast) ease,
-                   box-shadow   var(--ds-fast) ease;
+    background:    rgba(255,255,255,0.08)   !important;
+    border:        1px solid rgba(255,255,255,0.15) !important;
+    color:         var(--ds-text)           !important;
+    border-radius: var(--ds-r-sm)           !important;
+    padding:       10px 16px                !important;
+    font-family:   var(--ds-font)           !important;
+    font-size:     var(--ds-text-base)      !important;
+    transition:    border-color var(--ds-dur-fast) ease,
+                   box-shadow   var(--ds-dur-fast) ease;
 }
-
-input:focus,
-textarea:focus,
-select:focus {
+input:focus, textarea:focus, select:focus {
     outline:      none;
-    border-color: var(--ds-primary) !important;
-    box-shadow:   0 0 0 3px var(--ds-primary-glow) !important;
+    border-color: var(--ds-blue) !important;
+    box-shadow:   0 0 0 2px rgba(23,110,225,0.30) !important;
 }
-
-input[type="checkbox"],
-input[type="radio"] {
-    accent-color: var(--ds-primary);
+input[type="checkbox"], input[type="radio"] {
+    accent-color: var(--ds-blue);
 }
 
 
 /* ============================================================
-   SCROLLBAR
+   SCROLLBAR — sehr dezent wie Disney+
 ============================================================ */
 
-::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar       { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-    background:    rgba(255, 255, 255, 0.16);
-    border-radius: var(--ds-radius-pill);
+    background:    rgba(255,255,255,0.15);
+    border-radius: var(--ds-r-pill);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.30);
+    background: rgba(255,255,255,0.28);
 }
 
 
@@ -243,25 +207,24 @@ input[type="radio"] {
    SELECTION
 ============================================================ */
 
-::selection {
-    background: rgba(30, 167, 255, 0.35);
-}
+::selection { background: rgba(23,110,225,0.40); }
 
 
 /* ============================================================
-   DIVIDER
+   TRENNLINIE
 ============================================================ */
 
 hr {
-    border:     none;
-    height:     1px;
-    background: var(--ds-border);
-    margin:     var(--ds-space-16) 0;
+    border: none;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: var(--ds-s-16) 0;
 }
 
 
 /* ============================================================
-   GLASS CARD — shared surface style
+   GENERISCHE KARTEN / PANELS
+   (Jellyfin-Elemente wie Dialoge, Listen, etc.)
 ============================================================ */
 
 .card,
@@ -270,103 +233,76 @@ hr {
 .paperList,
 .listItem,
 .userCard {
-    background:
-        rgba(13, 23, 48, 0.70) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border:        1px solid var(--ds-border) !important;
-    border-radius: var(--ds-radius-lg)        !important;
+    background:    var(--ds-bg-tertiary)     !important;
+    border:        none                      !important;
+    border-radius: var(--ds-r-md)            !important;
     box-shadow:    var(--ds-shadow-card);
     transition:
-        transform   var(--ds-normal) var(--ds-ease),
-        box-shadow  var(--ds-normal) var(--ds-ease),
-        background  var(--ds-normal) ease !important;
+        transform  var(--ds-dur-normal) var(--ds-ease),
+        box-shadow var(--ds-dur-normal) var(--ds-ease) !important;
 }
 
 .card:hover,
 .cardBox:hover,
 .visualCardBox:hover {
-    background:  rgba(18, 32, 60, 0.90) !important;
-    transform:   translateY(-6px);
-    box-shadow:
-        var(--ds-shadow-lg),
-        var(--ds-glow);
+    transform:  translateY(-6px) !important;
+    box-shadow: var(--ds-shadow-lg), var(--ds-glow-blue) !important;
 }
 
 
 /* ============================================================
-   LIST ITEMS
+   LISTEN
 ============================================================ */
 
 .listItem {
-    padding:       var(--ds-space-16) !important;
-    margin-bottom: var(--ds-space-8)  !important;
+    padding:       var(--ds-s-16) !important;
+    margin-bottom: var(--ds-s-4)  !important;
 }
-
 .listItem:hover {
-    background: rgba(255, 255, 255, 0.04) !important;
+    background: rgba(255,255,255,0.04) !important;
 }
 
 
 /* ============================================================
-   DIALOGS / MODALS
+   DIALOGE / MODALS
 ============================================================ */
 
 .dialog,
 .formDialog {
-    background:    var(--ds-surface)    !important;
-    border:        1px solid var(--ds-border) !important;
-    border-radius: var(--ds-radius-xl)  !important;
-    box-shadow:    var(--ds-shadow-lg)  !important;
+    background:    #16161F  !important;
+    border:        1px solid rgba(255,255,255,0.10) !important;
+    border-radius: var(--ds-r-xl) !important;
+    box-shadow:    var(--ds-shadow-lg) !important;
     overflow:      hidden;
 }
-
 .dialogHeader {
-    background:   rgba(255, 255, 255, 0.03) !important;
-    border-bottom: 1px solid var(--ds-border) !important;
-    padding:       var(--ds-space-16) var(--ds-space-24) !important;
-}
-
-.dialogContent {
-    padding: var(--ds-space-24) !important;
+    background:    rgba(255,255,255,0.04) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    padding:       var(--ds-s-16) var(--ds-s-24) !important;
 }
 
 
 /* ============================================================
-   TABS
+   TABS (Jellyfin emby-tab-buttons)
 ============================================================ */
 
 .emby-tab-button {
-    border-radius:  var(--ds-radius-pill);
-    color:          var(--ds-text-secondary) !important;
-    font-weight:    var(--ds-weight-medium)  !important;
-    transition:
-        background var(--ds-fast) ease,
-        color      var(--ds-fast) ease !important;
+    color:         var(--ds-text-70)             !important;
+    font-weight:   var(--ds-weight-medium)       !important;
+    border-radius: var(--ds-r-pill);
+    transition:    color var(--ds-dur-fast) ease,
+                   background var(--ds-dur-fast) ease !important;
 }
-
 .emby-tab-button:hover {
-    background: rgba(30, 167, 255, 0.10) !important;
-    color:      var(--ds-text)           !important;
+    background: rgba(255,255,255,0.07) !important;
+    color:      var(--ds-text)         !important;
 }
-
 .emby-tab-button-active,
 .emby-tab-button.is-active {
-    background: rgba(30, 167, 255, 0.18) !important;
-    color:      var(--ds-primary)        !important;
-    font-weight: var(--ds-weight-semibold) !important;
+    color:       var(--ds-text)              !important;
+    font-weight: var(--ds-weight-semibold)   !important;
+    background:  rgba(255,255,255,0.10)      !important;
 }
-
-
-/* ============================================================
-   TABLES
-============================================================ */
-
-table         { width: 100%; border-collapse: collapse; }
-td, th        { padding: var(--ds-space-12) var(--ds-space-16); }
-th            { color: var(--ds-text-secondary); font-weight: var(--ds-weight-semibold); font-size: var(--ds-size-sm); text-transform: uppercase; letter-spacing: 0.06em; }
-tr            { border-bottom: 1px solid var(--ds-border); }
-tr:hover      { background: rgba(255, 255, 255, 0.03); }
 
 
 /* ============================================================
@@ -374,53 +310,37 @@ tr:hover      { background: rgba(255, 255, 255, 0.03); }
 ============================================================ */
 
 .mdl-progress {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-radius: var(--ds-radius-pill)  !important;
-    height: 4px !important;
+    background:    rgba(255,255,255,0.12) !important;
+    border-radius: var(--ds-r-pill)       !important;
+    height: 3px !important;
 }
-
 .mdl-progress > .progressbar {
-    background:
-        linear-gradient(90deg, var(--ds-primary), #52beff) !important;
-    border-radius: var(--ds-radius-pill) !important;
+    background:    var(--ds-blue)         !important;
+    border-radius: var(--ds-r-pill)       !important;
 }
 
 
 /* ============================================================
-   LOADER SPINNER
+   SPINNER
 ============================================================ */
 
 .mdl-spinner__layer-1,
 .mdl-spinner__layer-2,
 .mdl-spinner__layer-3,
 .mdl-spinner__layer-4 {
-    border-color: var(--ds-primary) !important;
+    border-color: var(--ds-blue) !important;
 }
 
 
 /* ============================================================
-   SETTINGS PAGE
+   TABELLEN
 ============================================================ */
 
-.settingsContainer {
-    max-width: var(--ds-page-max);
-    margin:    0 auto;
-    padding:   0 var(--ds-space-24);
-}
-
-
-/* ============================================================
-   NOTIFICATIONS / TOAST
-============================================================ */
-
-.toast,
-.notification {
-    background:    var(--ds-surface)    !important;
-    border:        1px solid var(--ds-border) !important;
-    border-radius: var(--ds-radius-md)  !important;
-    box-shadow:    var(--ds-shadow-lg)  !important;
-    color:         var(--ds-text)       !important;
-}
+table  { width: 100%; border-collapse: collapse; }
+th, td { padding: var(--ds-s-12) var(--ds-s-16); }
+th     { color: var(--ds-text-50); font-size: var(--ds-text-sm); text-transform: uppercase; letter-spacing: 0.06em; font-weight: var(--ds-weight-semibold); }
+tr     { border-bottom: 1px solid rgba(255,255,255,0.06); }
+tr:hover { background: rgba(255,255,255,0.03); }
 
 
 /* ============================================================
@@ -428,27 +348,21 @@ tr:hover      { background: rgba(255, 255, 255, 0.03); }
 ============================================================ */
 
 .pageFooter {
-    color:   var(--ds-text-muted) !important;
-    padding: var(--ds-space-48) var(--ds-space-24);
-    font-size: var(--ds-size-sm);
+    color:     var(--ds-text-50) !important;
+    padding:   var(--ds-s-48) var(--ds-s-24);
+    font-size: var(--ds-text-sm);
 }
 
 
 /* ============================================================
-   PAGE FADE-IN
+   PAGE ANIMATION
 ============================================================ */
 
 .mainAnimatedPage {
-    animation: dsPageIn var(--ds-slow) var(--ds-ease-out) both;
+    animation: dsPageFadeIn var(--ds-dur-slow) var(--ds-ease-out) both;
 }
 
-@keyframes dsPageIn {
-    from {
-        opacity:   0;
-        transform: translateY(14px);
-    }
-    to {
-        opacity:   1;
-        transform: none;
-    }
+@keyframes dsPageFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
 }
