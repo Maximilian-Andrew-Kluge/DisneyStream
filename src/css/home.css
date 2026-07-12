@@ -1,110 +1,175 @@
 /* ============================================================
-   Aurora Stream
+   DisneyStream
    home.css
-   Jellyfin 10.11.x
+   Jellyfin 10.11.x — v0.2.0
 ============================================================ */
+
 
 /* ============================================================
-   HOME PAGE
+   HOME PAGE WRAPPER
 ============================================================ */
 
-.homePage{
-
-    padding-left:40px;
-    padding-right:40px;
-    padding-bottom:60px;
-
+.homePage {
+    padding: 0 var(--ds-space-48) var(--ds-space-64) !important;
+    max-width: var(--ds-page-max);
+    margin: 0 auto;
 }
 
 
 /* ============================================================
-   HERO
+   HERO — full-bleed banner
 ============================================================ */
 
-.homePage::before{
+.ds-hero {
+    position: relative;
+    width:     100%;
+    height:    var(--ds-hero-h);
+    min-height: var(--ds-hero-min-h);
+    margin-bottom: var(--ds-space-48);
+    border-radius: var(--ds-radius-xl);
+    overflow: hidden;
+}
 
-    content:"";
+.ds-hero-backdrop {
+    position: absolute;
+    inset: 0;
+    background-size:     cover;
+    background-position: center top;
+    background-color:    var(--ds-surface);
+    transform:  scale(1.04);
+    transition: transform var(--ds-slow) var(--ds-ease);
+}
 
-    display:block;
+.ds-hero:hover .ds-hero-backdrop {
+    transform: scale(1);
+}
 
-    height:520px;
-
-    width:100%;
-
-    margin-bottom:55px;
-
-    border-radius:28px;
-
+/* gradient overlay */
+.ds-hero-overlay {
+    position: absolute;
+    inset: 0;
     background:
-
         linear-gradient(
-            180deg,
-            rgba(4,7,20,.05),
-            rgba(4,7,20,.35),
-            rgba(4,7,20,.95)
+            90deg,
+            rgba(4, 7, 20, 0.95) 0%,
+            rgba(4, 7, 20, 0.55) 55%,
+            rgba(4, 7, 20, 0.10) 100%
         ),
-
-        url("/web/assets/img/banner.jpg");
-
-    background-size:cover;
-    background-position:center;
-
-    box-shadow:
-
-        0 25px 70px rgba(0,0,0,.55);
-
-}
-
-
-/* ============================================================
-   HERO FADE
-============================================================ */
-
-.homePage::after{
-
-    content:"";
-
-    display:block;
-
-    width:100%;
-
-    height:80px;
-
-    margin-top:-80px;
-
-    background:
-
         linear-gradient(
-            transparent,
-            var(--background)
+            0deg,
+            rgba(4, 7, 20, 0.90) 0%,
+            transparent 50%
         );
+}
 
+/* hero text */
+.ds-hero-content {
+    position: absolute;
+    bottom:   var(--ds-space-48);
+    left:     var(--ds-space-48);
+    max-width: var(--ds-hero-max-w);
+    z-index: var(--ds-z-above);
+}
+
+.ds-badge {
+    display: inline-block;
+    background:  var(--ds-primary);
+    color:       #fff;
+    font-size:   var(--ds-size-xs);
+    font-weight: var(--ds-weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding:       4px 12px;
+    border-radius: var(--ds-radius-pill);
+    margin-bottom: var(--ds-space-12);
+}
+
+.ds-hero-content .ds-title {
+    font-size:   clamp(30px, 5vw, 56px);
+    font-weight: var(--ds-weight-bold);
+    line-height: var(--ds-lh-tight);
+    color:       var(--ds-text);
+    margin:      0 0 var(--ds-space-12);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.60);
+}
+
+.ds-hero-content .ds-description {
+    font-size:   var(--ds-size-md);
+    color:       var(--ds-text-secondary);
+    line-height: var(--ds-lh-normal);
+    margin:      0 0 var(--ds-space-24);
+    max-width:   520px;
+}
+
+/* hero buttons */
+.ds-buttons {
+    display: flex;
+    gap:     var(--ds-space-12);
+    flex-wrap: wrap;
+}
+
+.ds-play {
+    background:  #fff !important;
+    color:       #040714 !important;
+    font-weight: var(--ds-weight-bold) !important;
+    padding:     12px 32px !important;
+    font-size:   var(--ds-size-md) !important;
+    border-radius: var(--ds-radius-sm) !important;
+    gap: var(--ds-space-8);
+}
+
+.ds-play:hover {
+    background:  rgba(255,255,255,0.85) !important;
+    box-shadow:  0 0 0 4px rgba(255,255,255,0.18) !important;
+    transform:   translateY(-2px);
+}
+
+.ds-info {
+    background:  rgba(255, 255, 255, 0.18) !important;
+    color:       var(--ds-text)            !important;
+    font-weight: var(--ds-weight-semibold) !important;
+    padding:     12px 28px !important;
+    font-size:   var(--ds-size-md)  !important;
+    border-radius: var(--ds-radius-sm) !important;
+    backdrop-filter: blur(8px);
+}
+
+.ds-info:hover {
+    background:  rgba(255, 255, 255, 0.28) !important;
 }
 
 
 /* ============================================================
-   SECTIONS
+   SECTION ROW
 ============================================================ */
 
-.homePage .verticalSection{
-
-    margin-bottom:70px!important;
-
+.homePage .verticalSection {
+    margin-bottom: var(--ds-space-48) !important;
 }
 
+.homePage .sectionTitle,
+.homePage .sectionTitleLink {
+    font-size:   var(--ds-size-xl)        !important;
+    font-weight: var(--ds-weight-semibold) !important;
+    margin:      0 0 var(--ds-space-16)   !important;
+}
 
-/* ============================================================
-   SECTION TITLE
-============================================================ */
+.homePage .sectionTitleLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-space-8);
+}
 
-.homePage .sectionTitle{
+.homePage .sectionTitleLink::after {
+    content: "›";
+    font-size: 1.3em;
+    opacity: 0.5;
+    transition: opacity var(--ds-fast) ease, transform var(--ds-fast) ease;
+}
 
-    font-size:30px!important;
-
-    font-weight:700!important;
-
-    margin-bottom:20px!important;
-
+.homePage .sectionTitleLink:hover::after {
+    opacity: 1;
+    transform: translateX(4px);
 }
 
 
@@ -112,91 +177,33 @@
    POSTER ROW
 ============================================================ */
 
-.homePage .itemsContainer{
-
-    gap:22px!important;
-
-    padding-top:8px;
-
-    padding-bottom:12px;
-
+.homePage .itemsContainer {
+    gap:         var(--ds-card-gap) !important;
+    padding:     var(--ds-space-8) var(--ds-space-4) var(--ds-space-16) !important;
+    scroll-behavior: smooth;
 }
 
-
-/* ============================================================
-   ROW ANIMATION
-============================================================ */
-
-.homePage .itemsContainer>.cardBox{
-
-    animation:rowFade .55s ease both;
-
+/* stagger animation on row load */
+.homePage .itemsContainer > .cardBox {
+    animation: dsRowIn 0.45s var(--ds-ease-out) both;
 }
 
-@keyframes rowFade{
+.homePage .itemsContainer > .cardBox:nth-child(1)  { animation-delay: 0.04s; }
+.homePage .itemsContainer > .cardBox:nth-child(2)  { animation-delay: 0.08s; }
+.homePage .itemsContainer > .cardBox:nth-child(3)  { animation-delay: 0.12s; }
+.homePage .itemsContainer > .cardBox:nth-child(4)  { animation-delay: 0.16s; }
+.homePage .itemsContainer > .cardBox:nth-child(5)  { animation-delay: 0.20s; }
+.homePage .itemsContainer > .cardBox:nth-child(n+6){ animation-delay: 0.24s; }
 
-    from{
-
-        opacity:0;
-
-        transform:translateY(25px);
-
+@keyframes dsRowIn {
+    from {
+        opacity:   0;
+        transform: translateY(20px);
     }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
+    to {
+        opacity:   1;
+        transform: none;
     }
-
-}
-
-
-/* ============================================================
-   HORIZONTAL SCROLL
-============================================================ */
-
-.homePage .itemsContainer{
-
-    scroll-behavior:smooth;
-
-}
-
-
-/* ============================================================
-   TITLE SHADOW
-============================================================ */
-
-.pageTitle{
-
-    text-shadow:
-
-        0 0 18px rgba(0,0,0,.45);
-
-}
-
-
-/* ============================================================
-   CONTINUE WATCHING
-============================================================ */
-
-.resumeSection{
-
-    margin-top:20px;
-
-}
-
-
-/* ============================================================
-   LIBRARIES
-============================================================ */
-
-.libraryPage .itemsContainer{
-
-    gap:18px!important;
-
 }
 
 
@@ -204,12 +211,11 @@
    EMPTY STATE
 ============================================================ */
 
-.noItemsMessage{
-
-    color:var(--text-secondary)!important;
-
-    opacity:.8;
-
+.noItemsMessage {
+    color:   var(--ds-text-muted)   !important;
+    opacity: 0.7;
+    padding: var(--ds-space-32);
+    text-align: center;
 }
 
 
@@ -217,27 +223,36 @@
    MOBILE
 ============================================================ */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-.homePage{
+    .homePage {
+        padding: 0 var(--ds-space-16) var(--ds-space-32) !important;
+    }
 
-    padding-left:18px;
-    padding-right:18px;
+    .ds-hero {
+        height:        55vw;
+        min-height:    260px;
+        border-radius: var(--ds-radius-lg);
+        margin-bottom: var(--ds-space-32);
+    }
 
-}
+    .ds-hero-content {
+        bottom: var(--ds-space-24);
+        left:   var(--ds-space-20);
+    }
 
-.homePage::before{
+    .ds-hero-overlay {
+        background:
+            linear-gradient(
+                0deg,
+                rgba(4, 7, 20, 0.96) 0%,
+                rgba(4, 7, 20, 0.30) 60%,
+                transparent 100%
+            );
+    }
 
-    height:260px;
-
-    border-radius:20px;
-
-}
-
-.homePage .sectionTitle{
-
-    font-size:22px!important;
-
-}
+    .ds-hero-content .ds-description {
+        display: none;
+    }
 
 }

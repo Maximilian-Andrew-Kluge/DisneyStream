@@ -1,0 +1,165 @@
+/* ============================================================
+   DisneyStream
+   search.css — Search Page
+   Jellyfin 10.11.x — v0.2.0
+============================================================ */
+
+
+/* ============================================================
+   SEARCH INPUT
+============================================================ */
+
+.searchPage .inputElement,
+.searchFieldContainer input {
+    background:    rgba(255, 255, 255, 0.06) !important;
+    border:        1px solid var(--ds-border) !important;
+    border-radius: var(--ds-radius-pill)       !important;
+    color:         var(--ds-text)              !important;
+    font-size:     var(--ds-size-md)           !important;
+    padding:       14px 24px                   !important;
+    width:         100%;
+}
+
+.searchPage .inputElement:focus,
+.searchFieldContainer input:focus {
+    border-color: var(--ds-primary) !important;
+    box-shadow:   0 0 0 3px var(--ds-primary-glow) !important;
+    background:   rgba(255, 255, 255, 0.08) !important;
+}
+
+/* search icon */
+.searchFieldContainer .material-icons {
+    color: var(--ds-text-muted);
+}
+
+
+/* ============================================================
+   CATEGORY FILTERS
+============================================================ */
+
+.searchSuggestionsList {
+    display:   flex;
+    flex-wrap: wrap;
+    gap:       var(--ds-space-8);
+    margin:    var(--ds-space-16) 0;
+}
+
+.searchSuggestionsList li,
+.filterButton {
+    background:    rgba(255, 255, 255, 0.06) !important;
+    border:        1px solid var(--ds-border) !important;
+    border-radius: var(--ds-radius-pill)       !important;
+    color:         var(--ds-text-secondary)    !important;
+    padding:       6px 18px                    !important;
+    font-size:     var(--ds-size-sm)           !important;
+    cursor:        pointer;
+    list-style:    none;
+    transition:
+        background var(--ds-fast) ease,
+        color      var(--ds-fast) ease !important;
+}
+
+.searchSuggestionsList li:hover,
+.filterButton:hover,
+.filterButton.active {
+    background:  rgba(30, 167, 255, 0.18) !important;
+    border-color: var(--ds-primary)        !important;
+    color:        var(--ds-text)           !important;
+}
+
+
+/* ============================================================
+   RESULTS GRID
+============================================================ */
+
+.searchResults {
+    margin-top: var(--ds-space-24);
+}
+
+.ds-search-results {
+    position: fixed;
+    top:      var(--ds-header-h);
+    left:     var(--ds-sidebar-w);
+    right:    0;
+    bottom:   0;
+    background:    rgba(4, 7, 20, 0.96);
+    backdrop-filter: blur(var(--ds-blur));
+    overflow-y: auto;
+    padding:    var(--ds-space-24);
+    z-index:    var(--ds-z-modal);
+    display:    grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap:        var(--ds-space-16);
+    align-content: start;
+}
+
+.ds-search-card {
+    border-radius: var(--ds-radius-md);
+    overflow:      hidden;
+    cursor:        pointer;
+    transition:    transform var(--ds-fast) var(--ds-ease);
+}
+
+.ds-search-card:hover {
+    transform: translateY(-4px);
+}
+
+.ds-search-card img {
+    width:       100%;
+    aspect-ratio: 2/3;
+    object-fit:  cover;
+    display:     block;
+}
+
+.ds-search-info {
+    padding: var(--ds-space-8) var(--ds-space-4);
+}
+
+.ds-search-info h3 {
+    font-size:   var(--ds-size-sm);
+    font-weight: var(--ds-weight-semibold);
+    color:       var(--ds-text);
+    margin:      0 0 var(--ds-space-2);
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+}
+
+.ds-search-info p {
+    font-size: var(--ds-size-xs);
+    color:     var(--ds-text-muted);
+    margin:    0;
+}
+
+
+/* ============================================================
+   LOADING
+============================================================ */
+
+.ds-search-loading {
+    position: fixed;
+    bottom:   var(--ds-space-24);
+    left:     50%;
+    transform: translateX(-50%);
+    background:    var(--ds-surface);
+    border:        1px solid var(--ds-border);
+    border-radius: var(--ds-radius-pill);
+    padding:       10px 24px;
+    font-size:     var(--ds-size-sm);
+    color:         var(--ds-text-secondary);
+    box-shadow:    var(--ds-shadow-md);
+    z-index:       var(--ds-z-toast);
+    animation:     dsSlideUp 0.25s var(--ds-ease-out) both;
+}
+
+
+/* ============================================================
+   EMPTY STATE
+============================================================ */
+
+.noResults {
+    text-align: center;
+    padding:    var(--ds-space-64);
+    color:      var(--ds-text-muted);
+    font-size:  var(--ds-size-lg);
+}

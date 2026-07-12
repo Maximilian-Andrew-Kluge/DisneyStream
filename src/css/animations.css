@@ -1,409 +1,207 @@
 /* ============================================================
-   Aurora Stream
+   DisneyStream
    animations.css
-   Jellyfin 10.11.x
+   Jellyfin 10.11.x — v0.2.0
 ============================================================ */
 
 
 /* ============================================================
-   GLOBAL
+   GLOBAL TRANSITION DEFAULTS
+   Only non-layout props — avoids jank on forced reflows
 ============================================================ */
 
-*{
-
+* {
     transition:
-        background .25s ease,
-        color .25s ease,
-        border-color .25s ease,
-        box-shadow .30s ease,
-        transform .30s ease;
-
+        background-color var(--ds-fast) ease,
+        color            var(--ds-fast) ease,
+        border-color     var(--ds-fast) ease,
+        opacity          var(--ds-fast) ease;
 }
 
 
 /* ============================================================
-   PAGE FADE
+   PAGE ENTRANCE
 ============================================================ */
 
-.mainAnimatedPage{
-
-    animation:
-        pageFade .45s ease;
-
+.mainAnimatedPage {
+    animation: dsPageIn var(--ds-slow) var(--ds-ease-out) both;
 }
 
-@keyframes pageFade{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(18px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
+@keyframes dsPageIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   HERO
+   HERO ENTRANCE
 ============================================================ */
 
-.homePage::before{
-
-    animation:
-        heroFade 1s ease;
-
+.ds-hero {
+    animation: dsHeroIn 0.8s var(--ds-ease-out) both;
 }
 
-@keyframes heroFade{
+@keyframes dsHeroIn {
+    from { opacity: 0; transform: scale(1.025); }
+    to   { opacity: 1; transform: scale(1); }
+}
 
-    from{
+.ds-hero-content {
+    animation: dsHeroContentIn 0.7s var(--ds-ease-out) 0.2s both;
+}
 
-        opacity:0;
-
-        transform:scale(1.03);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:scale(1);
-
-    }
-
+@keyframes dsHeroContentIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   POSTERS
+   SECTION TITLE
 ============================================================ */
 
-.cardBox{
-
-    animation:
-        posterFade .55s ease;
-
+.sectionTitle,
+.sectionTitleLink {
+    animation: dsTitleIn 0.5s var(--ds-ease-out) both;
 }
 
-@keyframes posterFade{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(25px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
+@keyframes dsTitleIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   CARD HOVER
+   CARD ENTRANCE (JS-driven via IntersectionObserver preferred,
+   CSS fallback for initial load)
 ============================================================ */
 
-.cardBox:hover{
+.cardBox {
+    animation: dsCardIn 0.45s var(--ds-ease-out) both;
+}
 
-    transform:
-        translateY(-8px)
-        scale(1.04);
+@keyframes dsCardIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+}
 
+/* card hover — defined here for completeness, also in cards.css */
+.cardBox:hover {
+    transform:  translateY(-8px) !important;
+    box-shadow: var(--ds-shadow-lg), var(--ds-glow) !important;
+}
+
+.cardBox:hover .cardImage {
+    transform: scale(1.07) !important;
 }
 
 
 /* ============================================================
-   IMAGE
+   DIALOG OPEN
 ============================================================ */
 
-.cardImage{
-
-    transition:
-
-        transform .45s ease,
-        filter .45s ease;
-
+.dialog,
+.formDialog {
+    animation: dsDialogIn var(--ds-normal) var(--ds-ease-out) both;
 }
 
-.cardBox:hover .cardImage{
-
-    transform:
-
-        scale(1.08);
-
+@keyframes dsDialogIn {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   GLOW
+   SIDEBAR ITEM RIPPLE (nav icon rotate)
 ============================================================ */
 
-.cardBox:hover{
+.navMenuOption:hover i,
+.navMenuOption:hover .material-icons {
+    animation: dsIconBounce 0.3s var(--ds-ease) both;
+}
 
-    box-shadow:
-
-        0 22px 55px rgba(0,0,0,.45),
-
-        0 0 35px rgba(30,167,255,.18);
-
+@keyframes dsIconBounce {
+    0%  { transform: scale(1); }
+    50% { transform: scale(1.18) rotate(4deg); }
+    100%{ transform: scale(1.12); }
 }
 
 
 /* ============================================================
-   BUTTON
+   LOADING SPINNER GLOW
+============================================================ */
+
+.mdl-spinner {
+    animation: dsSpinGlow 1.2s ease-in-out infinite !important;
+}
+
+@keyframes dsSpinGlow {
+    0%, 100% { filter: drop-shadow(0 0 0px var(--ds-primary)); }
+    50%       { filter: drop-shadow(0 0 10px var(--ds-primary)); }
+}
+
+
+/* ============================================================
+   PROGRESS GLOW PULSE
+============================================================ */
+
+.itemProgressBarForeground {
+    animation: dsProgressPulse 3s ease-in-out infinite;
+}
+
+@keyframes dsProgressPulse {
+    0%, 100% { filter: brightness(1); }
+    50%       { filter: brightness(1.35); }
+}
+
+
+/* ============================================================
+   BUTTON MICRO-INTERACTION
 ============================================================ */
 
 button:hover,
-.btn:hover{
-
-    transform:
-
-        translateY(-2px);
-
+.emby-button:hover {
+    transform: translateY(-1px);
 }
 
-button:active{
-
-    transform:
-
-        scale(.97);
-
+button:active,
+.emby-button:active {
+    transform: scale(0.97);
 }
 
 
 /* ============================================================
-   SIDEBAR
+   SKIP INTRO BUTTON ENTRANCE
 ============================================================ */
 
-.navMenuOption{
-
-    transition:
-
-        all .25s ease;
-
+.ds-skip-intro {
+    animation: dsSlideUp 0.35s var(--ds-ease-out) both;
 }
 
-.navMenuOption:hover{
-
-    transform:
-
-        translateX(6px);
-
+@keyframes dsSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
 /* ============================================================
-   ICON
+   CARD VISIBILITY (class added by IntersectionObserver in JS)
 ============================================================ */
 
-.navMenuOption:hover i{
-
-    transform:
-
-        rotate(6deg)
-        scale(1.12);
-
+.cardBox.ds-visible {
+    opacity: 1;
 }
 
 
 /* ============================================================
-   SCROLL
+   REDUCED MOTION
 ============================================================ */
 
-.itemsContainer{
-
-    scroll-behavior:smooth;
-
-}
-
-
-/* ============================================================
-   TITLE
-============================================================ */
-
-.sectionTitle{
-
-    animation:
-
-        fadeTitle .6s ease;
-
-}
-
-@keyframes fadeTitle{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateX(-12px);
-
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation:  none !important;
+        transition: none !important;
     }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
-
-
-/* ============================================================
-   DIALOG
-============================================================ */
-
-.dialog{
-
-    animation:
-
-        dialogOpen .28s ease;
-
-}
-
-@keyframes dialogOpen{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            scale(.96);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            scale(1);
-
-    }
-
-}
-
-
-/* ============================================================
-   MENU
-============================================================ */
-
-.mainDrawer{
-
-    transition:
-
-        width .35s ease,
-        background .35s ease;
-
-}
-
-
-/* ============================================================
-   LOADER
-============================================================ */
-
-.mdl-spinner{
-
-    animation:
-
-        spinGlow 1.2s linear infinite;
-
-}
-
-@keyframes spinGlow{
-
-    0%{
-
-        filter:
-
-            drop-shadow(0 0 0px #1ea7ff);
-
-    }
-
-    50%{
-
-        filter:
-
-            drop-shadow(0 0 12px #1ea7ff);
-
-    }
-
-    100%{
-
-        filter:
-
-            drop-shadow(0 0 0px #1ea7ff);
-
-    }
-
-}
-
-
-/* ============================================================
-   PROGRESS BAR
-============================================================ */
-
-.itemProgressBarForeground{
-
-    animation:
-
-        progressGlow 2s linear infinite;
-
-}
-
-@keyframes progressGlow{
-
-    0%{
-
-        filter:brightness(1);
-
-    }
-
-    50%{
-
-        filter:brightness(1.35);
-
-    }
-
-    100%{
-
-        filter:brightness(1);
-
-    }
-
-}
-
-
-/* ============================================================
-   HOVER SCALE
-============================================================ */
-
-.visualCardBox:hover,
-.cardScalable:hover{
-
-    transform:
-
-        scale(1.05);
-
 }

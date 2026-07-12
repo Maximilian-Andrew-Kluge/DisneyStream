@@ -1,0 +1,186 @@
+/* ============================================================
+   DisneyStream
+   settings.css — Settings & Admin Pages
+   Jellyfin 10.11.x — v0.2.0
+============================================================ */
+
+
+/* ============================================================
+   SETTINGS LAYOUT
+============================================================ */
+
+.settingsPage {
+    max-width: 960px;
+    margin:    0 auto;
+    padding:   var(--ds-space-32) var(--ds-space-24) !important;
+}
+
+
+/* ============================================================
+   SETTINGS SECTION
+============================================================ */
+
+.verticalSection {
+    background:    rgba(255, 255, 255, 0.02);
+    border:        1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    padding:       var(--ds-space-24) !important;
+    margin-bottom: var(--ds-space-24) !important;
+}
+
+.verticalSection:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+
+/* ============================================================
+   SECTION HEADER
+============================================================ */
+
+.settingsSectionTitle,
+.verticalSection .sectionTitle {
+    font-size:   var(--ds-size-lg)         !important;
+    font-weight: var(--ds-weight-semibold) !important;
+    color:       var(--ds-text)            !important;
+    margin:      0 0 var(--ds-space-20)    !important;
+    padding-bottom: var(--ds-space-12)     !important;
+    border-bottom: 1px solid var(--ds-border);
+}
+
+
+/* ============================================================
+   FORM ROWS
+============================================================ */
+
+.inputLabelWrapper,
+.formRow {
+    display:       flex;
+    align-items:   center;
+    gap:           var(--ds-space-16);
+    padding:       var(--ds-space-12) 0;
+    border-bottom: 1px solid var(--ds-border);
+}
+
+.inputLabelWrapper:last-child,
+.formRow:last-child {
+    border-bottom: none;
+}
+
+.inputLabel,
+.fieldDescription {
+    flex:      1;
+    min-width: 0;
+}
+
+.inputLabel label {
+    font-size:   var(--ds-size-base)       !important;
+    font-weight: var(--ds-weight-medium)   !important;
+    color:       var(--ds-text)            !important;
+}
+
+.fieldDescription {
+    font-size: var(--ds-size-sm);
+    color:     var(--ds-text-muted);
+    margin-top: var(--ds-space-2);
+}
+
+
+/* ============================================================
+   TOGGLE / CHECKBOX
+============================================================ */
+
+.emby-checkbox-label {
+    display:     flex;
+    align-items: center;
+    gap:         var(--ds-space-12);
+    cursor:      pointer;
+    padding:     var(--ds-space-8) 0;
+}
+
+input[type="checkbox"] {
+    width:  20px;
+    height: 20px;
+    accent-color: var(--ds-primary);
+    cursor: pointer;
+}
+
+
+/* ============================================================
+   SELECT / DROPDOWN
+============================================================ */
+
+.emby-select {
+    appearance: none !important;
+    background:    rgba(255, 255, 255, 0.05) !important;
+    border:        1px solid var(--ds-border) !important;
+    border-radius: var(--ds-radius-md)         !important;
+    color:         var(--ds-text)              !important;
+    padding:       10px 40px 10px 16px         !important;
+    font-size:     var(--ds-size-base)         !important;
+    cursor:        pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23b0bccf' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 14px center !important;
+}
+
+.emby-select:focus {
+    border-color: var(--ds-primary) !important;
+    box-shadow:   0 0 0 3px var(--ds-primary-glow) !important;
+}
+
+
+/* ============================================================
+   SAVE BUTTON
+============================================================ */
+
+.btnSave {
+    background:  var(--ds-accent) !important;
+    margin-top:  var(--ds-space-24) !important;
+    padding:     12px 36px !important;
+}
+
+.btnSave:hover {
+    background: var(--ds-accent-hover) !important;
+}
+
+
+/* ============================================================
+   ADMIN CARD TILES
+============================================================ */
+
+.dashboardEntry {
+    background:    rgba(13, 23, 48, 0.70) !important;
+    border:        1px solid var(--ds-border) !important;
+    border-radius: var(--ds-radius-lg) !important;
+    padding:       var(--ds-space-20) !important;
+    transition:
+        background var(--ds-fast) ease,
+        transform  var(--ds-fast) ease,
+        box-shadow var(--ds-fast) ease !important;
+    cursor: pointer;
+}
+
+.dashboardEntry:hover {
+    background:  rgba(18, 32, 60, 0.90) !important;
+    transform:   translateY(-4px) !important;
+    box-shadow:  var(--ds-shadow-md), var(--ds-glow) !important;
+}
+
+.dashboardEntry .material-icons {
+    color:      var(--ds-primary);
+    font-size:  36px !important;
+    margin-bottom: var(--ds-space-8);
+}
+
+.dashboardEntry h3 {
+    font-size:   var(--ds-size-md)         !important;
+    font-weight: var(--ds-weight-semibold) !important;
+    color:       var(--ds-text)            !important;
+    margin:      0 0 var(--ds-space-4)     !important;
+}
+
+.dashboardEntry p {
+    font-size: var(--ds-size-sm);
+    color:     var(--ds-text-muted);
+    margin:    0;
+}

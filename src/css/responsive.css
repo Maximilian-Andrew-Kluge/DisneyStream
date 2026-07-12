@@ -1,203 +1,201 @@
 /* ============================================================
-   Aurora Stream
+   DisneyStream
    responsive.css
-   Jellyfin 10.11.x
+   Jellyfin 10.11.x — v0.2.0
 ============================================================ */
 
-/* ================================
-   4K / Ultrawide
-================================ */
 
-@media (min-width:2000px){
+/* ============================================================
+   4K / ULTRAWIDE  ≥ 2000px
+============================================================ */
 
-:root{
+@media (min-width: 2000px) {
 
---poster-width:260px;
+    :root {
+        --ds-card-w:   240px;
+        --ds-card-gap: 24px;
+    }
 
-}
-
-.pageTitle{
-
-font-size:42px!important;
-
-}
-
-.sectionTitle{
-
-font-size:34px!important;
+    .pageTitle    { font-size: 48px !important; }
+    .sectionTitle { font-size: 34px !important; }
+    .itemsContainer { gap: 28px !important; }
 
 }
 
-.itemsContainer{
 
-gap:28px!important;
+/* ============================================================
+   LARGE DESKTOP  1600–1999px
+============================================================ */
 
-}
+@media (max-width: 1999px) and (min-width: 1600px) {
 
-}
-
-/* ================================
-   Desktop
-================================ */
-
-@media (max-width:1600px){
-
-:root{
-
---poster-width:210px;
+    :root {
+        --ds-card-w: 210px;
+    }
 
 }
 
-}
 
-/* ================================
-   Laptop
-================================ */
+/* ============================================================
+   DESKTOP  1300–1599px
+============================================================ */
 
-@media (max-width:1300px){
+@media (max-width: 1599px) and (min-width: 1300px) {
 
-:root{
-
---poster-width:180px;
-
-}
-
-.pageTitle{
-
-font-size:30px!important;
+    :root {
+        --ds-card-w: 190px;
+    }
 
 }
 
-.sectionTitle{
 
-font-size:24px!important;
+/* ============================================================
+   LAPTOP  1025–1299px
+============================================================ */
 
-}
+@media (max-width: 1299px) and (min-width: 1025px) {
 
-}
+    :root {
+        --ds-card-w:   170px;
+        --ds-card-gap: 16px;
+    }
 
-/* ================================
-   Tablet
-================================ */
-
-@media (max-width:900px){
-
-.mainDrawer{
-
-width:72px!important;
+    .pageTitle    { font-size: 32px !important; }
+    .sectionTitle { font-size: 24px !important; }
 
 }
 
-.mainDrawer:hover{
 
-width:72px!important;
+/* ============================================================
+   TABLET  601–1024px
+   Sidebar collapses permanently; no hover-expand
+============================================================ */
 
-}
+@media (max-width: 1024px) {
 
-.navMenuOptionText{
+    :root {
+        --ds-card-w:   155px;
+        --ds-card-gap: 14px;
+    }
 
-display:none!important;
+    .mainAnimatedPage {
+        padding-left:  calc(var(--ds-sidebar-w) + var(--ds-space-16)) !important;
+        padding-right: var(--ds-space-16) !important;
+    }
 
-}
+    .homePage {
+        padding-left:  var(--ds-space-20) !important;
+        padding-right: var(--ds-space-20) !important;
+    }
 
-.pageTitle{
+    .pageTitle    { font-size: 28px !important; }
+    .sectionTitle { font-size: 22px !important; }
 
-font-size:26px!important;
-
-}
-
-.sectionTitle{
-
-font-size:20px!important;
-
-}
-
-.itemsContainer{
-
-gap:14px!important;
-
-}
-
-.cardBox{
-
-width:160px!important;
+    .itemsContainer { gap: 14px !important; }
 
 }
 
-}
 
-/* ================================
-   Smartphone
-================================ */
+/* ============================================================
+   LARGE PHONE  601–900px
+============================================================ */
 
-@media (max-width:600px){
+@media (max-width: 900px) {
 
-.homePage{
+    :root {
+        --ds-card-w:    150px;
+        --ds-card-gap:  12px;
+        --ds-header-h:  60px;
+    }
 
-padding:12px!important;
+    .pageTitle    { font-size: 26px !important; }
+    .sectionTitle { font-size: 20px !important; }
 
-}
-
-.pageTitle{
-
-font-size:22px!important;
-
-}
-
-.sectionTitle{
-
-font-size:18px!important;
+    button,
+    .emby-button {
+        font-size:  var(--ds-size-sm) !important;
+        padding:    8px 18px          !important;
+    }
 
 }
 
-.cardBox{
 
-width:135px!important;
+/* ============================================================
+   SMALL PHONE  ≤ 600px
+============================================================ */
+
+@media (max-width: 600px) {
+
+    :root {
+        --ds-card-w:    130px;
+        --ds-card-gap:  10px;
+        --ds-header-h:  56px;
+        --ds-sidebar-w: 0px; /* sidebar hidden on mobile */
+    }
+
+    .homePage {
+        padding: var(--ds-space-12) !important;
+    }
+
+    .mainAnimatedPage {
+        padding-left: 0 !important;
+    }
+
+    .pageTitle    { font-size: 22px !important; }
+    .sectionTitle { font-size: 18px !important; }
+
+    .ds-hero-content .ds-title {
+        font-size: 22px !important;
+    }
+
+    .ds-buttons {
+        gap: var(--ds-space-8);
+    }
+
+    .ds-play,
+    .ds-info {
+        padding:   10px 18px !important;
+        font-size: var(--ds-size-sm) !important;
+    }
+
+}
+
+
+/* ============================================================
+   TV / POINTER:COARSE — larger tap targets
+============================================================ */
+
+@media (pointer: coarse) {
+
+    .cardBox {
+        transition: transform 0.2s ease !important;
+    }
+
+    button,
+    .emby-button {
+        min-height: 52px !important;
+        font-size:  var(--ds-size-md) !important;
+    }
+
+    .navMenuOption {
+        height: 60px !important;
+    }
 
 }
 
-button{
 
-min-height:42px!important;
+/* ============================================================
+   REDUCED MOTION (duplicate guard in case animations.css
+   is loaded separately or out of order)
+============================================================ */
 
-padding:10px 18px!important;
+@media (prefers-reduced-motion: reduce) {
 
-}
-
-}
-
-/* ================================
-   Android TV
-================================ */
-
-@media (pointer:coarse){
-
-.cardBox{
-
-transition:.2s;
-
-}
-
-button{
-
-font-size:18px!important;
-
-}
-
-}
-
-/* ================================
-   Reduce Motion
-================================ */
-
-@media (prefers-reduced-motion:reduce){
-
-*{
-
-animation:none!important;
-
-transition:none!important;
-
-}
+    *,
+    *::before,
+    *::after {
+        animation:  none !important;
+        transition: none !important;
+    }
 
 }

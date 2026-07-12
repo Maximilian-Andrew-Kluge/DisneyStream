@@ -1,249 +1,272 @@
 /* ============================================================
-   Aurora Stream
+   DisneyStream
    navigation.css
-   Jellyfin 10.11.x
+   Jellyfin 10.11.x — v0.2.0
 ============================================================ */
 
 
 /* ============================================================
-   SIDEBAR
+   SIDEBAR SHELL
 ============================================================ */
 
-.mainDrawer{
-
-    width:92px!important;
+.mainDrawer {
+    position: fixed !important;
+    top:    var(--ds-header-h) !important;
+    left:   0                  !important;
+    bottom: 0                  !important;
+    width:  var(--ds-sidebar-w) !important;
 
     background:
-        rgba(4,7,20,.90)!important;
+        rgba(4, 7, 20, 0.92)   !important;
+    backdrop-filter: blur(var(--ds-blur)) saturate(150%);
+    -webkit-backdrop-filter: blur(var(--ds-blur)) saturate(150%);
 
-    backdrop-filter:
-        blur(24px);
+    border-right: 1px solid var(--ds-border) !important;
 
-    border-right:
-        1px solid rgba(255,255,255,.05);
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden !important;
+    z-index: var(--ds-z-sidebar);
+
+    transition: width var(--ds-normal) var(--ds-ease) !important;
+}
+
+/* expand on hover */
+.mainDrawer:hover,
+.mainDrawer.ds-expanded {
+    width: var(--ds-sidebar-open) !important;
+}
+
+
+/* ============================================================
+   DRAWER LOGO
+============================================================ */
+
+.drawerLogo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--ds-space-16);
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ds-border);
+}
+
+.drawerLogo img {
+    height: 28px;
+    object-fit: contain;
+}
+
+
+/* ============================================================
+   NAV LIST
+============================================================ */
+
+.navMenu,
+.navMenuContent {
+    flex: 1;
+    padding: var(--ds-space-12) 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* hide scrollbar while allowing scroll */
+.navMenu::-webkit-scrollbar,
+.navMenuContent::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ============================================================
+   NAV ITEM
+============================================================ */
+
+.navMenuOption {
+    display:     flex     !important;
+    align-items: center   !important;
+    gap:         var(--ds-space-16) !important;
+
+    height:  52px;
+    margin:  var(--ds-space-4) var(--ds-space-8) !important;
+    padding: 0 var(--ds-space-16) !important;
+
+    border-radius: var(--ds-radius-md) !important;
+    white-space: nowrap;
+    overflow: hidden;
+
+    color:  var(--ds-text-secondary) !important;
+    cursor: pointer;
 
     transition:
-        .35s ease;
-
-    overflow:hidden;
-
+        background var(--ds-fast) ease,
+        color      var(--ds-fast) ease,
+        transform  var(--ds-fast) var(--ds-ease) !important;
 }
 
 
 /* ============================================================
-   EXPAND
+   NAV ITEM — hover
 ============================================================ */
 
-.mainDrawer:hover{
-
-    width:250px!important;
-
+.navMenuOption:hover {
+    background: rgba(255, 255, 255, 0.07) !important;
+    color:      var(--ds-text)            !important;
+    transform:  translateX(3px)           !important;
 }
 
 
 /* ============================================================
-   MENU
+   NAV ITEM — active
 ============================================================ */
 
-.navMenu{
-
-    padding-top:18px;
-
-}
-
-
-/* ============================================================
-   ITEMS
-============================================================ */
-
-.navMenuOption{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:18px;
-
-    margin:8px 12px;
-
-    padding:14px 18px;
-
-    border-radius:16px;
-
-    transition:.30s;
-
-    color:var(--text-secondary)!important;
-
-}
-
-
-/* ============================================================
-   HOVER
-============================================================ */
-
-.navMenuOption:hover{
-
+.navMenuOption-selected,
+.navMenuOption.ds-active {
     background:
-
-        rgba(30,167,255,.12)!important;
-
-    color:white!important;
-
-    transform:
-
-        translateX(6px);
-
-}
-
-
-/* ============================================================
-   ACTIVE
-============================================================ */
-
-.navMenuOption-selected{
-
-    background:
-
         linear-gradient(
             90deg,
-            rgba(30,167,255,.28),
-            rgba(30,167,255,.08)
-        )!important;
+            rgba(30, 167, 255, 0.24) 0%,
+            rgba(30, 167, 255, 0.06) 100%
+        ) !important;
+    color: var(--ds-text)   !important;
+    font-weight: var(--ds-weight-semibold) !important;
+}
 
-    color:white!important;
+/* accent bar on active item */
+.navMenuOption-selected::before,
+.navMenuOption.ds-active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top:    25%;
+    bottom: 25%;
+    width: 3px;
+    border-radius: 0 var(--ds-radius-pill) var(--ds-radius-pill) 0;
+    background: var(--ds-primary);
+}
 
+.navMenuOption {
+    position: relative; /* needed for ::before */
 }
 
 
 /* ============================================================
-   ICONS
+   NAV ICON
 ============================================================ */
 
-.navMenuOption i{
+.navMenuOption .material-icons,
+.navMenuOption i {
+    font-size:  22px    !important;
+    flex-shrink: 0;
+    width:      24px;
+    text-align: center;
+    transition: transform var(--ds-fast) ease !important;
+}
 
-    font-size:28px!important;
+.navMenuOption:hover .material-icons,
+.navMenuOption:hover i {
+    transform: scale(1.15) !important;
+    color: var(--ds-primary);
+}
 
-    transition:.30s;
-
+.navMenuOption-selected .material-icons,
+.navMenuOption.ds-active .material-icons,
+.navMenuOption-selected i,
+.navMenuOption.ds-active i {
+    color: var(--ds-primary) !important;
 }
 
 
 /* ============================================================
-   ICON HOVER
+   NAV LABEL — hidden until sidebar expands
 ============================================================ */
 
-.navMenuOption:hover i{
+.navMenuOptionText {
+    opacity:    0;
+    transform:  translateX(-6px);
+    transition:
+        opacity   var(--ds-fast) ease,
+        transform var(--ds-fast) ease !important;
+    font-size:   var(--ds-size-base);
+    font-weight: var(--ds-weight-medium);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    transform:
-
-        scale(1.15);
-
-    color:
-
-        var(--primary);
-
+.mainDrawer:hover .navMenuOptionText,
+.mainDrawer.ds-expanded .navMenuOptionText {
+    opacity:   1;
+    transform: none;
 }
 
 
 /* ============================================================
-   LABEL
+   SECTION HEADER inside sidebar
 ============================================================ */
 
-.navMenuOptionText{
+.sidebarSectionHeader {
+    padding:   var(--ds-space-16) var(--ds-space-16) var(--ds-space-4);
+    font-size: var(--ds-size-xs);
+    font-weight: var(--ds-weight-semibold);
+    color:     var(--ds-text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity var(--ds-fast) ease;
+}
 
-    opacity:0;
-
-    transition:.25s;
-
-    white-space:nowrap;
-
+.mainDrawer:hover .sidebarSectionHeader,
+.mainDrawer.ds-expanded .sidebarSectionHeader {
+    opacity: 1;
 }
 
 
 /* ============================================================
-   SHOW TEXT
+   DRAWER FOOTER
 ============================================================ */
 
-.mainDrawer:hover
-.navMenuOptionText{
-
-    opacity:1;
-
+.drawerFooter {
+    padding:   var(--ds-space-16);
+    font-size: var(--ds-size-xs);
+    color:     var(--ds-text-muted);
+    border-top: 1px solid var(--ds-border);
+    flex-shrink: 0;
+    opacity: 0.6;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 
 /* ============================================================
-   LOGO
+   TABLET — no expand on hover, always collapsed
 ============================================================ */
 
-.drawerLogo{
+@media (max-width: 1024px) {
+    .mainDrawer,
+    .mainDrawer:hover,
+    .mainDrawer.ds-expanded {
+        width: var(--ds-sidebar-w) !important;
+    }
 
-    padding:26px 0;
+    .navMenuOptionText,
+    .mainDrawer:hover .navMenuOptionText {
+        display: none !important;
+    }
 
-    text-align:center;
-
+    .sidebarSectionHeader,
+    .mainDrawer:hover .sidebarSectionHeader {
+        display: none !important;
+    }
 }
 
 
 /* ============================================================
-   SCROLL
+   MOBILE — sidebar becomes bottom drawer (Jellyfin handles this)
 ============================================================ */
 
-.mainDrawer::-webkit-scrollbar{
-
-    width:6px;
-
-}
-
-.mainDrawer::-webkit-scrollbar-thumb{
-
-    background:
-        rgba(255,255,255,.12);
-
-    border-radius:50px;
-
-}
-
-
-/* ============================================================
-   FOOTER
-============================================================ */
-
-.drawerFooter{
-
-    margin-top:auto;
-
-    padding:20px;
-
-    opacity:.55;
-
-    font-size:12px;
-
-}
-
-
-/* ============================================================
-   MOBILE
-============================================================ */
-
-@media(max-width:900px){
-
-.mainDrawer{
-
-    width:70px!important;
-
-}
-
-.mainDrawer:hover{
-
-    width:70px!important;
-
-}
-
-.navMenuOptionText{
-
-    display:none;
-
-}
-
+@media (max-width: 600px) {
+    .mainDrawer {
+        width: 100% !important;
+    }
 }

@@ -1,0 +1,8 @@
+{
+    "name": "DisneyStream",
+    "version": "0.2.0",
+    "description": "A Disney+ inspired theme for Jellyfin",
+    "author": "Maximilian Andrew Kluge",
+    "jellyfin_version": ">=10.9.0",
+    "theme_color": "#040714"
+}

@@ -2,161 +2,151 @@
 ============================================================
 DisneyStream
 variables.css
-Version: 0.1.0
+Version: 0.2.0
 Author: Maximilian Andrew Kluge
 ============================================================
 */
 
-:root{
+:root {
 
 /* ==========================================================
-   COLORS
+   COLORS — Disney+ Palette
 ========================================================== */
 
---ds-background:#040714;
---ds-background-secondary:#071128;
---ds-background-tertiary:#0b1736;
+--ds-background:         #040714;
+--ds-background-alt:     #060c1f;
 
---ds-surface:#10192e;
---ds-surface-light:#18233d;
+--ds-surface:            #0d1730;
+--ds-surface-hover:      #152040;
+--ds-surface-card:       #0f1c35;
 
---ds-primary:#4da6ff;
---ds-primary-hover:#7cc0ff;
+--ds-primary:            #1ea7ff;
+--ds-primary-hover:      #52beff;
+--ds-primary-glow:       rgba(30, 167, 255, 0.22);
 
---ds-accent:#00c2ff;
+--ds-accent:             #0063e5;
+--ds-accent-hover:       #0483ee;
 
---ds-success:#32d74b;
---ds-warning:#ffb300;
---ds-danger:#ff4d5a;
+--ds-text:               #f9f9f9;
+--ds-text-secondary:     #b0bccf;
+--ds-text-muted:         #6b7a91;
 
---ds-text:#ffffff;
---ds-text-secondary:#c7d2e5;
---ds-text-muted:#8792a8;
+--ds-border:             rgba(255, 255, 255, 0.07);
+--ds-border-light:       rgba(255, 255, 255, 0.12);
 
---ds-border:rgba(255,255,255,.08);
+--ds-overlay-light:      rgba(4, 7, 20, 0.50);
+--ds-overlay-heavy:      rgba(4, 7, 20, 0.82);
 
---ds-overlay:rgba(0,0,0,.55);
+--ds-glass:              rgba(13, 23, 48, 0.75);
+--ds-glass-border:       rgba(255, 255, 255, 0.07);
+--ds-blur:               20px;
+
+--ds-success:            #34c759;
+--ds-warning:            #ff9f0a;
+--ds-danger:             #ff453a;
 
 /* ==========================================================
-   FONTS
+   TYPOGRAPHY
 ========================================================== */
 
 --ds-font:
-"Inter",
-"Segoe UI",
-Roboto,
-Arial,
-sans-serif;
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
 
---ds-font-size-xs:12px;
---ds-font-size-sm:14px;
---ds-font-size-md:16px;
---ds-font-size-lg:18px;
---ds-font-size-xl:24px;
---ds-font-size-xxl:34px;
---ds-font-size-hero:64px;
+--ds-size-xs:    11px;
+--ds-size-sm:    13px;
+--ds-size-base:  15px;
+--ds-size-md:    17px;
+--ds-size-lg:    22px;
+--ds-size-xl:    28px;
+--ds-size-xxl:   38px;
+--ds-size-hero:  60px;
+
+--ds-weight-regular:  400;
+--ds-weight-medium:   500;
+--ds-weight-semibold: 600;
+--ds-weight-bold:     700;
+
+--ds-lh-tight:  1.15;
+--ds-lh-normal: 1.50;
+--ds-lh-loose:  1.70;
 
 /* ==========================================================
    BORDER RADIUS
 ========================================================== */
 
---ds-radius-xs:6px;
---ds-radius-sm:10px;
---ds-radius-md:16px;
---ds-radius-lg:22px;
---ds-radius-xl:30px;
---ds-radius-round:999px;
+--ds-radius-xs:    4px;
+--ds-radius-sm:    8px;
+--ds-radius-md:    12px;
+--ds-radius-lg:    18px;
+--ds-radius-xl:    24px;
+--ds-radius-pill:  999px;
 
 /* ==========================================================
    SPACING
 ========================================================== */
 
---ds-space-xs:4px;
---ds-space-sm:8px;
---ds-space-md:16px;
---ds-space-lg:24px;
---ds-space-xl:32px;
---ds-space-xxl:48px;
---ds-space-hero:72px;
+--ds-space-2:    2px;
+--ds-space-4:    4px;
+--ds-space-8:    8px;
+--ds-space-12:  12px;
+--ds-space-16:  16px;
+--ds-space-20:  20px;
+--ds-space-24:  24px;
+--ds-space-32:  32px;
+--ds-space-48:  48px;
+--ds-space-64:  64px;
 
 /* ==========================================================
    SHADOWS
 ========================================================== */
 
---ds-shadow-sm:
-0 4px 10px rgba(0,0,0,.20);
-
---ds-shadow-md:
-0 10px 30px rgba(0,0,0,.30);
-
---ds-shadow-lg:
-0 20px 60px rgba(0,0,0,.45);
-
---ds-shadow-card:
-0 18px 45px rgba(0,0,0,.40);
-
-/* ==========================================================
-   GLASS
-========================================================== */
-
---ds-glass:
-
-rgba(255,255,255,.06);
-
---ds-glass-border:
-
-rgba(255,255,255,.08);
-
---ds-blur:18px;
+--ds-shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.30);
+--ds-shadow-md:   0 8px 24px rgba(0, 0, 0, 0.40);
+--ds-shadow-lg:   0 18px 50px rgba(0, 0, 0, 0.55);
+--ds-shadow-card: 0 14px 40px rgba(0, 0, 0, 0.50);
+--ds-glow:        0 0 28px rgba(30, 167, 255, 0.30);
 
 /* ==========================================================
    TRANSITIONS
 ========================================================== */
 
---ds-transition-fast:.18s;
+--ds-ease:       cubic-bezier(0.22, 0.8, 0.22, 1);
+--ds-ease-out:   cubic-bezier(0.0, 0.0, 0.2, 1);
 
---ds-transition:.28s;
-
---ds-transition-slow:.45s;
-
-/* ==========================================================
-   HEADER
-========================================================== */
-
---ds-header-height:78px;
-
---ds-sidebar-width:88px;
-
---ds-sidebar-expanded:290px;
+--ds-fast:       0.15s;
+--ds-normal:     0.28s;
+--ds-slow:       0.45s;
 
 /* ==========================================================
-   CARDS
+   LAYOUT
 ========================================================== */
 
---ds-card-width:260px;
+--ds-header-h:       68px;
+--ds-sidebar-w:      80px;
+--ds-sidebar-open:   256px;
 
---ds-card-height:390px;
+--ds-card-w:         200px;
+--ds-card-h:         300px;
+--ds-card-gap:       18px;
 
---ds-card-gap:22px;
+--ds-hero-h:         70vh;
+--ds-hero-min-h:     440px;
+--ds-hero-max-w:     720px;
+--ds-page-max:       1600px;
 
 /* ==========================================================
-   HERO
+   Z-INDEX
 ========================================================== */
 
---ds-hero-height:74vh;
-
---ds-hero-max-width:760px;
-
-/* ==========================================================
-   Z INDEX
-========================================================== */
-
---ds-z-header:1000;
-
---ds-z-sidebar:1100;
-
---ds-z-modal:5000;
-
---ds-z-overlay:9999;
+--ds-z-base:    1;
+--ds-z-above:   10;
+--ds-z-header:  900;
+--ds-z-sidebar: 950;
+--ds-z-modal:   1000;
+--ds-z-toast:   2000;
 
 }

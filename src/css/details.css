@@ -1,0 +1,287 @@
+/* ============================================================
+   DisneyStream
+   details.css — Detail / Item page
+   Jellyfin 10.11.x — v0.2.0
+============================================================ */
+
+
+/* ============================================================
+   DETAIL PAGE WRAPPER
+============================================================ */
+
+.detailPageWrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+
+/* ============================================================
+   DETAIL HERO (backdrop)
+============================================================ */
+
+.ds-detail-hero {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 75vh;
+    min-height: 500px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.ds-detail-backdrop {
+    position: absolute;
+    inset: 0;
+    background-size:     cover;
+    background-position: center top;
+    background-color:    var(--ds-surface);
+}
+
+.ds-detail-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            0deg,
+            var(--ds-background)   0%,
+            rgba(4, 7, 20, 0.60)  50%,
+            rgba(4, 7, 20, 0.20) 100%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(4, 7, 20, 0.80) 0%,
+            transparent          60%
+        );
+}
+
+
+/* ============================================================
+   DETAIL CONTENT
+============================================================ */
+
+.detailPagePrimaryContainer {
+    position: relative;
+    z-index: var(--ds-z-above);
+    padding:
+        var(--ds-space-48)
+        var(--ds-space-48)
+        var(--ds-space-32) !important;
+    max-width: 900px;
+}
+
+
+/* ============================================================
+   DETAIL TITLE
+============================================================ */
+
+.itemName,
+.ds-title {
+    font-size:   clamp(28px, 4vw, 52px) !important;
+    font-weight: var(--ds-weight-bold)   !important;
+    color:       var(--ds-text)          !important;
+    line-height: var(--ds-lh-tight)      !important;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.60);
+    margin:      0 0 var(--ds-space-12)  !important;
+}
+
+
+/* ============================================================
+   OVERVIEW / DESCRIPTION
+============================================================ */
+
+.overview,
+.ds-overview {
+    font-size:   var(--ds-size-md)      !important;
+    color:       var(--ds-text-secondary) !important;
+    line-height: var(--ds-lh-loose)     !important;
+    max-width:   680px;
+    margin:      var(--ds-space-16) 0   !important;
+}
+
+
+/* ============================================================
+   METADATA CHIPS
+============================================================ */
+
+.mediaInfoItem,
+.starRatingContainer {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    font-size:   var(--ds-size-sm) !important;
+    color:       var(--ds-text-muted) !important;
+    margin-right: var(--ds-space-12);
+}
+
+.itemMiscInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-space-4) var(--ds-space-12);
+    margin: var(--ds-space-8) 0 var(--ds-space-20);
+}
+
+
+/* ============================================================
+   DETAIL BUTTONS
+============================================================ */
+
+.ds-buttons {
+    display:    flex;
+    gap:        var(--ds-space-12);
+    flex-wrap:  wrap;
+    margin-top: var(--ds-space-24);
+}
+
+.detailButton,
+.btnPlay {
+    font-size:   var(--ds-size-md)         !important;
+    font-weight: var(--ds-weight-semibold) !important;
+    padding:     12px 32px                 !important;
+    border-radius: var(--ds-radius-sm)     !important;
+}
+
+/* primary play */
+.detailButton.btnPlay,
+.ds-play {
+    background: #fff    !important;
+    color:      #040714 !important;
+}
+
+.detailButton.btnPlay:hover,
+.ds-play:hover {
+    background:  rgba(255,255,255,0.88) !important;
+    transform:   translateY(-2px);
+}
+
+/* secondary trailer / more info */
+.detailButton:not(.btnPlay),
+.ds-trailer,
+.ds-info {
+    background:  rgba(255, 255, 255, 0.18) !important;
+    color:       var(--ds-text)             !important;
+    backdrop-filter: blur(8px);
+}
+
+.detailButton:not(.btnPlay):hover,
+.ds-trailer:hover,
+.ds-info:hover {
+    background: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* favorite */
+.ds-favorite {
+    background:   transparent              !important;
+    border:       1px solid var(--ds-border) !important;
+    color:        var(--ds-text-secondary)  !important;
+}
+
+.ds-favorite:hover {
+    border-color: var(--ds-primary)  !important;
+    color:        var(--ds-primary)  !important;
+}
+
+
+/* ============================================================
+   CAST ROW
+============================================================ */
+
+.peopleList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-space-16);
+    margin-top: var(--ds-space-24);
+}
+
+.personCard {
+    display:       flex;
+    flex-direction: column;
+    align-items:   center;
+    gap:           var(--ds-space-8);
+    width:         90px;
+    text-align:    center;
+    cursor:        pointer;
+}
+
+.personCard img {
+    width:         80px;
+    height:        80px;
+    border-radius: 50%;
+    object-fit:    cover;
+    border:        2px solid var(--ds-border);
+    transition:
+        border-color var(--ds-fast) ease,
+        transform    var(--ds-fast) ease;
+}
+
+.personCard:hover img {
+    border-color: var(--ds-primary);
+    transform:    scale(1.06);
+}
+
+.personCard .personName {
+    font-size:   var(--ds-size-xs);
+    font-weight: var(--ds-weight-semibold);
+    color:       var(--ds-text);
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+    max-width:   90px;
+}
+
+.personCard .personRole {
+    font-size: var(--ds-size-xs);
+    color:     var(--ds-text-muted);
+}
+
+
+/* ============================================================
+   EPISODES LIST
+============================================================ */
+
+.episodeCard {
+    display:    flex;
+    gap:        var(--ds-space-16);
+    padding:    var(--ds-space-16);
+    border-radius: var(--ds-radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    border:     1px solid var(--ds-border);
+    margin-bottom: var(--ds-space-8);
+    cursor:     pointer;
+    transition:
+        background var(--ds-fast) ease,
+        transform  var(--ds-fast) ease;
+}
+
+.episodeCard:hover {
+    background: rgba(30, 167, 255, 0.08);
+    transform:  translateX(4px);
+}
+
+.episodeThumbnail {
+    width:         160px;
+    aspect-ratio:  16/9;
+    border-radius: var(--ds-radius-sm);
+    object-fit:    cover;
+    flex-shrink:   0;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 900px) {
+
+    .detailPagePrimaryContainer {
+        padding: var(--ds-space-24) var(--ds-space-20) var(--ds-space-20) !important;
+    }
+
+    .ds-detail-hero {
+        height:     60vw;
+        min-height: 280px;
+    }
+
+    .episodeThumbnail {
+        width: 110px;
+    }
+
+}

@@ -1,0 +1,49 @@
+/* ============================================================
+   DisneyStream — theme/index.css
+   Jellyfin Custom Theme Entry Point
+   This file is the single CSS file Jellyfin loads.
+   It imports all partials in the correct order.
+   v0.2.0
+============================================================ */
+
+/* 1. Design tokens */
+@import "../src/css/variables.css";
+
+/* 2. Base & layout */
+@import "../src/css/main.css";
+
+/* 3. Navigation / Sidebar */
+@import "../src/css/navigation.css";
+
+/* 4. Home page & Hero */
+@import "../src/css/home.css";
+
+/* 5. Content cards */
+@import "../src/css/cards.css";
+
+/* 6. Detail / Item page */
+@import "../src/css/details.css";
+
+/* 7. Video player */
+@import "../src/css/player.css";
+
+/* 8. Search */
+@import "../src/css/search.css";
+
+/* 9. Profile / User select */
+@import "../src/css/profile.css";
+
+/* 10. Settings & Admin */
+@import "../src/css/settings.css";
+
+/* 11. Login */
+@import "../src/css/login.css";
+
+/* 12. Animations */
+@import "../src/css/animations.css";
+
+/* 13. Responsive breakpoints */
+@import "../src/css/responsive.css";
+
+/* 14. Utility helpers */
+@import "../src/css/utilities.css";

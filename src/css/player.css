@@ -1,0 +1,170 @@
+/* ============================================================
+   DisneyStream
+   player.css — Video Player
+   Jellyfin 10.11.x — v0.2.0
+============================================================ */
+
+
+/* ============================================================
+   PLAYER CONTAINER
+============================================================ */
+
+.videoPlayerContainer,
+#videoPlayer {
+    background: #000 !important;
+}
+
+
+/* ============================================================
+   OSD — On-Screen Display
+============================================================ */
+
+.osdBottom,
+.videoOsdBottom {
+    background:
+        linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.90) 0%,
+            rgba(0, 0, 0, 0.40) 60%,
+            transparent 100%
+        ) !important;
+    padding: 0 var(--ds-space-24) var(--ds-space-16) !important;
+    transition: opacity var(--ds-normal) ease;
+}
+
+.osdTop,
+.videoOsdTop {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.80) 0%,
+            transparent 100%
+        ) !important;
+    padding: var(--ds-space-12) var(--ds-space-24) !important;
+}
+
+
+/* ============================================================
+   PROGRESS / SCRUBBER
+============================================================ */
+
+.osdPositionSlider,
+.mdl-slider {
+    height:        5px !important;
+    border-radius: var(--ds-radius-pill) !important;
+    background:    rgba(255, 255, 255, 0.20) !important;
+    cursor:        pointer;
+}
+
+.mdl-slider::-webkit-slider-thumb {
+    width:         16px;
+    height:        16px;
+    border-radius: 50%;
+    background:    var(--ds-primary);
+    cursor:        pointer;
+    box-shadow:    0 0 0 4px rgba(30, 167, 255, 0.30);
+}
+
+/* played portion */
+.osdPositionSlider::before,
+.progressCurrent {
+    background:
+        linear-gradient(90deg, var(--ds-primary), #52beff) !important;
+}
+
+
+/* ============================================================
+   OSD BUTTONS
+============================================================ */
+
+.osdButton,
+.playerButton {
+    background:    transparent !important;
+    border:        none        !important;
+    color:         #fff        !important;
+    border-radius: 50%         !important;
+    min-height:    unset       !important;
+    padding:       8px         !important;
+    transition:
+        background var(--ds-fast) ease,
+        transform  var(--ds-fast) ease !important;
+}
+
+.osdButton:hover,
+.playerButton:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    transform:  scale(1.1) !important;
+    box-shadow: none !important;
+}
+
+
+/* ============================================================
+   CUSTOM OVERLAY BUTTONS
+============================================================ */
+
+.ds-player-overlay {
+    position: absolute;
+    bottom:   var(--ds-space-32);
+    right:    var(--ds-space-24);
+    display:  flex;
+    flex-direction: column;
+    gap:      var(--ds-space-8);
+    z-index:  var(--ds-z-above);
+}
+
+.ds-skip-intro,
+.ds-next {
+    background:
+        rgba(20, 20, 40, 0.85) !important;
+    color:         var(--ds-text)       !important;
+    border:        1px solid var(--ds-border-light) !important;
+    border-radius: var(--ds-radius-sm)  !important;
+    padding:       10px 20px            !important;
+    font-size:     var(--ds-size-sm)    !important;
+    font-weight:   var(--ds-weight-semibold) !important;
+    backdrop-filter: blur(12px);
+    cursor:        pointer;
+    transition:
+        background var(--ds-fast) ease,
+        transform  var(--ds-fast) ease !important;
+}
+
+.ds-skip-intro:hover,
+.ds-next:hover {
+    background:  var(--ds-accent) !important;
+    border-color: transparent     !important;
+    transform:   translateY(-2px);
+}
+
+
+/* ============================================================
+   CHAPTER MARKERS
+============================================================ */
+
+.chapterThumb {
+    border-radius: var(--ds-radius-sm) !important;
+    border:        2px solid var(--ds-primary) !important;
+}
+
+
+/* ============================================================
+   VOLUME SLIDER
+============================================================ */
+
+.volumeSlider {
+    accent-color: var(--ds-primary);
+}
+
+
+/* ============================================================
+   NEXT EPISODE POPUP
+============================================================ */
+
+.upNextContainer {
+    background:    var(--ds-glass)     !important;
+    border:        1px solid var(--ds-border) !important;
+    border-radius: var(--ds-radius-lg) !important;
+    backdrop-filter: blur(var(--ds-blur));
+    padding:       var(--ds-space-16)  !important;
+    box-shadow:    var(--ds-shadow-lg) !important;
+}

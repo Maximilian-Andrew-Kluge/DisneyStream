@@ -1,180 +1,182 @@
 /* ============================================================
-   Aurora Stream Theme
+   DisneyStream
    cards.css
-   Jellyfin 10.11.x
+   Jellyfin 10.11.x — v0.2.0
 ============================================================ */
 
 
 /* ============================================================
-   CARD CONTAINER
+   CONTAINER
 ============================================================ */
 
-.itemsContainer{
+.itemsContainer {
+    gap:            var(--ds-card-gap) !important;
+    padding:        var(--ds-space-4) !important;
+    scroll-behavior: smooth;
+}
 
-    gap:20px!important;
-
-    padding:10px!important;
-
+.itemsContainer::-webkit-scrollbar {
+    display: none;
 }
 
 
 /* ============================================================
-   POSTER
+   CARD BOX — wrapper
 ============================================================ */
 
-.cardBox{
+.cardBox {
+    position:      relative;
+    width:         var(--ds-card-w)  !important;
+    border-radius: var(--ds-radius-md) !important;
+    background:    transparent       !important;
+    overflow:      hidden;
+    cursor:        pointer;
 
-    border-radius:20px!important;
-
-    overflow:hidden;
-
-    background:transparent!important;
+    /* reset glass style from main.css for cards */
+    backdrop-filter:   none !important;
+    border:            none !important;
+    box-shadow:        none !important;
 
     transition:
-        .35s cubic-bezier(.2,.8,.2,1);
-
+        transform  var(--ds-normal) var(--ds-ease),
+        box-shadow var(--ds-normal) var(--ds-ease) !important;
 }
 
-
-/* ============================================================
-   IMAGE
-============================================================ */
-
-.cardImageContainer{
-
-    border-radius:20px!important;
-
-    overflow:hidden;
-
+.cardBox:hover {
+    transform:  translateY(-8px) !important;
     box-shadow:
-        0 12px 30px rgba(0,0,0,.45);
+        var(--ds-shadow-lg),
+        var(--ds-glow)  !important;
+    background: transparent !important;
+}
 
+/* keyboard focus */
+.cardBox:focus-visible {
+    outline:        2px solid var(--ds-primary);
+    outline-offset: 4px;
 }
 
 
 /* ============================================================
-   IMAGE
+   IMAGE CONTAINER
 ============================================================ */
 
-.cardImage{
+.cardImageContainer {
+    position:      relative;
+    border-radius: var(--ds-radius-md) !important;
+    overflow:      hidden;
+    aspect-ratio:  2/3; /* poster ratio */
+    background:    var(--ds-surface);
+    box-shadow:    var(--ds-shadow-card);
+}
 
+
+/* ============================================================
+   POSTER IMAGE
+============================================================ */
+
+.cardImage,
+.cardPadder {
+    border-radius: var(--ds-radius-md) !important;
+    width:  100%;
+    height: 100%;
+    object-fit: cover;
     transition:
-        transform .45s ease,
-        filter .45s ease;
+        transform var(--ds-slow)   var(--ds-ease),
+        filter    var(--ds-normal) ease !important;
+}
 
+.cardBox:hover .cardImage {
+    transform: scale(1.07) !important;
+    filter:    brightness(1.06) saturate(1.08) !important;
 }
 
 
 /* ============================================================
-   HOVER
+   OVERLAY — gradient + controls
 ============================================================ */
 
-.cardBox:hover .cardImage{
-
-    transform:scale(1.08);
-
-    filter:
-        brightness(1.08)
-        saturate(1.1);
-
-}
-
-
-/* ============================================================
-   CARD SHADOW
-============================================================ */
-
-.cardBox:hover{
-
-    transform:
-        translateY(-8px);
-
-}
-
-
-/* ============================================================
-   PLAY BUTTON
-============================================================ */
-
-.cardOverlayButton{
-
-    width:62px!important;
-
-    height:62px!important;
-
-    border-radius:50%!important;
-
+.cardOverlayContainer {
+    position: absolute;
+    inset:    0;
+    border-radius: var(--ds-radius-md);
     background:
-
-        rgba(30,167,255,.92)!important;
-
-    backdrop-filter:blur(12px);
-
-    transition:.30s;
-
-}
-
-
-.cardOverlayButton:hover{
-
-    transform:scale(1.12);
-
-}
-
-
-/* ============================================================
-   OVERLAY
-============================================================ */
-
-.cardOverlayContainer{
-
-    opacity:0;
-
-    transition:.30s;
-
-    background:
-
         linear-gradient(
-            transparent,
-            rgba(4,7,20,.72)
+            0deg,
+            rgba(4, 7, 20, 0.85) 0%,
+            rgba(4, 7, 20, 0.30) 45%,
+            transparent          75%
         );
-
+    opacity:    0;
+    transition: opacity var(--ds-fast) ease !important;
+    display:    flex;
+    align-items: flex-end;
+    padding:    var(--ds-space-12);
 }
 
-
-.cardBox:hover
-.cardOverlayContainer{
-
-    opacity:1;
-
-}
-
-
-/* ============================================================
-   TITLE
-============================================================ */
-
-.cardText{
-
-    margin-top:12px;
-
-    font-size:15px!important;
-
-    font-weight:600!important;
-
-    color:white!important;
-
+.cardBox:hover .cardOverlayContainer {
+    opacity: 1;
 }
 
 
 /* ============================================================
-   SUBTITLE
+   PLAY BUTTON on overlay
 ============================================================ */
 
-.cardText-secondary{
+.cardOverlayButton {
+    width:         52px  !important;
+    height:        52px  !important;
+    border-radius: 50%   !important;
+    background:    rgba(30, 167, 255, 0.95) !important;
+    backdrop-filter: blur(8px);
+    box-shadow:    0 4px 20px rgba(30, 167, 255, 0.45);
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+    transition:
+        transform var(--ds-fast) ease,
+        box-shadow var(--ds-fast) ease !important;
+}
 
-    color:#AAB3C7!important;
+.cardOverlayButton:hover {
+    transform:  scale(1.12) !important;
+    box-shadow: 0 6px 28px rgba(30, 167, 255, 0.65);
+}
 
+
+/* ============================================================
+   FAB — favorite / watched
+============================================================ */
+
+.cardOverlayFab-primary {
+    background:    rgba(0, 0, 0, 0.55) !important;
+    border-radius: 50%                  !important;
+    transition:    background var(--ds-fast) ease !important;
+}
+
+.cardOverlayFab-primary:hover {
+    background: rgba(30, 167, 255, 0.85) !important;
+}
+
+
+/* ============================================================
+   CARD TEXT
+============================================================ */
+
+.cardText {
+    margin-top:  var(--ds-space-8) !important;
+    font-size:   var(--ds-size-sm) !important;
+    font-weight: var(--ds-weight-semibold) !important;
+    color:       var(--ds-text)   !important;
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+}
+
+.cardText-secondary {
+    font-size: var(--ds-size-xs) !important;
+    color:     var(--ds-text-muted) !important;
+    margin-top: var(--ds-space-2);
 }
 
 
@@ -182,103 +184,44 @@
    PROGRESS BAR
 ============================================================ */
 
-.itemProgressBar{
+.itemProgressBar {
+    height:        4px !important;
+    border-radius: var(--ds-radius-pill);
+    background:    rgba(255, 255, 255, 0.12) !important;
+    margin-top:    var(--ds-space-4);
+    overflow: hidden;
+}
 
-    height:5px!important;
-
-    border-radius:50px;
-
+.itemProgressBarForeground {
     background:
-
-        rgba(255,255,255,.12)!important;
-
-}
-
-
-.itemProgressBarForeground{
-
-    background:
-
-        linear-gradient(
-            90deg,
-            #1ea7ff,
-            #5ec8ff
-        )!important;
-
+        linear-gradient(90deg, var(--ds-primary), #52beff) !important;
+    border-radius: var(--ds-radius-pill) !important;
+    height: 100%;
 }
 
 
 /* ============================================================
-   FAVORITE
+   ROW SECTION SPACING
 ============================================================ */
 
-.cardOverlayFab-primary{
+.verticalSection {
+    margin-bottom: var(--ds-space-48) !important;
+}
 
-    background:
-
-        rgba(0,0,0,.55)!important;
-
-    border-radius:50%!important;
-
+.sectionTitle,
+.sectionTitleLink {
+    margin-bottom: var(--ds-space-16) !important;
+    font-size:   var(--ds-size-xl)        !important;
+    font-weight: var(--ds-weight-semibold) !important;
 }
 
 
 /* ============================================================
-   FAVORITE HOVER
+   WIDE CARDS (backdrop ratio — used on some rows)
 ============================================================ */
 
-.cardOverlayFab-primary:hover{
-
-    background:
-
-        rgba(30,167,255,.9)!important;
-
-}
-
-
-/* ============================================================
-   ROUNDED
-============================================================ */
-
-.cardPadder{
-
-    border-radius:20px!important;
-
-}
-
-
-/* ============================================================
-   ROW SPACING
-============================================================ */
-
-.verticalSection{
-
-    margin-bottom:50px!important;
-
-}
-
-
-/* ============================================================
-   ROW TITLE
-============================================================ */
-
-.sectionTitle{
-
-    margin-bottom:18px!important;
-
-    font-size:28px!important;
-
-}
-
-
-/* ============================================================
-   SCROLL
-============================================================ */
-
-.itemsContainer::-webkit-scrollbar{
-
-    display:none;
-
+.cardBox.backdrop .cardImageContainer {
+    aspect-ratio: 16/9;
 }
 
 
@@ -286,12 +229,14 @@
    RESPONSIVE
 ============================================================ */
 
-@media(max-width:900px){
-
-.cardBox{
-
-    width:160px!important;
-
+@media (max-width: 1300px) {
+    :root { --ds-card-w: 175px; }
 }
 
+@media (max-width: 900px) {
+    :root { --ds-card-w: 155px; --ds-card-gap: 14px; }
+}
+
+@media (max-width: 600px) {
+    :root { --ds-card-w: 130px; --ds-card-gap: 10px; }
 }
