@@ -870,3 +870,129 @@ fieldset { border: 1px solid var(--dp-border) !important; border-radius: var(--d
 }
 /* The carousel dot indicators */
 .sliderPageIndicator { bottom: 1.2em !important; }
+
+/* ═══════════════════════════════════════════
+   v2.2 — Disney+ Layout Match
+═══════════════════════════════════════════ */
+
+/* ── HERO: correct height so content is visible below ── */
+/* Jellyfin's home hero slideshow */
+.sliderView {
+    height: 44vw !important;
+    max-height: 540px !important;
+    min-height: 300px !important;
+}
+.itemBackdrop {
+    height: 44vw !important;
+    max-height: 540px !important;
+    min-height: 300px !important;
+}
+
+/* ── LIBRARY TILES: Disney+ brand row style ──
+   Make them look like dark tiles with centered label.
+   We darken the image heavily and show text prominently */
+.homeLibraryButton .cardScalable {
+    border-radius: var(--dp-r) !important;
+    overflow: hidden !important;
+}
+/* Darken the tile image to near-black so it looks like Disney+ brand tiles */
+.homeLibraryButton .cardContent,
+.homeLibraryButton .cardImageContainer {
+    filter: brightness(0.15) !important;
+}
+/* The text overlay — large, white, centered */
+.homeLibraryButton .innerCardFooter {
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    position: absolute !important;
+    inset: 0 !important;
+    padding: 0 !important;
+}
+.homeLibraryButton .cardFooter {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+.homeLibraryButton .cardText,
+.homeLibraryButton .cardTextCentered,
+.homeLibraryButton .cardText-first {
+    font-size: 1.4em !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    text-shadow: none !important;
+    letter-spacing: 0.02em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+/* The tile container itself: dark background */
+.homeLibraryButton .raised,
+.homeLibraryButton {
+    background: #1a1d2e !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: var(--dp-r) !important;
+}
+.homeLibraryButton:hover .raised,
+.homeLibraryButton:hover {
+    background: #232740 !important;
+    border-color: rgba(255,255,255,0.18) !important;
+}
+
+/* ── SEITENABSTÄNDE wie Disney+ ── */
+/* Disney+ hat ~2% Rand links/rechts */
+.homePage .padded-left,
+.homePage .padded-right,
+.homePage .sectionTitleContainer,
+.homePage .itemsContainer {
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+}
+
+/* ── HERO GRADIENT: links dunkel, rechts hell ── */
+/* Jellyfin renders home hero differently — target the slide wrapper */
+.slide .cardOverlayContainer,
+.homeSectionSlider .cardOverlayContainer {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(4,7,20,0.90) 0%,
+            rgba(4,7,20,0.60) 30%,
+            rgba(4,7,20,0.10) 60%,
+            transparent 75%
+        ),
+        linear-gradient(
+            0deg,
+            rgba(4,7,20,0.70) 0%,
+            transparent 40%
+        ) !important;
+}
+
+/* ── SECTION SPACING ── */
+.verticalSection:not(:empty) {
+    margin-bottom: 1.5em !important;
+}
+/* First section (library tiles) sits right below hero */
+.homePage > .padded-top:first-child {
+    padding-top: 0.8em !important;
+}
+
+/* ── POSTER CARDS: correct Disney+ sizing ── */
+/* Disney+ shows about 6 posters per row on desktop */
+@media (min-width: 120em) {
+    .portraitCard, .squareCard { --cardCount: 7 !important; }
+}
+@media (max-width: 120em) and (min-width: 80em) {
+    .portraitCard, .squareCard { --cardCount: 6 !important; }
+}
+
+/* ── HIDE PAUSE BUTTON on hero ── */
+.btnPlayPause.paper-icon-button-light.btnPlayerPlayPause { display: none !important; }
